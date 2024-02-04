@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import './css/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
-import burningHospital from './images/burning-hospital.png';
-import UserContext from "./context/UserContext";
 import axios from "axios";
 
 const Login = () => {
@@ -16,7 +14,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const { setUserData } = useContext(UserContext);
+    //const { setUserData } = useContext(UserContext);
 
     const handleChange = (e) => {
       setFormData({
@@ -25,6 +23,7 @@ const Login = () => {
       });
     };
 
+    /*
     async function handleSubmit(e) {
       e.preventDefault();
       setLoading(true);
@@ -48,19 +47,15 @@ const Login = () => {
       }
  
     };
+    */
+   //fix line 58
     return (
     <div class = "background">
-          <div class="outer">
-            <div class="logo">
-                <img src={burningHospital} alt="Burning Hospital" width='130px'/>
-                <h1 class="logo"><span style={{ color: '#FF6056' }}>HOT</span>SPITALS</h1>
-            </div>
-          </div>
           <hr></hr>
           <h2 class="register">Login</h2>
         <div className="center">
         <div class="formcontainer">
-          <form onSubmit={handleSubmit} className ="forms">
+          <form className ="forms">
             <label class="forms-label">
               Email
               <input class="forms-input"
