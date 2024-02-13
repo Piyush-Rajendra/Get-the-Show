@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-import './css/Login.css';
+import './../css/LoginRegister/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
@@ -58,17 +58,18 @@ const Login = () => {
           <form className ="forms">
             <label class="forms-label">
               Email
+            </label>
               <input class="forms-input"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
-              />
-            </label>
-            <br />
+              />            
+            <br/>
             <label class="forms-label">
               Password
+            </label>
               <input
                 type="password"
                 name="password"
@@ -76,10 +77,12 @@ const Login = () => {
                 onChange={handleChange}
                 required
                 class="forms-input"
-              />
-            </label>
-            <br />
-            <button type="submit" className="register-button">Login</button>
+              />      
+            <div className="forgot-register-Buttons">
+              <Link to='/forgot'><button class="forgot-Button">Forgot Password?</button></Link>
+              <Link to='/register'><button class="signUp-ButtonLogin">SignUp</button></Link>
+            </div>
+            <button type="submit" className="register-button">Login</button>            
           </form>
       </div>
       </div>
