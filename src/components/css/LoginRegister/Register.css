@@ -1,0 +1,25 @@
+.form-group{
+  margin-bottom: 15px;
+}
+
+.centerFormRegister {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bodyRegisterForm {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    background-color: #FFE8CC;
+    padding: 10px;
+    border-radius: 25px;
+    width: 90%;
+    height: 800px;
+    justify-content: center;
+}
+
+.containerForm {
+    margin:auto;
+}

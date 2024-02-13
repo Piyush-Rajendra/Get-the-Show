@@ -1,96 +1,102 @@
 import React from "react";
 import { useState, useContext } from "react";
 import './../css/LoginRegister/Register.css';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from "axios";
-//import UserContext from "./context/UserContext";
 
 const Register = () => {
-    const [formData, setFormData] = useState({
-      email: '',
-      password: '',
-    });
-
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-
-//    const { setUserData } = useContext(UserContext);
-
-    const handleChange = (e) => {
-      setFormData({
-        ...formData,
-        [e.target.name]: e.target.value
-      });
-    };
-
-    async function handleSubmit(e) {
-      e.preventDefault();
-      setLoading(true);
-      try {
-        console.log(formData);
-        const newUser = formData;
-        await axios.post("http://localhost:4000/api/users/signup/", newUser);
-        const loginRes = await axios.post("http://localhost:4000/api/users/login", formData);
-/**
-        setUserData({
-          token: loginRes.data.token,
-          user: loginRes.data.user,
-        });
- */        
-        localStorage.setItem("auth-token", loginRes.data.token);
-        setLoading(false);
-        navigate('/');
-      } catch (err) {
-        setLoading(false);
-        err.response.data.msg && setError(err.response.data.msg);
-        alert(err.response.data.msg);
-      }
-     
-    };
-    
-
-    return (
-    <div class = "background">
-          <div class="outer">
-            <div class="logo">
-                <h1 class="logo"><span style={{ color: '#FF6056' }}>HOT</span>SPITALS</h1>
-            </div>
-          </div>
-          <hr></hr>
-          <h2 class="register">Register</h2>
-        <div className="center">
-        <div class="formcontainer">
-          <form onSubmit={handleSubmit} className ="forms">
-            <label class="forms-label">
-              Email
-              <input class="forms-input"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </label>
-            <br />
-            <label class="forms-label">
-              Password
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                class="forms-input"
-              />
-            </label>
-            <br />
-            <button type="submit" className="register-button">Register</button>
-          </form>
+ return (
+  <div className="centerFormRegister">  
+    <div className="containerForm">
+      <form className="bodyRegisterForm">
+      <div>
+      <div className="columnForm">
+        <h2>User Information</h2>
+        <div className="form-group">
+          <label>Username: </label>
+          <input type="text" />
+        </div>
+        <div className="form-group">
+          <label>Email: </label>
+          <input type="email" />
+        </div>
+        <div className="form-group">
+          <label>Password: </label>
+          <input type="password" />
+        </div>
+        <div className="form-group">
+          <label>Confirm Password: </label>
+          <input type="password" />
+        </div>
+        <div className="form-group">
+          <label>Phone Number: </label>
+          <input type="tel" />
+        </div>
       </div>
-      </div>
+
+    <div className="columnForm">
+      <div className="form-group">      
+        <h2>Payment Information</h2>      
+          <label>Card Type: </label>
+          <input type="text" />
+        </div>
+        <div className="form-group">
+          <label>Card Number: </label>
+          <input type="text" />
+        </div>
+        <div className="form-group">
+          <label>Expiration Date: </label>
+          <input type="text" />
+        </div>
     </div>
-    )
-  }
 
-  export default Register;
+    </div>
+    
+    <div>
+      <div className="columnForm">
+        <h2>Home Address</h2>
+        <div className="form-group">
+          <label>Street: </label>
+          <input type="text" />
+        </div>
+        <div className="form-group">
+          <label>City: </label>
+          <input type="text" />
+        </div>
+        <div className="form-group">
+          <label>State: </label>
+          <input type="text" />
+        </div>
+        <div className="form-group">
+          <label>Zip Code: </label>
+          <input type="text" />
+        </div>
+      </div>
+
+      <div className="columnForm">
+        <h2>Billing Address</h2>
+        <div className="form-group">
+          <label>Street: </label>
+          <input type="text" />
+        </div>
+        <div className="form-group">
+          <label>City: </label>
+          <input type="text" />
+        </div>
+        <div className="form-group">
+          <label>State: </label>
+          <input type="text" />
+        </div>
+        <div className="form-group">
+          <label>Zip Code: </label>
+          <input type="text" />
+        </div>
+      </div>
+      <button>Register!</button>
+      
+      </div>
+      </form>
+      </div>
+  </div>
+  );
+}
+
+export default Register;
