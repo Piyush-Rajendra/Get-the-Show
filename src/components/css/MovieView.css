@@ -1,0 +1,94 @@
+body {
+    background-color: #070707 /* Replace #f0f0f0 with the color of your choice */
+}
+
+.red {
+    color: #FF6666; 
+}
+ .white {
+    color: #ffffff; 
+ }
+
+#title-logo {
+    color: #FF6666;
+    padding: 10px; 
+    padding-left: 100px;
+}
+
+.three-containers {
+    display: flex;
+    color: #ffffff; 
+    margin: 20px;
+    padding: 10px; 
+}
+
+.three-containers div {
+    flex: 1;
+}
+
+#movie-poster {
+    border-radius: 10px; /* Adjust the value to change the amount of curvature */
+}
+
+.view-page-column {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    align-items: center;
+}
+
+#movie-title {
+        background-color: #FF6666;
+        color: #ffffff;
+        border-radius: 25px; /* Rounded corners */
+        padding: 20px; /* Add some padding for spacing */
+        padding-top: 10px;
+        padding-bottom: 10px;
+        display: inline-block; /* Ensure that the background only covers the text */
+}
+
+#movie-info {
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 25px; /* Rounded corners */
+    padding: 20px; /* Add some padding for spacing */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: inline-block; /* Ensure that the background only covers the text */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 13px;
+    font-weight: normal;  
+}
+
+.showtime {
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 35px; /* Rounded corners */
+    padding: 20px; /* Add some padding for spacing */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: inline-block; /* Ensure that the background only covers the text */
+    text-align: center;
+    margin: 4px; 
+}
+
+#showtime-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.cast-member {
+    margin: 4px; 
+}
+
+#movie-rating {
+    margin: 2px; 
+    padding-top: 2px;
+}
+
+#review-title {
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+}
