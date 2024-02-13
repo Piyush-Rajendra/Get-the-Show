@@ -23,6 +23,17 @@ const Login = () => {
       });
     };
 
+    async function handleSubmit(e) {
+      e.preventDefault();
+      setLoading(true);
+      try {
+        navigate('/HomePage');
+      } catch (err) {
+        setLoading(false);
+        err.response.data.msg && setError(err.response.data.msg);
+        alert(err.response.data.msg);
+      }
+    }
     /*
     async function handleSubmit(e) {
       e.preventDefault();
@@ -55,7 +66,7 @@ const Login = () => {
           <h2 class="register">Login</h2>
         <div className="center">
         <div class="formcontainer">
-          <form className ="forms">
+          <form onSubmit={handleSubmit} className ="forms">
             <label class="forms-label">
               Email
               <input class="forms-input"
