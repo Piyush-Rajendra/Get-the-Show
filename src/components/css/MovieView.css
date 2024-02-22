@@ -1,5 +1,7 @@
-body {
-    background-color: #070707 /* Replace #f0f0f0 with the color of your choice */
+.page {
+    background: linear-gradient(to bottom, #070707, #939393); /* Black to dark grey gradient */
+    margin: 0; /* Remove default body margin */
+    padding-bottom: 50px; /* Remove default body padding */
 }
 
 .red {
@@ -20,6 +22,7 @@ body {
     color: #ffffff; 
     margin: 20px;
     padding: 10px; 
+    padding-bottom: 50px;
 }
 
 .three-containers div {
