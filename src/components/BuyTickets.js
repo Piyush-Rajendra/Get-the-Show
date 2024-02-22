@@ -50,9 +50,9 @@ const BuyTickets = (props) => {
     useEffect(() => {
         setMovieTitle('The Emoji Movie');
         setMovieTime('2/23/24 @ 4:30 P.M.');
-        setAdultTicket(9);
-        setSeniorTicket(12);
-        setChildTicket(8); 
+        setAdultTicket(12);
+        setSeniorTicket(8);
+        setChildTicket(9); 
         //setTax(3.91);
       }, []);
 
