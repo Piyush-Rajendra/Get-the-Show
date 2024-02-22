@@ -5,7 +5,9 @@ body {
 }
 
 .background {
-    background-color: #FFF3E8;
+    background: linear-gradient(to bottom, #070707, #939393); /* Black to dark grey gradient */
+    margin: 0; /* Remove default body margin */
+    padding-bottom: 50px; /* Remove default body padding */
     font-family: Judson, sans-serif;
 }
 
@@ -26,12 +28,12 @@ hr {
     height: 4px; 
     width: 100%; 
     margin: 20px auto; 
-    background-color: #e3902b; 
+    background-color: #c4c4c4; 
     border: none; 
 }
 
 .register {
-    color: #E08E41;
+    color: #FF6666;
     text-align: center;
     font-size: 40px;
 }
@@ -49,7 +51,7 @@ hr {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    background-color: #FFE8CC;
+    background-color: #FF6666;
     padding: 10px;
     margin-bottom: 50px;
     border-radius: 25px;
@@ -60,7 +62,7 @@ hr {
 .forms-label {
     font-size: 25px;
     text-align: center;
-    color: #E08E41;
+    color: #fffcfa;
 }
 
 .forms-input {
@@ -80,8 +82,8 @@ hr {
     padding: 6px;
     font-size: 16px;
     border-radius: 25px;
-    background-color: #FFF3E8;
-    color: #E08E41;
+    background-color: rgb(248, 232, 232);
+    color: #000000;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -109,7 +111,7 @@ hr {
     padding: 10px;
     font-size: 16px;
     border-radius: 25px;
-    background-color: #FFF3E8;
+    background-color: rgb(248, 232, 232);
     color: #000000;
     border: none;
     cursor: pointer;
@@ -128,7 +130,7 @@ hr {
     padding: 10px;
     font-size: 16px;
     border-radius: 25px;
-    background-color: #FFF3E8;
+    background-color: rgb(248, 232, 232);
     color: #000000;
     border: none;
     cursor: pointer;
