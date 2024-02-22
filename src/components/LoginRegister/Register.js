@@ -1,6 +1,7 @@
 import React from "react";
-import { useState, useContext } from "react";
+import {useState, useContext } from "react";
 import './../css/LoginRegister/Register.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
  return (
@@ -41,10 +42,10 @@ const Register = () => {
         <div className="form-group">
           <label>Expiration Date: </label>
           <input class="forms-inputRegister" type="text" />
-        </div>
+        </div>    
         <div className="form-group">        
-          <button class="registerButtonRegister">Register!</button>
-        </div>        
+          <Link to='/confirmationPage'><button class="registerButtonRegister">Register!</button></Link>
+        </div>         
     </div>
     
     
@@ -85,8 +86,7 @@ const Register = () => {
           <input class="forms-inputRegister" type="text" />
         </div>
         <div className="fillInSpaceRegister"></div>
-        
-      </div>
+      </div> 
       </form>
       </div>
   </div>

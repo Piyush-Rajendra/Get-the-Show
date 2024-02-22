@@ -79,8 +79,8 @@ const Login = () => {
                 class="forms-input"
               />      
             <div className="forgot-register-Buttons">
-              <Link to='/forgot'><button class="forgot-Button">Forgot Password?</button></Link>
-              <Link to='/register'><button class="signUp-ButtonLogin">SignUp</button></Link>
+              <Link to='/forgotPage'><button class="forgot-Button">Forgot Password?</button></Link>
+              <Link to='/registerPage'><button class="signUp-ButtonLogin">SignUp</button></Link>
             </div>
             <button type="submit" className="register-button">Login</button>            
           </form>
