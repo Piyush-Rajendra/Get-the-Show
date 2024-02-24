@@ -1,0 +1,17 @@
+#confirm-page {
+    background: linear-gradient(to bottom, #070707, #939393); /* Black to dark grey gradient */
+    margin: 0; /* Remove default body margin */
+    padding-bottom: 1000px; /* Remove default body padding */
+    padding-top: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: white; 
+}
+
+#payment-confirm {
+    color: #ff6666; 
+}
+
+#return {
+    color: white; 
+}

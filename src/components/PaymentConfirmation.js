@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './css/Payment.css';
+import './css/PaymentConfirmation.css';
 import { Link, useNavigate, useSearchParams, useLocation} from 'react-router-dom';
 import axios from "axios";
 
@@ -26,10 +26,10 @@ const PaymentConfirmation = () => {
 
     return (
         <div id="confirm-page">
-            <h1>Payment Confirmed! Thanks for choosing E-Cinema Booking!</h1>
+            <h1 id="payment-confirm">Payment Confirmed! Thanks for choosing E-Cinema Booking!</h1>
             <h3>You many now leave this page.</h3>
             <Link to={`/`}>
-            <h4>Click here to return to the home page.</h4>
+            <h4 id="return">Click here to return to the home page.</h4>
             </Link>
         </div>
     )

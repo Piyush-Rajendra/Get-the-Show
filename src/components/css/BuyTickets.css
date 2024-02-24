@@ -90,6 +90,7 @@
     padding-top: 8px;
     padding-bottom: 8px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .add-button {
@@ -102,6 +103,7 @@
     display: inline-block; /* Ensure that the background only covers the text */
     text-align: center;
     margin: 4px; 
+    cursor: pointer;
 }
 
 .sum {
