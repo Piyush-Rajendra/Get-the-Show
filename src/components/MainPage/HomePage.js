@@ -48,6 +48,8 @@ const handleSearch = () => {
   setFilteredMovies(filtered);
 };
 
+const [isOpen, setIsOpen] = useState(false);
+
 useEffect(() => {
   axios.get(url)
     .then(response => {
@@ -72,6 +74,11 @@ useEffect(() => {
     navigate('/', { state: {props: false} });
     
   }
+  
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     return(
         <div class = "homeBody">
           <div class = "homeHeader">
@@ -102,6 +109,12 @@ useEffect(() => {
               {myValue && 
                   <button onClick={updateVal}>Logout</button>
               }
+              <button>Register</button>
+              <button>Logout</button>
+              <div>
+                <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button>
+                <SidebarPopup isOpen={isOpen} onClose={toggleSidebar} />
+              </div>
             </div>
           </div>
           <div class = "homeNowPlaying">
@@ -196,5 +209,6 @@ useEffect(() => {
       </div>
     )
 };
+
 
 export default HomePage;

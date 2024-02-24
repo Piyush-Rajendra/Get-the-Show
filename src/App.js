@@ -7,6 +7,7 @@ import HomePage from './components/MainPage/HomePage';
 import Register from './components/Register';
 import ManageMovie from './components/AdminPage/ManageMovie';
 import ManageUser from './components/AdminPage/ManageUser';
+import ProfilePage from './components/MainPage/ProfilePage';
 
 function App() {
 
@@ -22,6 +23,9 @@ function App() {
           <Route exact path='/AdminPanel' element={<AdminPanel/>}/>
           <Route exact path='/ManageMovie' element={<ManageMovie/>}/>
           <Route exact path='/ManageUser' element={<ManageUser/>}/>
+          <Route exact path='/' element={<Login/>} />
+          <Route exact path='/HomePage' element={<HomePage movies={DUMMY_MOVIE}/>} />
+          <Route exact path='/Profile' element={<ProfilePage/>}/>
         </Routes>
       </div>
     </Router>

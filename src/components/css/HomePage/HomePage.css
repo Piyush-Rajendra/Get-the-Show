@@ -21,9 +21,10 @@ body {
   background-color: #FF6666;
   color: black;
   border-radius: 35px; 
-    padding: 20px; 
-    padding-top: 5px;
-    padding-bottom: 5px;
+  padding: 20px; 
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
 }
 
 .homeSearch {
@@ -104,4 +105,9 @@ body {
 /* Optional: Remove margin from the last movie card */
 .movie-card-container > :last-child {
   margin-right: 0;
+}
+
+.hambugerMainPage {
+  font-size: larger;
+  font-weight: 800;
 }
