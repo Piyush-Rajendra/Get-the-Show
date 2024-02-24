@@ -41,7 +41,6 @@ function App() {
           <Route exact path='/paymentconfirm' element={<PaymentConfirmation />} />
           <Route exact path='/ordersummary' element={<OrderSummary />} />
 
-        
         </Routes>
       </div>
     </Router>
