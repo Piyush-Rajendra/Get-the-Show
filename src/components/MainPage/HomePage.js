@@ -54,9 +54,9 @@ useEffect(() => {
               <button>Register</button>
               <button>Logout</button>
               <div>
-                <button onClick={toggleSidebar}>Profile</button>
+                <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button>
                 <SidebarPopup isOpen={isOpen} onClose={toggleSidebar} />
-            </div>
+              </div>
             </div>
           </div>
           <div class = "homeNowPlaying">

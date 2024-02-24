@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import AdminPanel from './components/AdminPanel'
 import HomePage from './components/MainPage/HomePage';
-import ProfilePage from './components/MainPage/Profile';
+import ProfilePage from './components/MainPage/ProfilePage';
 
 function App() {
   const DUMMY_MOVIE = [

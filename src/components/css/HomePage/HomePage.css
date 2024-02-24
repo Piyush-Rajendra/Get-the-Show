@@ -100,3 +100,8 @@ body {
 .movie-card-container > :last-child {
   margin-right: 0;
 }
+
+.hambugerMainPage {
+  font-size: larger;
+  font-weight: 800;
+}

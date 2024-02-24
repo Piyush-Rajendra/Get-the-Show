@@ -1,0 +1,88 @@
+.profile-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 30px;
+}
+
+.tabsProfilePage {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabsProfilePage button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  font-weight: bold;
+}
+
+.tab-content {
+  margin-top: 20px;
+}
+
+.tab-content > div {
+  display: none;
+}
+
+.tab-content > div:first-child {
+  display: block;
+}
+
+.inputProfilePage {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.tabsProfilePage button {
+  padding: 10px 15px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  &:hover {
+  background-color: #f85757;
+  }
+}
+
+.editButtonProfilePage {
+  padding: 10px 15px;
+  border: none;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  font-size: 30px;
+  width:90px;
+  border-radius: 30px;
+  background-color: #f85757;
+  &:hover {
+  background-color: #b44242;
+  }
+}
+
+.imgProfilePage {
+  height: 200px;
+  width: 200px;
+  border-radius: 80%;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.backButtonProfilePage {
+  color:rgb(2, 2, 2);
+  margin-top: 15px;
+  margin-bottom: 50px;
+  font-size: 25;
+  font-weight: 600;
+  background-color: #f85757;
+  border-radius: 20px;
+  cursor: pointer;
+  &:hover {
+    background-color: #b44242;
+  }
+}
