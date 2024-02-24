@@ -1,12 +1,10 @@
-import React from "react";
-import { useState, useContext } from "react";
-import './css/Register.css';
+import React, { useContext } from "react";
+import { useState } from "react";
+import './../css/LoginRegister/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
-import burningHospital from './images/burning-hospital.png';
 import axios from "axios";
-import UserContext from "./context/UserContext";
 
-const Register = () => {
+const Login = () => {
     const [formData, setFormData] = useState({
       email: '',
       password: '',
@@ -16,7 +14,7 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const { setUserData } = useContext(UserContext);
+    //const { setUserData } = useContext(UserContext);
 
     const handleChange = (e) => {
       setFormData({
@@ -25,56 +23,53 @@ const Register = () => {
       });
     };
 
+    /*
     async function handleSubmit(e) {
       e.preventDefault();
       setLoading(true);
       try {
-        console.log(formData);
-        const newUser = formData;
-        await axios.post("http://localhost:4000/api/users/signup/", newUser);
-        const loginRes = await axios.post("http://localhost:4000/api/users/login", formData);
+        const loginUser = formData;
+        const loginRes = await axios.post("http://localhost:4000/api/users/login", loginUser);
         setUserData({
           token: loginRes.data.token,
           user: loginRes.data.user,
         });
+        console.log(loginRes.data.token);
         localStorage.setItem("auth-token", loginRes.data.token);
-        setLoading(false);
+        const test = localStorage.getItem("auth-token");
+        console.log(test);
+        //setLoading(false);
         navigate('/');
       } catch (err) {
         setLoading(false);
         err.response.data.msg && setError(err.response.data.msg);
         alert(err.response.data.msg);
       }
-     
+ 
     };
-    
-
+    */
+   //fix line 58
     return (
     <div class = "background">
-          <div class="outer">
-            <div class="logo">
-                <img src={burningHospital} alt="Burning Hospital" width='130px'/>
-                <h1 class="logo"><span style={{ color: '#FF6056' }}>HOT</span>SPITALS</h1>
-            </div>
-          </div>
           <hr></hr>
-          <h2 class="register">Register</h2>
+          <h2 class="register">Login</h2>
         <div className="center">
         <div class="formcontainer">
-          <form onSubmit={handleSubmit} className ="forms">
+          <form className ="forms">
             <label class="forms-label">
               Email
+            </label>
               <input class="forms-input"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
-              />
-            </label>
-            <br />
+              />            
+            <br/>
             <label class="forms-label">
               Password
+            </label>
               <input
                 type="password"
                 name="password"
@@ -82,10 +77,12 @@ const Register = () => {
                 onChange={handleChange}
                 required
                 class="forms-input"
-              />
-            </label>
-            <br />
-            <button type="submit" className="register-button">Register</button>
+              />      
+            <div className="forgot-register-Buttons">
+              <Link to='/forgotPage'><button class="forgot-Button">Forgot Password?</button></Link>
+              <Link to='/registerPage'><button class="signUp-ButtonLogin">SignUp</button></Link>
+            </div>
+            <button type="submit" className="register-button">Login</button>            
           </form>
       </div>
       </div>
@@ -93,4 +90,4 @@ const Register = () => {
     )
   }
 
-  export default Register;
+  export default Login;

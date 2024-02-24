@@ -1,0 +1,23 @@
+.h3ConfirmationPage {
+    color:white;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.formsConfirmationPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #FF6666;
+    padding: 10px;
+    margin-bottom: 50px;
+    border-radius: 25px;
+    width: 50%;
+    height: 44vh;    
+}
+
+.imageConfirmationPage {
+    height:150px;
+    width:150px;
+}
