@@ -1,0 +1,7 @@
+#payment-page {
+    background: linear-gradient(to bottom, #070707, #939393); /* Black to dark grey gradient */
+    margin: 0; /* Remove default body margin */
+    padding-bottom: 100px; /* Remove default body padding */
+    padding-top: 100px;
+    color: white; 
+}

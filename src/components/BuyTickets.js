@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 const BuyTickets = (props) => {
+    const navigate = useNavigate();
 
     const [childTicket, setChildTicket] = useState();
     const [adultTicket, setAdultTicket] = useState();
@@ -97,17 +98,22 @@ const BuyTickets = (props) => {
         }
       };
       
+    const totalAmount = 1500; 
+    const handlePaymentButton = () => {
+        //navigate('/payment');
+        navigate('/payment', { state: { totalAmount: totalAmount } });
 
-      
+    } 
 
 
 
     return (
         <div className="movie-page">
             <div className="movie-title">
-                <h2 id="ticket-movie-title">{movieTitle}</h2>
-                <h2 id="ticket-movie-time">{movieTime}</h2>
+                <h2 id="ticket-movie-title">Movie: {movieTitle}</h2>
+                <h2 id="ticket-movie-time">Time: {movieTime}</h2>
             </div>
+            <hr/>
             <div className="two-columns">
                 <div id="ticket-column-one">
                     <div id="prices">
@@ -119,15 +125,15 @@ const BuyTickets = (props) => {
                     <div id="ticket-buttons">
                         <div className="add-delete">
                             <h3 onClick={handleAddChildTicket} className="add-button">Add Child Ticket</h3>
-                            <button onClick={handleRemoveChildTicket} className="remove">Remove</button>
+                            <button onClick={handleRemoveChildTicket} className="remove">Remove Child Ticket</button>
                         </div>
                         <div className="add-delete">
                             <h3 onClick={handleAddAdultTicket} className="add-button">Add Adult Ticket</h3>
-                            <button onClick={handleRemoveAdultTicket} className="remove">Remove</button>
+                            <button onClick={handleRemoveAdultTicket} className="remove">Remove Adult Ticket</button>
                         </div>
                         <div className="add-delete">
                             <h3 onClick={handleAddSeniorTicket} className="add-button">Add Senior Ticket</h3>
-                            <button onClick={handleRemoveSeniorTicket} className="remove">Remove</button>
+                            <button onClick={handleRemoveSeniorTicket} className="remove">Remove Senior Ticket</button>
                         </div>
                     </div>
                     <div id="totals">
@@ -152,10 +158,12 @@ const BuyTickets = (props) => {
                 </div>
                 <div id="ticket-column-two">
                     <div id="movie-image">
+                        <div id="movie-img-container">
                         <img id="seat-image" src="https://amc-theatres-res.cloudinary.com/amc-cdn/production/2/attributes/HybridSeating_promo.jpg" width="400px"/>
+                        </div>
                         <h5 id="seat-select-text">Select Your Seat(s):</h5>
                         {[...Array(renderTimes)].map((_, index) => (
-                            <div key={index}>
+                            <div className="seat-dropdown" key={index}>
                             <select id={`seatSelector${index}`} value={selectedSeats[index]} onChange={(event) => handleSeatSelection(event, index)}>
                                 <option value="">Select a seat...</option>
                                 {availableSeats.map((seat, seatIndex) => (
@@ -164,12 +172,14 @@ const BuyTickets = (props) => {
                                 </option>
                                 ))}
                             </select>
-                            <p>Selected Seat: {selectedSeats[index]}</p>
+                            <p className="selected-seat-text">Selected Seat: {selectedSeats[index]}</p>
                             </div>
                         ))}
                     </div>
                     {(total > 0 && check == true) && (
-                    <button id="proceed">Proceed to Payment</button>
+                    <div id="proceed-container">
+                    <button id="proceed" onClick={handlePaymentButton}>Proceed to Payment</button>
+                    </div>
                     )}
                 </div>
             </div>

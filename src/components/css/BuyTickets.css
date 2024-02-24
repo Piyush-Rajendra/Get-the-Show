@@ -13,6 +13,15 @@
     padding-bottom: 50px;
 }
 
+#ticket-column-one {
+    padding-right: 30px;
+}
+
+#ticket-column-two {
+    padding-left: 30px; 
+    
+}
+
 .two-columns div {
     flex: 1;
 }
@@ -22,21 +31,51 @@
     padding: 20px;
 }
 
+#ticket-movie-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #ticket-movie-time {
     color: white; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #seat-image {
     border-radius: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .price {
     margin: 0px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
+
+#price-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+#ticket-buttons {
+    padding-top: 50px; 
+}
+
 
 .add-delete {
     display: flex; 
     margin: 8px;
+    justify-content: center;
+    align-items: center;
 }
 
 .remove {
@@ -44,12 +83,13 @@
     background-color: #FF6666; /* Set button background color to red */
     color: black; /* Set button text color to black */
     border: none; /* Remove default button border */
-    border-radius: 12px; /* Make button more round */
-    font-size: 7px; /* Set font size */
-    padding-right: 5px;
-    padding-left: 5px; 
-    padding-top: 0;
-    padding-bottom: 0;
+    border-radius: 35px; /* Make button more round */
+    font-size: 18px;
+    padding-right: 10px;
+    padding-left: 10px; 
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: bold;
 }
 
 .add-button {
@@ -63,3 +103,53 @@
     text-align: center;
     margin: 4px; 
 }
+
+.sum {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tax {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#final-sum {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#seat-select-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.seat-dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selected-seat-text {
+    margin-left: 20px;
+}
+
+#proceed-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#movie-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

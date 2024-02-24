@@ -26,7 +26,7 @@ const MovieView = (props) => {
             title: 'The Emoji Movie',
             poster: 'https://image.tmdb.org/t/p/original/60bTx5z9zL1AqCjZ0gmWoRMJ6Bb.jpg',
             category: 'Animation/Comedy',
-            rating: 'PG',
+            ageRating: 'PG',
             director: 'Tony Leondis',
             producer: 'Michelle Raimo Kouyate',
             code: 'EMOJ001',
