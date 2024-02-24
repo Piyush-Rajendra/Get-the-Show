@@ -1,0 +1,77 @@
+#summary-page {
+    background: linear-gradient(to bottom, #070707, #939393); /* Black to dark grey gradient */
+    margin: 0; /* Remove default body margin */
+    padding-bottom: 200px; /* Remove default body padding */
+    padding-top: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#checkout-title {
+    color: #FF6666;
+}
+
+#order-summary-title {
+    color: white;
+}
+
+ #order-summary-details {
+    background-color: #ffffff;
+    border-radius: 25px; /* Rounded corners */
+    padding: 10px; /* Add some padding for spacing */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: inline-block; /* Ensure that the background only covers the text */
+    margin-top: 25px;
+    width: 90%; /* Adjust this value as needed */
+    margin: 0 auto; /* Center the div horizontally */
+    height: auto; /* Let the height adjust based on content */
+ }
+
+ .order-details-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px; 
+    margin-bottom: 0px; 
+ }
+
+ .order-details-label {
+    padding: 0px;
+    margin: 0px; 
+ }
+
+ .order-details-value {
+    padding: 2px;
+    margin: 4px; 
+ }
+
+ #summary-buttons {
+    margin: 30px; 
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+ .summary-page-buttons {
+    display: inline-block;
+    padding: 10px 20px; /* Adjust as needed */
+    border-radius: 50px; /* This makes it pill-shaped */
+    background-color: #FF6666; /* Green background color */
+    color: white; /* Text color */
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px; /* Adjust as needed */
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease;
+    margin: 10px
+ }
+
+ .summary-page-buttons:hover {
+    background-color: #f38d8d; /* Darker green on hover */
+    padding: 8px 18px; /* Decrease padding on hover */
+    font-size: 14px;
+}
+

@@ -9,6 +9,12 @@ import HomePage from './components/MainPage/HomePage';
 import ManageMovie from './components/AdminPage/ManageMovie';
 import ManageUser from './components/AdminPage/ManageUser';
 import ProfilePage from './components/MainPage/ProfilePage';
+import MovieView from './components/MovieView/MovieView';
+import BuyTickets from './components/BookingTickets/BuyTickets';
+import Payment from './components/BookingTickets/Payment';
+import PaymentConfirmation from './components/BookingTickets/PaymentConfirmation';
+import OrderSummary from './components/BookingTickets/OrderSummary';
+
 
 function App() {
 
@@ -29,6 +35,13 @@ function App() {
           <Route path='/registerPage' element={<Register/>} />
           <Route path='/forgotPage' element={<Forgot/>} />
           <Route path='/confirmationPage' element={<ConfirmPage/>}/> 
+          <Route exact path='/movieview/:id' element={<MovieView />} />
+          <Route exact path='/tickets' element={<BuyTickets />} />
+          <Route exact path='/payment' element={<Payment  />} />
+          <Route exact path='/paymentconfirm' element={<PaymentConfirmation />} />
+          <Route exact path='/ordersummary' element={<OrderSummary />} />
+
+        
         </Routes>
       </div>
     </Router>

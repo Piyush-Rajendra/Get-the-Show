@@ -1,0 +1,157 @@
+.movie-page {
+    background: linear-gradient(to bottom, #070707, #939393); /* Black to dark grey gradient */
+    margin: 0; /* Remove default body margin */
+    padding-bottom: 100px; /* Remove default body padding */
+}
+
+.two-columns {
+    display: flex;
+    color: #ffffff; 
+    margin: 20px;
+    padding: 10px; 
+    padding-left: 70px;
+    padding-bottom: 50px;
+}
+
+#ticket-column-one {
+    padding-right: 30px;
+}
+
+#ticket-column-two {
+    padding-left: 30px; 
+    
+}
+
+.two-columns div {
+    flex: 1;
+}
+
+.movie-title {
+    color: #FF6666;
+    padding: 20px;
+}
+
+#ticket-movie-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ticket-movie-time {
+    color: white; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#seat-image {
+    border-radius: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.price {
+    margin: 0px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#price-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+#ticket-buttons {
+    padding-top: 50px; 
+}
+
+
+.add-delete {
+    display: flex; 
+    margin: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.remove {
+    margin-left: 20px; 
+    background-color: #FF6666; /* Set button background color to red */
+    color: black; /* Set button text color to black */
+    border: none; /* Remove default button border */
+    border-radius: 35px; /* Make button more round */
+    font-size: 18px;
+    padding-right: 10px;
+    padding-left: 10px; 
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-button {
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 35px; /* Rounded corners */
+    padding: 20px; /* Add some padding for spacing */
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: inline-block; /* Ensure that the background only covers the text */
+    text-align: center;
+    margin: 4px; 
+    cursor: pointer;
+}
+
+.sum {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tax {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#final-sum {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#seat-select-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.seat-dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selected-seat-text {
+    margin-left: 20px;
+}
+
+#proceed-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#movie-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
