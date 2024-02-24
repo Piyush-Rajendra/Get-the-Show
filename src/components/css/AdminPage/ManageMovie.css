@@ -1,0 +1,175 @@
+body {
+    background-color: black;
+    color: #f66;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .homeHeader {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px 20px 20px 20px;
+  }
+  
+  .buttons {
+    display: flex; /* Make buttons flex container */
+  }
+  
+  .buttons button {
+    margin-right: 10px; /* Adjust as needed */
+    background-color: #FF6666;
+    color: black;
+    border-radius: 35px; 
+      padding: 20px; 
+      padding-top: 5px;
+      padding-bottom: 5px;
+  }
+  
+  .homeSearch {
+    display: flex;
+    
+  }
+  .homeSearch input {
+    border-radius: 35px; 
+    padding: 20px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 500px;
+    margin: 0px 5px 0px 5px;
+  }
+  .homeSearch select {
+    width: 10%;
+  }
+  .homeSearch button {
+    margin-right: 10px; /* Adjust as needed */
+    background-color: #FF6666;
+    color: black;
+    border-radius: 35px; 
+      padding: 20px; 
+      padding-top: 5px;
+      padding-bottom: 5px;
+  }
+  
+  .ManageMovieNowPlaying {
+    background-color: #FF6666;
+    color: black;
+    margin: 10px 0px 10px 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-align: center;
+    align-items: center;
+  }
+  .ManageMovieNowPlaying h1 {
+    margin: 0px 10% 0px 10%;
+    padding:5px;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .ManageMovieButton {
+    padding:10px;
+    padding-bottom: 15px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  .ManageMovieButton button{
+    margin-right: 10px; /* Adjust as needed */
+    background-color: #FF6666;
+    color: black;
+    border-radius: 35px; 
+    padding: 20px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
+    align-items: center;
+    width: 200px;
+    height:50px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  
+  .homeComingSoon {
+    background-color: #FF6666;
+    color: black;
+    margin: 20px 0px 10px 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+  }
+  .homeComingSoon h1 {
+    margin: 0px 10% 0px 10%;
+  }
+  
+  /* .homeListNowPlaying {
+    overflow-x: hidden; 
+    overflow-y: hidden; 
+  }
+  
+  .item-list {
+    display: flex;
+    padding: 10px; 
+    margin: 0; 
+    list-style-type: none;
+  } */
+
+  .homeListNowPlaying .item-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Adjust as needed */
+    list-style: none;
+    padding: 0;
+  }
+  
+  .homeListNowPlaying .movie-card-container {
+    width: calc(20% - 10px); /* 20% width with some spacing */
+    margin-bottom: 20px;
+  }
+  
+  .movie-card-container {
+    display: flex; /* Use flexbox to align items horizontally */
+  }
+  
+  /* Optional: Add spacing between movie cards */
+  .movie-card-container > * {
+    margin-right: 10px; /* Adjust spacing between movie cards */
+    margin-left: 20px;
+  }
+  
+  /* Optional: Remove margin from the last movie card */
+  .movie-card-container > :last-child {
+    margin-right: 0;
+  }
+  .movie-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between; /* Space items evenly */
+    width: 100%; /* Occupy full width */
+  }
+
+  .button-group button {
+    margin-right: 10px; /* Adjust as needed */
+    background-color: #FF6666;
+    color: black;
+    border-radius: 35px; 
+      padding: 20px; 
+      padding-top: 5px;
+      padding-bottom: 5px;
+  }
+
+  footer {
+   
+    padding: 20px; /* Padding around the content inside the footer */
+    bottom: 0; /* Align to the bottom */
+    width: 100%; /* Full width */
+    background-color: black;
+    color: #f66;
+    text-align: center;
+  }
+
+  
