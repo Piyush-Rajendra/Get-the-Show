@@ -1,18 +1,27 @@
 import React from "react";
-import { Link } from 'react-router-dom';
-import { useState, useContext } from "react";
-import './css/AdminPanel.css';
-import Gorgi from './img/Gorgi.png';
-import Kevin from './img/Kevin_Hungy.png';
-import MovieCard from "./MainPage/MovieCard";
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useContext} from "react";
+import '../css/AdminPage/AdminPanel.css';
+import MovieCard from "../MainPage/MovieCard";
 
 const AdminPanel = props => {
+  const navigate = useNavigate();
+
+  const changeMovie = () => {
+    navigate('/ManageMovie');
+  }
+  const changeUser = () => {
+    navigate('/ManageUser');
+  }
+  const changeHome = () => {
+    navigate('/');
+  }
     return(
         <div class = "homeBody">
           <div class = "homeHeader">
             <h1>E-Cinema Booking</h1>
             <div class = "buttons">
-              <button>Logout</button>
+              <button onClick={changeHome}>Logout</button>
             </div>
           </div>
           {/* <div class = "homeSearch">
@@ -28,16 +37,17 @@ const AdminPanel = props => {
             <h1>ADMIN PANEL</h1>
           </div>
           <div class = "adminChoices">
-            <button>Add New Movie</button>
+              <button onClick={changeMovie}>Manage Movies</button>
             <br></br>
-            <button>Edit Movie</button>
-            <br></br>
-            <button>Promotions</button>
+            <button >Manage Promotions</button>
             <br></br>
             <button>Ticket Prices</button>
             <br></br>
-            <button>Members & Admin</button>
+            <button onClick={changeUser}>Members & Admin</button>
           </div>
+          
+        <footer>
+      </footer>
       </div>
     )
 };

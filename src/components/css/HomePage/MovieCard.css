@@ -67,6 +67,9 @@
   .card-sum {
     margin: 50px 0px 0px 0px;
   }
+  .card-sum hr {
+    background-color: #FF6666;
+  }
   .card-sum h3 {
     text-align: center;
     margin-bottom: 0px;

@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 const Login = () => {
+
+
     const [formData, setFormData] = useState({
       email: '',
       password: '',
@@ -27,7 +29,7 @@ const Login = () => {
       e.preventDefault();
       setLoading(true);
       try {
-        navigate('/HomePage');
+        navigate('/', { state: {props: true} });
       } catch (err) {
         setLoading(false);
         err.response.data.msg && setError(err.response.data.msg);

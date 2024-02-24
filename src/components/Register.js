@@ -2,9 +2,7 @@ import React from "react";
 import { useState, useContext } from "react";
 import './css/Register.css';
 import { Link, useNavigate } from 'react-router-dom';
-import burningHospital from './images/burning-hospital.png';
 import axios from "axios";
-import UserContext from "./context/UserContext";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -16,7 +14,6 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const { setUserData } = useContext(UserContext);
 
     const handleChange = (e) => {
       setFormData({
@@ -29,17 +26,17 @@ const Register = () => {
       e.preventDefault();
       setLoading(true);
       try {
-        console.log(formData);
-        const newUser = formData;
-        await axios.post("http://localhost:4000/api/users/signup/", newUser);
-        const loginRes = await axios.post("http://localhost:4000/api/users/login", formData);
-        setUserData({
-          token: loginRes.data.token,
-          user: loginRes.data.user,
-        });
-        localStorage.setItem("auth-token", loginRes.data.token);
+        // console.log(formData);
+        // const newUser = formData;
+        // await axios.post("http://localhost:4000/api/users/signup/", newUser);
+        // const loginRes = await axios.post("http://localhost:4000/api/users/login", formData);
+        // setUserData({
+        //   token: loginRes.data.token,
+        //   user: loginRes.data.user,
+        // });
+        // localStorage.setItem("auth-token", loginRes.data.token);
         setLoading(false);
-        navigate('/');
+        navigate('/', { state: {props: true} });
       } catch (err) {
         setLoading(false);
         err.response.data.msg && setError(err.response.data.msg);
@@ -53,7 +50,7 @@ const Register = () => {
     <div class = "background">
           <div class="outer">
             <div class="logo">
-                <img src={burningHospital} alt="Burning Hospital" width='130px'/>
+                <img src="" alt="Burning Hospital" width='130px'/>
                 <h1 class="logo"><span style={{ color: '#FF6056' }}>HOT</span>SPITALS</h1>
             </div>
           </div>
