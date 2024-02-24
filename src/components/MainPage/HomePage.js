@@ -5,11 +5,14 @@ import '../css/HomePage/HomePage.css'
 import MovieCard from "./MovieCard";
 import axios from 'axios';
 import {useEffect} from 'react';
+import SidebarPopup from './SidebarPopup';
 
 const HomePage = ({movies}) => {
 
 // Define the URL
 const url = 'http://localhost:3000/movies';
+
+const [isOpen, setIsOpen] = useState(false);
 
 useEffect(() => {
   axios.get(url)
@@ -29,6 +32,11 @@ useEffect(() => {
   const addMovieHandler = (newMovie) => {
     setMovieList((prevMovies) => [newMovie, ...prevMovies]);
   };
+  
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
     return(
         <div class = "homeBody">
           <div class = "homeHeader">
@@ -45,6 +53,10 @@ useEffect(() => {
             <div class = "buttons">
               <button>Register</button>
               <button>Logout</button>
+              <div>
+                <button onClick={toggleSidebar}>Profile</button>
+                <SidebarPopup isOpen={isOpen} onClose={toggleSidebar} />
+            </div>
             </div>
           </div>
           <div class = "homeNowPlaying">

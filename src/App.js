@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import AdminPanel from './components/AdminPanel'
 import HomePage from './components/MainPage/HomePage';
+import ProfilePage from './components/MainPage/Profile';
 
 function App() {
   const DUMMY_MOVIE = [
@@ -23,6 +24,7 @@ function App() {
           {/* Route for the home page when not authenticated */}
           <Route exact path='/' element={<Login/>} />
           <Route exact path='/HomePage' element={<HomePage movies={DUMMY_MOVIE}/>} />
+          <Route exact path='/Profile' element={<ProfilePage/>}/>
         </Routes>
       </div>
     </Router>
