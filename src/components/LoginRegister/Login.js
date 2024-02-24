@@ -6,7 +6,7 @@ import axios from "axios";
 
 const Login = () => {
     const [formData, setFormData] = useState({
-      email: '',
+      usernameOrEmail: '',
       password: '',
     });
 
@@ -14,7 +14,6 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    //const { setUserData } = useContext(UserContext);
 
     const handleChange = (e) => {
       setFormData({
@@ -23,46 +22,32 @@ const Login = () => {
       });
     };
 
-    /*
-    async function handleSubmit(e) {
-      e.preventDefault();
-      setLoading(true);
-      try {
-        const loginUser = formData;
-        const loginRes = await axios.post("http://localhost:4000/api/users/login", loginUser);
-        setUserData({
-          token: loginRes.data.token,
-          user: loginRes.data.user,
-        });
-        console.log(loginRes.data.token);
-        localStorage.setItem("auth-token", loginRes.data.token);
-        const test = localStorage.getItem("auth-token");
-        console.log(test);
-        //setLoading(false);
-        navigate('/');
-      } catch (err) {
-        setLoading(false);
-        err.response.data.msg && setError(err.response.data.msg);
-        alert(err.response.data.msg);
-      }
- 
-    };
-    */
-   //fix line 58
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3000/signin', formData);
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      navigate("/confirmationPage");
+    } catch (error) {
+      console.error('Login failed', error);
+    }
+  };
+
     return (
     <div class = "background">
           <hr></hr>
           <h2 class="register">Login</h2>
         <div className="center">
         <div class="formcontainer">
-          <form className ="forms">
+          <form className ="forms" onSubmit={handleSubmit}>
             <label class="forms-label">
-              Email
+              Email/Username
             </label>
               <input class="forms-input"
-                type="email"
-                name="email"
-                value={formData.email}
+                type="text"
+                name="usernameOrEmail"
+                value={formData.usernameOrEmail}
                 onChange={handleChange}
                 required
               />            
