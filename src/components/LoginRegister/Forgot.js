@@ -2,7 +2,6 @@ import React from "react";
 import './../css/LoginRegister/Register.css';
 import {useState } from 'react';
 
-//import UserContext from "./context/UserContext";
 
 const Forgot = () => {
   const [displayText, setDisplayText] = useState(

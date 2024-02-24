@@ -6,7 +6,7 @@ import axios from "axios";
 
 const Login = () => {
     const [formData, setFormData] = useState({
-      email: '',
+      usernameOrEmail: '',
       password: '',
     });
 
@@ -22,20 +22,32 @@ const Login = () => {
       });
     };
 
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3000/signin', formData);
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      navigate("/confirmationPage");
+    } catch (error) {
+      console.error('Login failed', error);
+    }
+  };
+
     return (
     <div class = "background">
           <hr></hr>
           <h2 class="register">Login</h2>
         <div className="center">
         <div class="formcontainer">
-          <form className ="forms">
+          <form className ="forms" onSubmit={handleSubmit}>
             <label class="forms-label">
-              Email
+              Email/Username
             </label>
               <input class="forms-input"
-                type="email"
-                name="email"
-                value={formData.email}
+                type="text"
+                name="usernameOrEmail"
+                value={formData.usernameOrEmail}
                 onChange={handleChange}
                 required
               />            
