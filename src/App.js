@@ -6,7 +6,6 @@ import Forgot from './components/LoginRegister/Forgot';
 import ConfirmPage from './components/LoginRegister/ConfirmPage';
 import AdminPanel from './components/AdminPage/AdminPanel'
 import HomePage from './components/MainPage/HomePage';
-import Register from './components/Register';
 import ManageMovie from './components/AdminPage/ManageMovie';
 import ManageUser from './components/AdminPage/ManageUser';
 import ProfilePage from './components/MainPage/ProfilePage';
