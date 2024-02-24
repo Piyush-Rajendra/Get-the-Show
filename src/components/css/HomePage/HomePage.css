@@ -1,0 +1,101 @@
+body {
+  background-color: black;
+  color: #f66;
+  margin: 0;
+  padding: 0;
+}
+
+.homeHeader {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px 20px 20px 20px;
+}
+
+.buttons {
+  display: flex; /* Make buttons flex container */
+}
+
+.buttons button {
+  margin-right: 10px; /* Adjust as needed */
+  background-color: #FF6666;
+  color: black;
+  border-radius: 35px; 
+    padding: 20px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.homeSearch {
+  display: flex;
+  
+}
+.homeSearch input {
+  border-radius: 35px; 
+  padding: 20px; 
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 500px;
+  margin: 0px 5px 0px 5px;
+}
+.homeSearch select {
+  width: 10%;
+}
+.homeSearch button {
+  margin-right: 10px; /* Adjust as needed */
+  background-color: #FF6666;
+  color: black;
+  border-radius: 35px; 
+    padding: 20px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.homeNowPlaying {
+  background-color: #FF6666;
+  color: black;
+  margin: 10px 0px 10px 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+.homeNowPlaying h1 {
+  margin: 0px 10% 0px 10%;
+}
+
+
+.homeComingSoon {
+  background-color: #FF6666;
+  color: black;
+  margin: 20px 0px 10px 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+.homeComingSoon h1 {
+  margin: 0px 10% 0px 10%;
+}
+
+.homeListNowPlaying {
+  overflow-x: hidden; /* Enable horizontal scrolling */
+  overflow-y: hidden; /* Hide vertical scrollbar */
+}
+
+.item-list {
+  display: flex; /* Use flexbox */
+  padding: 10px; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  list-style-type: none; /* Remove default list styles */
+}
+
+.movie-card-container {
+  display: flex; /* Use flexbox to align items horizontally */
+}
+
+/* Optional: Add spacing between movie cards */
+.movie-card-container > * {
+  margin-right: 10px; /* Adjust spacing between movie cards */
+}
+
+/* Optional: Remove margin from the last movie card */
+.movie-card-container > :last-child {
+  margin-right: 0;
+}

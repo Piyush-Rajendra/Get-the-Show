@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import './css/AdminPanel.css';
 import Gorgi from './img/Gorgi.png';
 import Kevin from './img/Kevin_Hungy.png';
-import MovieCard from "./MovieCard";
+import MovieCard from "./MainPage/MovieCard";
 
 const AdminPanel = props => {
     return(

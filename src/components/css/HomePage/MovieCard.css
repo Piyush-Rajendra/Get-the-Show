@@ -3,6 +3,10 @@
     height: 300px;
     perspective: 1000px;
   }
+
+  hr {
+    background-color: #FF6666;
+  }
   
   .card-inner {
     width: 100%;
