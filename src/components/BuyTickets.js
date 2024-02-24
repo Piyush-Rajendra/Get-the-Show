@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import './css/BuyTickets.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
 
 const BuyTickets = (props) => {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     const [childTicket, setChildTicket] = useState();
     const [adultTicket, setAdultTicket] = useState();
@@ -59,6 +60,8 @@ const BuyTickets = (props) => {
 
       useEffect(() => {
         // Check if all seats have been selected for renderTimes
+        setMovieTime(searchParams.get('showtime'));
+        setMovieTitle(searchParams.get('title'));
         console.log(selectedSeats);
         console.log(selectedSeats.length == renderTimes)
         //if (selectedSeats.every(seat => seat !== "")) {
@@ -67,7 +70,7 @@ const BuyTickets = (props) => {
         } else {
           setCheck(false); // Set check to false if any seat is not selected
         }
-      }, [selectedSeats, renderTimes]);
+      }, [selectedSeats, renderTimes, movieTime, movieTitle]);
 
       const handleAddChildTicket = () => {
         setNumOfChildTickets(prevNum => prevNum + 1); 
@@ -101,9 +104,23 @@ const BuyTickets = (props) => {
     const totalAmount = 1500; 
     const handlePaymentButton = () => {
         //navigate('/payment');
-        navigate('/payment', { state: { totalAmount: totalAmount } });
+        /*event.preventDefault();
+        const numberOfTickets = renderTimes;*/
+        const cost = (totalChildPrice + totalAdultPrice + totalSeniorPrice);
+        //const fullTotal = cost + tax; 
+        //updateOrderData(numberOfTickets, cost, taxTotal); 
+        sessionStorage.setItem('numberOfTickets', renderTimes);
+        sessionStorage.setItem('cost', cost);
+        sessionStorage.setItem('tax', tax);
+        sessionStorage.setItem('fullTotal', totalFormatted);
+
+
+        navigate('/payment');
 
     } 
+
+    
+    //const total = searchParams.get('total');
 
 
 

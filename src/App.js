@@ -6,6 +6,8 @@ import MovieView from './components/MovieView';
 import BuyTickets from './components/BuyTickets';
 import Payment from './components/Payment';
 import PaymentConfirmation from './components/PaymentConfirmation';
+import OrderSummary from './components/OrderSummary';
+
 
 function App() {
   return (
@@ -14,11 +16,15 @@ function App() {
         <Routes>
           {/* Route for the home page when not authenticated */}
           <Route exact path='/' element={<Login />} />
-          <Route exact path='/movieview' element={<MovieView />} />
+          <Route exact path='/movieview/:id' element={<MovieView />} />
+          
           <Route exact path='/tickets' element={<BuyTickets />} />
-          <Route exact path='/payment' element={<Payment />} />
+          <Route exact path='/payment' element={<Payment  />} />
+          
           <Route exact path='/paymentconfirm' element={<PaymentConfirmation />} />
+          <Route exact path='/ordersummary' element={<OrderSummary />} />
 
+        
         </Routes>
       </div>
     </Router>

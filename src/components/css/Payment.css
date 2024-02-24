@@ -4,4 +4,28 @@
     padding-bottom: 100px; /* Remove default body padding */
     padding-top: 100px;
     color: white; 
+    text-align: center;
+}
+
+#center-payment-page {
+    background: linear-gradient(to bottom, #070707, #939393); /* Black to dark grey gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.red {
+    color: #FF6666;
+}
+
+#form-two {
+    margin-bottom: 20px;
+}
+
+.payment-input {
+    width: 300px;
+}
+
+#click-me {
+    cursor: pointer;
 }

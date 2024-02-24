@@ -41,13 +41,37 @@
 }
 
 #movie-title {
-        background-color: #FF6666;
-        color: #ffffff;
+        background-color: #000000;
+        color: rgb(255, 255, 255);
         border-radius: 25px; /* Rounded corners */
         padding: 20px; /* Add some padding for spacing */
         padding-top: 10px;
         padding-bottom: 10px;
         display: inline-block; /* Ensure that the background only covers the text */
+        text-align: center; 
+}
+
+#center-movie-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#whole-info-container {
+        background-color: #ffffff;
+        border-radius: 25px; /* Rounded corners */
+        padding: 10px; /* Add some padding for spacing */
+        padding-top: 10px;
+        padding-bottom: 10px;
+        display: inline-block; /* Ensure that the background only covers the text */
+        margin-top: 25px;
+
+}
+
+#info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #movie-info {

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import './css/MovieView.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import EmbeddedVideo from "./EmbeddedVideo";
 
 const MovieView = (props) => {
+    const { id } = useParams();
+
     const [movie, setMovie] = useState({
         title:'',
         poster:'',
@@ -12,16 +14,26 @@ const MovieView = (props) => {
         ageRating:'',
         director:'',
         producer:'',
-        code:'',
+        //code:'',
         trailer:'',
         synopsis:'',
         rating:'',  
-        showtimes: [],
+        showtimes: '',
         reviews: [],
-        cast: []
+        cast: ''
     });
 
-    useEffect(() => {
+    function stringToArray(inputString) {
+        // Split the input string by comma and space
+        const items = inputString.split(", ");
+        // Return the resulting array
+        return items;
+    }
+
+    const [showtimesArray, setShowtimesArray] = useState([]);
+    const [castArray, setCastArray] = useState([]);
+
+    /*useEffect(() => {
         setMovie({
             title: 'The Emoji Movie',
             poster: 'https://image.tmdb.org/t/p/original/60bTx5z9zL1AqCjZ0gmWoRMJ6Bb.jpg',
@@ -37,7 +49,42 @@ const MovieView = (props) => {
             reviews: ["It was kind of mid", "Another Sony Pictures stinker", "My five year old really enjoyed it", "Awful"],
             cast: ["Filler Guy Jr.", "Guy Ray", "Ray Guy", "Batman Robin", "Barack Obama", "Fake Person IV"]
         });
-    }, []);
+    }, []);*/
+
+
+    useEffect(() => {
+        const fetchMovieData = async () => {
+          try {
+            const response = await axios.get(`http://localhost:3000/${id}`);
+            //const response = await axios.get(`http://localhost:3001/3`);
+            console.log(response.data);
+            setMovie({
+                title: response.data.title,
+                poster: response.data.trailerPicture,
+                category: response.data.category,
+                ageRating: response.data.mpaaRating,
+                director: response.data.director,
+                producer: response.data.producer,
+                trailer: response.data.trailerVideo,
+                synopsis: response.data.synopsis,
+                rating: 4.5,
+                showtimes: response.data.showDatesTimes,
+                reviews: ["It was kind of mid", "Another Sony Pictures stinker", "My five year old really enjoyed it", "Awful"],
+                cast: response.data.cast
+            });
+            //setShowtimesArray(["2/23/24 @ 4:30 P.M.", "2/27/24 @ 7:30 P.M.", "3/1/24 @ 1:00 P.M.", "3/16/24 @ 11:15 A.M."]);
+            //setCastArray(["Filler Guy Jr.", "Guy Ray", "Ray Guy", "Batman Robin", "Barack Obama", "Fake Person IV"]);
+            setShowtimesArray(stringToArray(movie.showtimes));
+            setCastArray(stringToArray(movie.cast));
+
+            //setFormData(response.data);
+          } catch (error) {
+            console.error('Error fetching hospital data:', error);
+          }
+        };
+    
+        fetchMovieData();
+      }, [id, showtimesArray, castArray]);
 
     return (
         <div className="page">
@@ -47,7 +94,10 @@ const MovieView = (props) => {
             <div className="three-containers">
                 <div id="column-one" className="view-page-column">
                     <img src={movie.poster} width="250" id="movie-poster" alt={movie.title} />
+                    <div id="whole-info-container">
+                    <div id="center-movie-title">
                     <h2 id="movie-title">{movie.title}</h2>
+                    </div>
                     <div id="info-container">
                     <div id="movie-info">
                         <h3>{movie.category}</h3>
@@ -55,6 +105,7 @@ const MovieView = (props) => {
                         <h3>Director: {movie.director}</h3>
                         <h3>Prodcuer: {movie.producer}</h3>
                         <h3>Film Code: {movie.code}</h3>
+                    </div>
                     </div>
                     </div>
                 </div>
@@ -66,10 +117,12 @@ const MovieView = (props) => {
                     <h3 className="red">Showtimes</h3>
                     <h5 className="white">Click to purchase tickets:</h5>
                     <div id="showtime-container">
-                    {movie.showtimes.map((showtime, index) => (
+                    {showtimesArray.map((showtime, index) => (
+                    <Link to={`/tickets?showtime=${showtime}&title=${movie.title}`} className="componenetLink">
                     <h4 className="showtime" key={index}>
                         {showtime} 
                     </h4>
+                    </Link>
                 ))}
                 <div id="review-container">
                     <h3 className="red" id="review-title">Reviews</h3>
@@ -91,7 +144,7 @@ const MovieView = (props) => {
                     </h4>
                     <h3 id="cast-title" className="red">Cast</h3>
                     <div id="the-cast">
-                    {movie.cast.map((cast, index) => (
+                    {castArray.map((cast, index) => (
                     <h4 className="cast-member" key={index}>
                         {cast} 
                     </h4>
