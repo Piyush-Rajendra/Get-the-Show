@@ -24,7 +24,7 @@ function App() {
           <Route exact path='/ManageMovie' element={<ManageMovie/>}/>
           <Route exact path='/ManageUser' element={<ManageUser/>}/>
           <Route exact path='/' element={<Login/>} />
-          <Route exact path='/HomePage' element={<HomePage movies={DUMMY_MOVIE}/>} />
+          <Route exact path='/HomePage' element={<HomePage/>} />
           <Route exact path='/Profile' element={<ProfilePage/>}/>
         </Routes>
       </div>

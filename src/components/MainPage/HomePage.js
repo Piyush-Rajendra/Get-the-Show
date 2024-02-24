@@ -7,6 +7,7 @@ import axios from 'axios';
 import {useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
+import SidebarPopup from './SidebarPopup';
 
 
 const HomePage = ({props}) => {
