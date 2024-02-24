@@ -14,7 +14,6 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    //const { setUserData } = useContext(UserContext);
 
     const handleChange = (e) => {
       setFormData({
@@ -23,32 +22,6 @@ const Login = () => {
       });
     };
 
-    /*
-    async function handleSubmit(e) {
-      e.preventDefault();
-      setLoading(true);
-      try {
-        const loginUser = formData;
-        const loginRes = await axios.post("http://localhost:4000/api/users/login", loginUser);
-        setUserData({
-          token: loginRes.data.token,
-          user: loginRes.data.user,
-        });
-        console.log(loginRes.data.token);
-        localStorage.setItem("auth-token", loginRes.data.token);
-        const test = localStorage.getItem("auth-token");
-        console.log(test);
-        //setLoading(false);
-        navigate('/');
-      } catch (err) {
-        setLoading(false);
-        err.response.data.msg && setError(err.response.data.msg);
-        alert(err.response.data.msg);
-      }
- 
-    };
-    */
-   //fix line 58
     return (
     <div class = "background">
           <hr></hr>
