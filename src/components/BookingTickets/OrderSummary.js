@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './css/OrderSummary.css';
+import '../css/BookingTickets/OrderSummary.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 

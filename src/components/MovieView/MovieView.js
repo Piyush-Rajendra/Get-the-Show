@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import './css/MovieView.css';
+import '../css/MovieView/MovieView.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
-import EmbeddedVideo from "./EmbeddedVideo";
+import EmbeddedVideo from "../EmbeddedVideo";
 
 const MovieView = (props) => {
     const { id } = useParams();

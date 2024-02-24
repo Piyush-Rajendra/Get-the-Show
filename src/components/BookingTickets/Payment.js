@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './css/Payment.css';
+import '../css/BookingTickets/Payment.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 

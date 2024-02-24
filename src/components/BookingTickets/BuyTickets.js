@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './css/BuyTickets.css';
+import '../css/BookingTickets/BuyTickets.css';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
 
