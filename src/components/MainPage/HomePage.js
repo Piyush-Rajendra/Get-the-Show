@@ -119,7 +119,7 @@ useEffect(() => {
             <ul class="item-list">
               <li class="movie-card-container">
               {searchActive && filteredMovies.slice(0, movieList.length/2).map((location, index) => (
-                  <Link to="/movieview/${index}"  key={index}>
+                  <Link to={`/movieview/${location.id}`}  key={index}>
                     <MovieCard 
                       movie={location.title}
                       category={location.category}
@@ -136,7 +136,7 @@ useEffect(() => {
                 </Link>
                 ))}
                 {!searchActive && movieList.slice(0, movieList.length/2).map((location, index) => (
-                  <Link to={`/movieview/${index+1}`}  key={index}>
+                  <Link to={`/movieview/${location.id}`}  key={index}>
                     <MovieCard 
                       movie={location.title}
                       category={location.category}
@@ -162,7 +162,7 @@ useEffect(() => {
             <ul class="item-list">
               <li class="movie-card-container">
               {searchActive && filteredMovies.slice(movieList.length/2).map((location) => (
-                  <Link to="/">
+                  <Link to={`/movieview/${location.id}`}  >
                     <MovieCard 
                       movie={location.title}
                       category={location.category}
@@ -179,7 +179,7 @@ useEffect(() => {
                 </Link>
                 ))}
                 {!searchActive && movieList.slice(movieList.length/2, movieList.length).map((location) => (
-                  <Link to="/">
+                  <Link to={`/movieview/${location.id}`}  >
                     <MovieCard 
                       movie={location.title}
                       category={location.category}
