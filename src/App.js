@@ -14,6 +14,7 @@ import BuyTickets from './components/BookingTickets/BuyTickets';
 import Payment from './components/BookingTickets/Payment';
 import PaymentConfirmation from './components/BookingTickets/PaymentConfirmation';
 import OrderSummary from './components/BookingTickets/OrderSummary';
+import Promotions from './components/Promotions/Promotions';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route exact path='/payment' element={<Payment  />} />
           <Route exact path='/paymentconfirm' element={<PaymentConfirmation />} />
           <Route exact path='/ordersummary' element={<OrderSummary />} />
+          <Route exact path='/promotions' element={<Promotions />} />
 
         </Routes>
       </div>
