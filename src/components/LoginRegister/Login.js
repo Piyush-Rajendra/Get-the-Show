@@ -28,7 +28,7 @@ const Login = () => {
       const response = await axios.post('http://localhost:3000/signin', formData);
       const token = response.data.token;
       localStorage.setItem('token', token);
-      navigate("/HomePage");
+      navigate("/");
     } catch (error) {
       console.error('Login failed', error);
       alert('Username/Email or password is not correct');

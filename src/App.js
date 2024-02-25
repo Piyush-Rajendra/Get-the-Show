@@ -30,7 +30,6 @@ function App() {
           <Route exact path='/AdminPanel' element={<AdminPanel/>}/>
           <Route exact path='/ManageMovie' element={<ManageMovie/>}/>
           <Route exact path='/ManageUser' element={<ManageUser/>}/>
-          <Route exact path='/HomePage' element={<HomePage/>} />
           <Route exact path='/Profile' element={<ProfilePage/>}/>
           <Route path='/registerPage' element={<Register/>} />
           <Route path='/forgotPage' element={<Forgot/>} />

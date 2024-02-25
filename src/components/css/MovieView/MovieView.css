@@ -49,6 +49,7 @@
         padding-bottom: 10px;
         display: inline-block; /* Ensure that the background only covers the text */
         text-align: center; 
+        width: 100%;
 }
 
 #center-movie-title {
