@@ -14,9 +14,9 @@
     background-color: #FF6666;
     color: black;
     border-radius: 35px; 
-      padding: 20px; 
-      padding-top: 5px;
-      padding-bottom: 5px;
+    padding: 20px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
   
   .homeSearch {
@@ -90,6 +90,7 @@
     padding-bottom: 5px;
     padding-top: 5px;
   }
+
   .homeComingSoon h1 {
     margin: 0px 10% 0px 10%;
   }
@@ -109,13 +110,12 @@
   .homeListNowPlaying .item-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* Adjust as needed */
     list-style: none;
     padding: 0;
   }
   
   .homeListNowPlaying .movie-card-container {
-    width: calc(20% - 10px); /* 20% width with some spacing */
+    width: 300px;
     margin-bottom: 20px;
   }
   
@@ -127,6 +127,7 @@
   .movie-card-container > * {
     margin-right: 10px; /* Adjust spacing between movie cards */
     margin-left: 20px;
+    margin-top: 20px;
   }
   
   /* Optional: Remove margin from the last movie card */
@@ -143,6 +144,7 @@
     display: flex;
     justify-content: space-between; /* Space items evenly */
     width: 100%; /* Occupy full width */
+    margin: 15px;
   }
 
   .button-group button {
@@ -150,9 +152,9 @@
     background-color: #FF6666;
     color: black;
     border-radius: 35px; 
-      padding: 20px; 
-      padding-top: 5px;
-      padding-bottom: 5px;
+    padding: 22px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
 
   footer {
