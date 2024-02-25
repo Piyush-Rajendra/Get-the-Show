@@ -110,7 +110,6 @@ useEffect(() => {
               {searchActive && filteredMovies.map((location, index) => (
                   <li key={index} class="movie-card-container">
                     <div class="movie-card-wrapper">
-                      <Link to="/">
                         <MovieCard 
                           movie={location.title}
                           category={location.category}
@@ -124,7 +123,6 @@ useEffect(() => {
                           showDatesTimes={location.showDatesTimes}
                           posterBase64={location.posterBase64}
                         />
-                      </Link>
                       <div class="button-group">
                         <button>Edit</button>
                         <button>Delete</button>
@@ -135,7 +133,6 @@ useEffect(() => {
               {!searchActive && movieList.map((location, index) => (
                 <li key={index} class="movie-card-container">
                   <div class="movie-card-wrapper">
-                    <Link to="/">
                       <MovieCard 
                         movie={location.title}
                         category={location.category}
@@ -149,7 +146,6 @@ useEffect(() => {
                         showDatesTimes={location.showDatesTimes}
                         posterBase64={location.posterBase64}
                       />
-                    </Link>
                     <div class="button-group">
                       <button>Edit</button>
                       <button>Delete</button>
