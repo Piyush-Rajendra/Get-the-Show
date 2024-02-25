@@ -59,6 +59,7 @@
   font-size: 30px;
   width:90px;
   border-radius: 30px;
+  font-weight: 600;
   background-color: #f85757;
   &:hover {
   background-color: #b44242;
@@ -74,10 +75,11 @@
 }
 
 .backButtonProfilePage {
+  padding: 10px;
   color:rgb(2, 2, 2);
   margin-top: 15px;
   margin-bottom: 50px;
-  font-size: 25;
+  font-size: 25px;
   font-weight: 600;
   background-color: #f85757;
   border-radius: 20px;

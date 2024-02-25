@@ -1,9 +1,3 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #323030;     
-}
-
 .background {
     background: linear-gradient(to bottom, #070707, #939393); /* Black to dark grey gradient */
     margin: 0; /* Remove default body margin */
