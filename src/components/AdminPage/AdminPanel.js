@@ -16,6 +16,9 @@ const AdminPanel = props => {
   const changeHome = () => {
     navigate('/');
   }
+  const changePromotions = () => {
+    navigate('/promotions');
+  }
     return(
         <div class = "homeBody">
           <div class = "homeHeader">
@@ -39,7 +42,7 @@ const AdminPanel = props => {
           <div class = "adminChoices">
               <button onClick={changeMovie}>Manage Movies</button>
             <br></br>
-            <button >Manage Promotions</button>
+            <button onClick={changePromotions}>Manage Promotions</button>
             <br></br>
 
             {/* <button>Ticket Prices</button>            
