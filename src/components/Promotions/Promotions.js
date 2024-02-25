@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import '../css/BookingTickets/BuyTickets.css';
+import '../css/Promotions/Promotions.css';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
 
@@ -44,7 +44,9 @@ const Promotions = () => {
 
 
     return (
-        hi
+        <div id="promotions-page">
+            
+        </div>
     )
 }
 
