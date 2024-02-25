@@ -41,8 +41,9 @@ const AdminPanel = props => {
             <br></br>
             <button >Manage Promotions</button>
             <br></br>
-            <button>Ticket Prices</button>
-            <br></br>
+
+            {/* <button>Ticket Prices</button>            
+            <br></br>*/}
             <button onClick={changeUser}>Members & Admin</button>
           </div>
           

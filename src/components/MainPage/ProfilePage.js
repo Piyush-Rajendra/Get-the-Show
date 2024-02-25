@@ -11,6 +11,10 @@ const ProfilePage = () => {
     setActiveTab(tab);
   };
 
+  const handleSubmit = () => {
+    alert('Profile changed!');
+  };
+
   return (
     <div className="profile-container">
       <Link to='/HomePage'><button className='backButtonProfilePage'>Back</button></Link>
@@ -36,38 +40,38 @@ const ProfilePage = () => {
       </div>
       <div className="tab-content">
         {activeTab === 'user' && (
-          <div >
+          <form onSubmit={handleSubmit}>
             <input className="inputProfilePage" type="text" placeholder="Username" />
             <input className="inputProfilePage" type="password" placeholder="Password" />
             <input className="inputProfilePage" type="tel" placeholder="Phone Number" />
             <button className='editButtonProfilePage'>Edit</button>
-          </div>
+          </form>
         )}
         {activeTab === 'payment' && (
-          <div>
+          <form onSubmit={handleSubmit}>
             <input className="inputProfilePage" type="text" placeholder="Card Type" />
             <input className="inputProfilePage" type="text" placeholder="Card Number" />
             <input className="inputProfilePage" type="date" placeholder="Expiration Date" />
             <button className='editButtonProfilePage'>Edit</button>
-          </div>
+          </form>
         )}
         {activeTab === 'home' && (
-          <div>
+          <form onSubmit={handleSubmit}>
             <input className="inputProfilePage" type="text" placeholder="Street" />
             <input className="inputProfilePage" type="text" placeholder="City" />
             <input className="inputProfilePage" type="text" placeholder="State" />
             <input className="inputProfilePage" type="number" placeholder="Zip Code" />
             <button className='editButtonProfilePage'>Edit</button>
-          </div>
+          </form>
         )}
         {activeTab === 'billing' && (
-          <div>
+          <form onSubmit={handleSubmit}>
             <input className="inputProfilePage" type="text" placeholder="Street" />
             <input className="inputProfilePage" type="text" placeholder="City" />
             <input className="inputProfilePage" type="text" placeholder="State" />
             <input className="inputProfilePage" type="number" placeholder="Zip Code" />
             <button className='editButtonProfilePage'>Edit</button>
-          </div>
+          </form>
         )}
 
       </div>
