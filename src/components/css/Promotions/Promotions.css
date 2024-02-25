@@ -1,0 +1,79 @@
+#promotions-page {
+    background: linear-gradient(to bottom, #070707, #939393); /* Black to dark grey gradient */
+    margin: 0; /* Remove default body margin */
+    padding-bottom: 100px; /* Remove default body padding */
+    padding-top: 30px;
+}
+
+#promo-title {
+    color: #ff6666;
+}
+
+#promotions-label {
+    color: white; 
+}
+
+.card {
+    background-color: #ffffff;
+        border-radius: 25px; /* Rounded corners */
+        padding: 8px; /* Add some padding for spacing */
+        padding-top: 10px;
+        padding-bottom: 10px;
+        display: inline-block; /* Ensure that the background only covers the text */
+        margin-top: 25px;
+        margin-left: 10px;
+        margin-right: 10px; 
+}
+
+.card:hover {
+    background-color: #ffaaaa;
+
+}
+
+#add-promo-button {
+    display: inline-block;
+    padding: 10px 20px; /* Adjust as needed */
+    border-radius: 50px; /* This makes it pill-shaped */
+    background-color: #FF6666; /* Green background color */
+    color: white; /* Text color */
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px; /* Adjust as needed */
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease;
+    margin: 10px
+}
+
+
+    
+
+#promos-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#promo-add-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#label-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo-title {
+    padding: 20px;
+    margin-left: 15px;
+}
+
+#logo-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
