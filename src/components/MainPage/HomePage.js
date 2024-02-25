@@ -119,7 +119,7 @@ useEffect(() => {
             <ul class="item-list">
               <li class="movie-card-container">
               {searchActive && filteredMovies.slice(0, movieList.length/2).map((location, index) => (
-                  <Link to="/movieview/${index}"  key={index}>
+                  <Link to={`/movieview/${index+1}`}  key={index}>
                     <MovieCard 
                       movie={location.title}
                       category={location.category}
