@@ -55,7 +55,7 @@ const MovieView = (props) => {
     useEffect(() => {
         const fetchMovieData = async () => {
           try {
-            const response = await axios.get(`http://localhost:3000/${id}`);
+            const response = await axios.get(`http://localhost:3000/moviesById/${id}`);
             //const response = await axios.get(`http://localhost:3001/3`);
             console.log(response.data);
             setMovie({
