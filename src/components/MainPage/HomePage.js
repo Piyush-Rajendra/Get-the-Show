@@ -98,11 +98,6 @@ useEffect(() => {
             </div>
             <div class = "buttons">
               {!myValue &&
-                <Link to="/Register">
-                  <button>Register</button>
-                </Link>
-              }
-              {!myValue &&
                 <Link to="/Login">
                   <button>Login</button>
                 </Link>
@@ -110,11 +105,10 @@ useEffect(() => {
               {myValue && 
                   <button onClick={updateVal}>Logout</button>
               }
-              <button>Register</button>
-              <button>Logout</button>
-              <div>
-                <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button>
+               <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button>
                 <SidebarPopup isOpen={isOpen} onClose={toggleSidebar} />
+              <div>
+
               </div>
             </div>
           </div>
