@@ -98,11 +98,6 @@ useEffect(() => {
             </div>
             <div class = "buttons">
               {!myValue &&
-                <Link to="/Register">
-                  <button>Register</button>
-                </Link>
-              }
-              {!myValue &&
                 <Link to="/Login">
                   <button>Login</button>
                 </Link>
@@ -110,11 +105,10 @@ useEffect(() => {
               {myValue && 
                   <button onClick={updateVal}>Logout</button>
               }
-              <button>Register</button>
-              <button>Logout</button>
-              <div>
-                <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button>
+               <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button>
                 <SidebarPopup isOpen={isOpen} onClose={toggleSidebar} />
+              <div>
+
               </div>
             </div>
           </div>
@@ -124,8 +118,8 @@ useEffect(() => {
           <div class="homeListNowPlaying">
             <ul class="item-list">
               <li class="movie-card-container">
-              {searchActive && filteredMovies.slice(0, movieList.length/2).map((location) => (
-                  <Link to="/">
+              {searchActive && filteredMovies.slice(0, movieList.length/2).map((location, index) => (
+                  <Link to="/movieview/${index}"  key={index}>
                     <MovieCard 
                       movie={location.title}
                       category={location.category}
@@ -141,8 +135,8 @@ useEffect(() => {
                     ></MovieCard>
                 </Link>
                 ))}
-                {!searchActive && movieList.slice(0, movieList.length/2).map((location) => (
-                  <Link to="/">
+                {!searchActive && movieList.slice(0, movieList.length/2).map((location, index) => (
+                  <Link to={`/movieview/${index+1}`}  key={index}>
                     <MovieCard 
                       movie={location.title}
                       category={location.category}

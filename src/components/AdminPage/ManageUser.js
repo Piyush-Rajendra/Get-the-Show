@@ -81,7 +81,6 @@ const ManageUser = () => {
             {searchActive && filteredUsers.map((location, index) => (
                   <li key={index} class="movie-card-container">
                     <div class="movie-card-wrapper">
-                      <Link to="/">
                       <UserCard 
                           fullName={location.fullName}
                           userName={location.username}
@@ -90,7 +89,6 @@ const ManageUser = () => {
                           profilePhoto={location.profilePhoto}
                           paymentInfo={location.paymentInfo}
                         />
-                    </Link>
                       <div class="button-group">
                         <button>Edit</button>
                         <button>Delete</button>
@@ -101,7 +99,6 @@ const ManageUser = () => {
               {!searchActive && userList.map((location, index) => (
                 <li key={index} class="movie-card-container">
                   <div class="movie-card-wrapper">
-                    <Link to="/">
                     <UserCard 
                           fullName={location.fullName}
                           userName={location.username}
@@ -110,7 +107,6 @@ const ManageUser = () => {
                           profilePhoto={location.profilePhoto}
                           paymentInfo={location.paymentInfo}
                         />
-                    </Link>
                     <div class="button-group">
                       <button>Edit</button>
                       <button>Delete</button>
