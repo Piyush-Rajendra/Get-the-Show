@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import '../css/Promotions/Promotions.css';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "axios";
+import UserContext from "../context/UserContext";
 
 const Promotions = () => {
+
+    const { userData } = useContext(UserContext);
+    const isAdmin = userData && userData.isAdmin;
     const DUMMY_PROMOTIONS = [
         {
             name: 'Promo1',
@@ -109,7 +113,7 @@ const Promotions = () => {
     const [promotions, setPromotions] = useState(DUMMY_PROMOTIONS);
 
 
-
+    if (isAdmin) {
     return (
         <div id="promotions-page">
             <div id="promo-title">
@@ -144,6 +148,12 @@ const Promotions = () => {
 
         </div>
     )
+            }
+    else {
+        return (
+            <h2 style={{ color: 'red' }}>You are not authorized to view this page.</h2>
+        )
+    }
 }
 
 export default Promotions; 

@@ -1,11 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import '../css/MovieView/MovieView.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import EmbeddedVideo from "../EmbeddedVideo";
+import UserContext from "../context/UserContext";
 
 const MovieView = (props) => {
     const { id } = useParams();
+
+    const { userData } = useContext(UserContext);
+    const [username, setUsername] = useState();
+
+    useEffect(() => {
+        // Get username from localStorage and set it
+        const username = localStorage.getItem('username');
+        setUsername(username);
+    
+      }, []);
+    //console.log(userData.username)
+
+    // Access isAdmin from userData
+    //const isAdmin = userData && userData.isAdmin;
 
     const [movie, setMovie] = useState({
         title:'',
@@ -57,7 +72,7 @@ const MovieView = (props) => {
           try {
             const response = await axios.get(`http://localhost:3000/moviesById/${id}`);
             //const response = await axios.get(`http://localhost:3001/3`);
-            console.log(response.data);
+            //console.log(response.data);
             setMovie({
                 title: response.data.title,
                 poster: response.data.trailerPicture,
@@ -79,7 +94,7 @@ const MovieView = (props) => {
 
             //setFormData(response.data);
           } catch (error) {
-            console.error('Error fetching hospital data:', error);
+            console.error('Error fetching movie data:', error);
           }
         };
     
@@ -155,6 +170,7 @@ const MovieView = (props) => {
             </div>
         </div>
     );
+
 }
 
 export default MovieView; 

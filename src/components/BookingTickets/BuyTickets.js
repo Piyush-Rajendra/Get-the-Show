@@ -7,6 +7,8 @@ const BuyTickets = (props) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
+    const [token, setToken] = useState(localStorage.getItem('token'));
+
     const [childTicket, setChildTicket] = useState();
     const [adultTicket, setAdultTicket] = useState();
     const [seniorTicket, setSeniorTicket] = useState();
@@ -123,7 +125,7 @@ const BuyTickets = (props) => {
     //const total = searchParams.get('total');
 
 
-
+    if (token) {
     return (
         <div className="movie-page">
             <div className="movie-title">
@@ -202,6 +204,17 @@ const BuyTickets = (props) => {
             </div>
         </div>
     )
+                    }
+    else {
+        return (
+            <div className="not-logged-in">
+                <h2 style={{ color: 'red' }}>Please login to be able to purchase tickets.</h2>
+                <Link to="/Login">
+                <h3>Click here to login</h3>
+                </Link>
+            </div>
+        )
+    }
 
 
 

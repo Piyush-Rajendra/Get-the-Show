@@ -7,11 +7,12 @@ const MovieCard = (props) => {
     <div class="card">
   <div class="card-inner">
     <div class="card-front">
-    {base64String ? (
+    {/*base64String ? (
           <img src={base64String} alt="Base64 Image" />
         ) : (
           <p>No valid base64 string provided</p>
-        )}
+        )*/}
+    <img src={props.trailerPicture}/>
     </div>
     <div class="card-back">
       <div class="back-title">
