@@ -131,16 +131,18 @@ useEffect(() => {
     const userId = response.data.id;
     try {
       const lastPayment = paymentInfo.slice(-1)[0];
+      console.log(lastPayment);
+      console.log(paymentInfoForms[0].city);
+      console.log(paymentInfo);
       await axios.put(`http://localhost:3000/payment/${userId}`, {
         cardType: lastPayment.cardType,
         cardNumberHash: lastPayment.cardNumberHash,
         cardPINHash: lastPayment.cardPINHash,
         expirationDate: lastPayment.expirationDate,
-        billingAddress: lastPayment.billingAddress,
-        city: lastPayment.city,
-        state: lastPayment.state,
-        zipCode: lastPayment.zipCode,
-        userId: lastPayment.userId,
+        billingAddress: paymentInfoForms[0].billingAddress,
+        city: paymentInfoForms[0].city,
+        state: paymentInfoForms[0].state,
+        zipCode: paymentInfoForms[0].zipCode,
       });
       alert('Payment information updated!');
     } catch (error) {
