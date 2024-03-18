@@ -84,6 +84,8 @@ useEffect(() => {
       const response = await axios.get(`http://localhost:3000/user/${username}`);
       setUserInfo(response.data);
       const userId = response.data.id;
+
+      console.log(response.data);
   
       const paymentResponse = await axios.get(`http://localhost:3000/users/${userId}/payment-info`);
       const last3Payments = paymentResponse.data.paymentInfo.slice(-3);
@@ -128,12 +130,6 @@ useEffect(() => {
     const response = await axios.get(`http://localhost:3000/user/${username}`);
     const userId = response.data.id;
     try {
-      const ifHavePayment = await axios.get(`http://localhost:3000/users/${userId}/payment-info`);
-      if (ifHavePayment.paymentInfo === undefined) {
-        alert('Please fill out your Payment Information first!');
-        return;
-      };
-
       const lastPayment = paymentInfo.slice(-1)[0];
       await axios.put(`http://localhost:3000/payment/${userId}`, {
         cardType: lastPayment.cardType,
@@ -216,7 +212,7 @@ const handleAddPaymentCard = async (e) => {
       </div>
       <div className="tab-content">
         {activeTab === 'user' && (
-          <form onSubmit={handleSubmitPayment}>
+          <form onSubmit={handleSubmit}>
             <input className="inputProfilePage" type="text" placeholder="Full Name" 
             value={userInfo && userInfo.fullName}
             onChange={(e) => setUserInfo({ ...userInfo, fullName: e.target.value })}/>
