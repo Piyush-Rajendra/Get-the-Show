@@ -99,7 +99,9 @@
     width:150px;
     border-radius: 30px;
     font-weight: 600;
-    margin-left: 50px;
+    margin:50px;
+    margin-top:0px;
+    margin-left:0px;
     background-color: #f85757;
     &:hover {
     background-color: #b44242;
