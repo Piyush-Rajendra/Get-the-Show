@@ -1,6 +1,7 @@
 import React from "react";
 import './../css/LoginRegister/Register.css';
 import {useState } from 'react';
+import axios from 'axios';
 
 
 const Forgot = () => {
@@ -10,7 +11,7 @@ const Forgot = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
 
     // Validate email
@@ -18,9 +19,24 @@ const Forgot = () => {
       setEmailError("Please enter a valid email address.");
       return;
     }
+    try {
 
+    } catch(error) {
+
+    }
     // Email is valid, update displayText
+    try {
+    console.log(email);
+    const emailHolder = {
+      email: email
+    }
+    const response = await axios.post('http://localhost:3000/forgot-password', emailHolder); 
     setDisplayText("Thank you! The email should be send to your inbox!");
+    localStorage.setItem('email', email);
+    } catch(error) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
   };
 
   const handleEmailChange = (e) => {

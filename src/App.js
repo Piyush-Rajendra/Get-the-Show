@@ -18,11 +18,12 @@ import Promotions from './components/Promotions/Promotions';
 import React, { useState, useEffect } from "react";
 import UserContext from './components/context/UserContext';
 import Logout from './components/Logout/Logout';
+import UpdatePassword from './components/LoginRegister/UpdatePassword';
+import RegisterContinued from './components/LoginRegister/RegisterContinued';
 import AdminLogIn from './components/LoginRegister/AdminLogIn';
 
 
 function App() {
-
   const [userData, setUserData] = useState({
     username: undefined,
     token: undefined,
@@ -49,7 +50,8 @@ function App() {
     checkLoggedIn();
   }, [])
 
-  
+
+
   return (
     <UserContext.Provider value ={{userData, setUserData}}>
     <Router>
@@ -75,6 +77,8 @@ function App() {
           <Route path='/logout' element={<Logout />} />
           <Route path='/adminlogin' element={<AdminLogIn />} />
 
+          <Route exact path='/reset/:token' element={<UpdatePassword />} />
+          <Route exact path='/registerContinued' element={<RegisterContinued />} /> 
         </Routes>
       </div>
     </Router>
