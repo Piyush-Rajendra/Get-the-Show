@@ -7,6 +7,7 @@ import axios from 'axios';
 import {useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
+import UserContext from "../context/UserContext";
 
 const ManageUser = () => {
 
@@ -14,11 +15,19 @@ const ManageUser = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
+  const isAdmin = localStorage.getItem('isAdmin');
+  const { userData, setUserData } = useContext(UserContext);
 
   const navigate = useNavigate();
-  const changeHome = () => {
-      navigate('/');
-  }
+  const logout = () => {
+    setUserData(prevUserData => ({
+      ...prevUserData,
+      token: null,
+    }));
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    navigate('/logout');
+  } 
 
   const toggleActive = () => {
     setSearchActive(false);
@@ -51,6 +60,7 @@ const ManageUser = () => {
     setFilteredUsers(filtered);
   };
 
+  if (isAdmin) {
     return(
         <div class = "homeBody">
           <div class = "homeHeader">
@@ -70,7 +80,7 @@ const ManageUser = () => {
             <Link to="/AdminPanel">
                   <button>Admin</button>
                 </Link>
-                <button onClick={changeHome}>Logout</button>
+                <button onClick={logout}>Logout</button>
             </div>
           </div>
           <div class = "ManageMovieNowPlaying">
@@ -124,6 +134,12 @@ const ManageUser = () => {
       </footer>
       </div>
     )
+              }
+    else {
+      return (
+        <h2 style={{ color: 'red' }}>You are not authorized to view this page.</h2>
+      )
+    }
 }
 
 export default ManageUser;

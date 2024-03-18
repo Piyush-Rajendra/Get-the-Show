@@ -7,7 +7,7 @@ import UserContext from "../context/UserContext";
 const Promotions = () => {
 
     const { userData } = useContext(UserContext);
-    const isAdmin = userData && userData.isAdmin;
+    const isAdmin = localStorage.getItem('isAdmin');
     const DUMMY_PROMOTIONS = [
         {
             name: 'Promo1',

@@ -7,8 +7,10 @@ import UserContext from "../context/UserContext";
 
 const AdminPanel = props => {
   const navigate = useNavigate();
-  const { userData } = useContext(UserContext);
-  const isAdmin = userData && userData.isAdmin;
+  const { userData, setUserData } = useContext(UserContext);
+  //const isAdmin = userData && userData.isAdmin;
+  const isAdmin = localStorage.getItem('isAdmin');
+  console.log(isAdmin);
 
   const changeMovie = () => {
     navigate('/ManageMovie');
@@ -16,9 +18,16 @@ const AdminPanel = props => {
   const changeUser = () => {
     navigate('/ManageUser');
   }
-  const changeHome = () => {
-    navigate('/');
-  }
+  const logout = () => {
+    setUserData(prevUserData => ({
+      ...prevUserData,
+      token: null,
+    }));
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    navigate('/logout');
+  } 
+   
   const changePromotions = () => {
     navigate('/promotions');
   }
@@ -28,7 +37,7 @@ const AdminPanel = props => {
           <div class = "homeHeader">
             <h1>E-Cinema Booking</h1>
             <div class = "buttons">
-              <button onClick={changeHome}>Logout</button>
+              <button onClick={logout}>Logout</button>
             </div>
           </div>
           {/* <div class = "homeSearch">

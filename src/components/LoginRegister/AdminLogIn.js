@@ -5,9 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import UserContext from "../context/UserContext";
 
-const Login = () => {
+const AdminLogIn = () => {
     const [formData, setFormData] = useState({
-      usernameOrEmail: '',
+      username: '',
       password: '',
     });
 
@@ -27,17 +27,25 @@ const Login = () => {
    const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/signin', formData);
+        console.log(formData);
+      const response = await axios.post('http://localhost:3000/admin/signin', formData);
       const token = response.data.token;
-      const username = response.data.user.username; 
+      const user = response.data.user.username; 
       localStorage.setItem('token', token);
-      localStorage.setItem('username', username)
+      localStorage.setItem('username', user)
+      localStorage.setItem('isAdmin', 'admin')
       setUserData(prevUserData => ({
         ...prevUserData,
-        username: username,
+        username: user,
         token: token,
+        isAdmin: true,
       }));
+      /*setUserData(prevUserData => ({
+        ...prevUserData,
+        isAdmin: true,
+      }));*/
       //console.log(username);
+      
       navigate("/", { state: { props: true } });
     } catch (error) {
       console.error('Login failed', error);
@@ -48,17 +56,17 @@ const Login = () => {
     return (
     <div class = "background">
           <hr></hr>
-          <h2 class="register">Login</h2>
+          <h2 class="register">Admin Login</h2>
         <div className="center">
         <div class="formcontainer">
           <form className ="forms" onSubmit={handleSubmit}>
             <label class="forms-label">
-              Email/Username
+              Username
             </label>
               <input class="forms-input"
                 type="text"
-                name="usernameOrEmail"
-                value={formData.usernameOrEmail}
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
                 required
               />            
@@ -77,7 +85,6 @@ const Login = () => {
             <div className="forgot-register-Buttons">
               <Link to='/forgotPage'><button class="forgot-Button">Forgot Password?</button></Link>
               <Link to='/registerPage'><button class="signUp-ButtonLogin">SignUp</button></Link>
-              <Link to='/adminlogin'><button class="signUp-ButtonLogin">Admin?</button></Link>
             </div>
             <button type="submit" className="register-button">Login</button>            
           </form>
@@ -87,4 +94,4 @@ const Login = () => {
     )
   }
 
-  export default Login;
+  export default AdminLogIn;
