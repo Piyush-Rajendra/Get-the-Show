@@ -61,8 +61,12 @@ useEffect(() => {
       setUserInfo(response.data);
       const userId = response.data.id;
       
-      const paymentResponse = await axios.get(`http://localhost:3000/users/${userId}/payment-info`);
-      setPaymentInfo(paymentResponse.data.paymentInfo); // Set the paymentInfo state with the fetched data
+
+
+      const paymentResponse = await axios.get('http://localhost:3000/users/${userId}/payment-info');
+      const last3Payments = paymentResponse.data.paymentInfo.slice(-3);
+      setPaymentInfo(last3Payments);
+
     } catch (error) {
       console.error('Failed to fetch user information', error);
       // Handle error, e.g., redirect to login page
@@ -170,34 +174,32 @@ useEffect(() => {
         )}
         {activeTab === 'payment' && (
           <div>
-            {paymentInfoForms.slice(0, 3).map((paymentInfo, index) => (
-              <form key={index} onSubmit={(e) => handleSubmitPayment(e, index)}>
+            {paymentInfo.map((payment, index) => (
+              <form key={index} onSubmit={handleSubmit}>
                 <input
-                  className="inputProfilePage"
+                className="inputProfilePage"
                   type="text"
                   placeholder="Card Type"
-                  value={paymentInfo.cardType}
-                  onChange={(e) => handlePaymentInfoChange(index, 'cardType', e.target.value)}
+                  value={payment.cardType}
+                  // Handle change
                 />
                 <input
-                  className="inputProfilePage"
+                className="inputProfilePage"
                   type="text"
                   placeholder="Card Number"
-                  value={paymentInfo.cardNumberHash}
-                  onChange={(e) => handlePaymentInfoChange(index, 'cardNumberHash', e.target.value)}
+                  value={payment.cardNumberHash}
+                  // Handle change
                 />
                 <input
                   className="inputProfilePage"
                   type="date"
                   placeholder="Expiration Date"
-                  value={paymentInfo.expirationDate}
-                  onChange={(e) => handlePaymentInfoChange(index, 'expirationDate', e.target.value)}
+                  value={payment.expirationDate}
+                  // Handle change
                 />
-                <button className='editButtonProfilePage'>Edit</button>
-                <button type="button" className="removeButtonProfilePage" onClick={() => removePaymentInfoForm(index)}>Remove</button>
+                <button className='editButtonProfilePage' type="submit">Edit</button>
               </form>
             ))}
-            {paymentInfoForms.length < 3 && <button className="editButtonProfilePage" onClick={addPaymentInfoForm}>Add</button>}
           </div>
         )}
         {activeTab === 'home' && (
@@ -270,5 +272,6 @@ useEffect(() => {
     </div>
   );
 };
+
 
 export default ProfilePage;
