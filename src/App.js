@@ -18,6 +18,7 @@ import Promotions from './components/Promotions/Promotions';
 import React, { useState, useEffect } from "react";
 import UserContext from './components/context/UserContext';
 import Logout from './components/Logout/Logout';
+import AdminLogIn from './components/LoginRegister/AdminLogIn';
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
           <Route exact path='/ordersummary' element={<OrderSummary />} />
           <Route exact path='/promotions' element={<Promotions />} />
           <Route path='/logout' element={<Logout />} />
+          <Route path='/adminlogin' element={<AdminLogIn />} />
 
         </Routes>
       </div>

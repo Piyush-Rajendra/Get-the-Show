@@ -11,9 +11,10 @@ import UserContext from "../context/UserContext";
 
 
 const ManageMovie = ({props}) => {
+  const isAdmin = localStorage.getItem('isAdmin');
 
-  const { userData } = useContext(UserContext);
-  const isAdmin = userData && userData.isAdmin;
+  const { userData, setUserData } = useContext(UserContext);
+  
 
   const [myValue, setMyValue] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -78,6 +79,17 @@ useEffect(() => {
     navigate('/', { state: {props: false} });
     
   }
+
+  const logout = () => {
+    setUserData(prevUserData => ({
+      ...prevUserData,
+      token: null,
+    }));
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    navigate('/logout');
+  } 
+
   if (isAdmin) {
     return(
         <div class = "homeBody">
@@ -101,7 +113,7 @@ useEffect(() => {
                 <Link to="/AdminPanel">
                   <button>Admin</button>
                 </Link>
-                <button onClick={updateVal}>Logout</button>
+                <button onClick={logout}>Logout</button>
             </div>
           </div>
           <div class = "ManageMovieNowPlaying">

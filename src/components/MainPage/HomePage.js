@@ -19,7 +19,7 @@ const HomePage = ({props}) => {
   const [searchActive, setSearchActive] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
   const [token, setToken] = useState()
-  const isAdmin = userData && userData.isAdmin;
+  const isAdmin = localStorage.getItem('isAdmin');
 
 
 
@@ -121,6 +121,11 @@ useEffect(() => {
               }
               {userData.token && 
                   <button onClick={logout}>Logout</button>
+              }
+              {isAdmin &&
+                <Link to="/AdminPanel">
+                  <button>Admin</button>
+                </Link>
               }
               {userData.token &&
                <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button> 
