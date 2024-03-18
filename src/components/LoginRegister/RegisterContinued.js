@@ -1,29 +1,22 @@
 import React from "react";
 import {useState, useContext } from "react";
 import './../css/LoginRegister/Register.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {useHistory} from 'react-router-dom';
 import axios from "axios";
-const Register = () => {
-  const handleCheck = (event) => {
-    formData.registerForPromotion = event.target.checked;
-    console.log(formData.registerForPromotion);
 
-  }
+const Register = () => {
+    const location = useLocation();
+    const holder = location.state || {};
   const [formData, setFormData] = useState({
-    fullName: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
-    profilePhoto: '',
-    email: '',
-    age: '18',
-    street: '',
+    cardType: '',
+    cardNumber: '',
+    cardPIN: '',
+    expirationDate: '',
+    billingAddress: '',
     city: '',
-    registerForPromotion: 'false',
-    zipCode: '',
     state: '',
-    phoneNumber: ''
+    zipCode: '',
   });
 
   const handleChange = (e) => {
@@ -49,37 +42,37 @@ const Register = () => {
     console.log(formData);
     // Reset form data
     
+
     try {
-    const response = await axios.post("http://localhost:3000/signup", formData);
+        if (formData.cardType !== '') {
+        console.log(holder.email);
+         const userID = await axios.get(`http://localhost:3000/users/${holder.email}`);
+
+         console.log(formData);
+         const submit = await axios.post(`http://localhost:3000/users/${userID.data.id}/payment`, formData);
+        }
     setFormData({
-      fullName: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
-      profilePhoto: '',
-      email: '',
-      age: '18',
-      street: '',
-      city: '',
-      registerForPromotion: 'false',
-      zipCode: '',
-      state: '',
-      phoneNumber: ''
+        cardType: '',
+        cardNumber: '',
+        cardPIN: '',
+        expirationDate: '',
+        billingAddress: '',
+        city: '',
+        state: '',
+        zipCode: '',
     });
-    newLocation("/registerContinued", { state: { email: formData.email } })
+    newLocation("/confirmationPage")
     } catch(error) {
-      console.error('Registering failed', error);
-      alert('Error while registering');
+
     }
-  
   };
  return (
   <div className="centerFormRegister">  
     <div className="containerForm">
-    <h2 class="register">Register</h2>
-      <form className="bodyRegisterForm" onSubmit={handleSubmit}>
+    <h2 class="register">Register: Optional</h2>
+      <form className="bodyRegisterContinuedForm" onSubmit={handleSubmit}>
       <div>
-        <h2>User Information</h2>
+        {/* <h2>User Information</h2>
         <div className="form-group">
           <label>Username: </label>
           <input className="forms-inputRegister"
@@ -128,9 +121,10 @@ const Register = () => {
                 value={formData.phoneNumber}
                 onChange={handleChange}
               />
-        </div>
-      {/* <div className="form-group">       */}
-        {/* <h2>Payment Information</h2>      
+        </div> */}
+        
+      <div className="form-group">      
+        <h2>Payment Information</h2>      
           <label>Card Type: </label>
           <input className="forms-inputRegister"
               type="text"
@@ -156,17 +150,68 @@ const Register = () => {
               value={formData.expirationDate}
               onChange={handleChange}
             />
- </div>    */} 
-        <div className="form-group">    
-          <label for="registerForPromotion">Register for promotions:</label> 
-          <input type="checkbox" id="registerForPromotion" name="registerForPromotion" onChange={handleCheck}></input> 
-          <button className="registerButtonRegister" type="submit">Continue</button>
-        </div>          
+            
+        </div>  
+        <div className="form-group">
+          <label>Card Pin: </label>
+          <input className="forms-inputRegister"
+              type="text"
+              name="cardPIN"
+              value={formData.cardPIN}
+              onChange={handleChange}
+            />
+            
+        </div> 
+         
+        {/* <div className="form-group">  
+          <button className="registerButtonRegisterContinued" type="submit">Register!</button>
+        </div>          */}
+        
+      <div className="form-group">  
+          <button className="registerButtonRegisterContinued" type="submit">Register!</button>
+        </div>  
     </div>
     
     
     <div>
-        <h2>Home Address</h2>
+        {/* <h2>Home Address</h2>
+        <div className="form-group">
+          <label>Street: </label>
+          <input className="forms-inputRegister"
+              type="text"
+              name="street"
+              value={formData.street}
+              onChange={handleChange}
+            />
+        </div>
+        <div className="form-group">
+          <label>City: </label>
+          <input className="forms-inputRegister"
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+            />
+        </div>
+        <div className="form-group">
+          <label>State: </label>
+          <input className="forms-inputRegister"
+              type="text"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+            />
+        </div>
+        <div className="form-group">
+          <label>Zip Code: </label>
+          <input className="forms-inputRegister"
+              type="text"
+              name="zipCode"
+              value={formData.zipCode}
+              onChange={handleChange}
+            />
+        </div> */}
+        <h2>Billing Address</h2>
         <div className="form-group">
           <label>Street: </label>
           <input className="forms-inputRegister"
@@ -203,47 +248,20 @@ const Register = () => {
               onChange={handleChange}
             />
         </div>
-        {/* <h2>Billing Address</h2>
         <div className="form-group">
-          <label>Street: </label>
+          <label>Billing Address: </label>
           <input className="forms-inputRegister"
               type="text"
-              name="street"
-              value={formData.street}
+              name="billingAddress"
+              value={formData.billingAddress}
               onChange={handleChange}
             />
         </div>
-        <div className="form-group">
-          <label>City: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-            />
-        </div> */}
-        {/* <div className="form-group">
-          <label>State: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>Zip Code: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleChange}
-            />
-        </div> */}
         <div className="fillInSpaceRegister"></div>
       </div> 
       </form>
-      </div>
+      
+      </div>  
   </div>
   );
 }

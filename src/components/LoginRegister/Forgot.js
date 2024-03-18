@@ -21,6 +21,7 @@ const Forgot = () => {
 
     // Email is valid, update displayText
     setDisplayText("Thank you! The email should be send to your inbox!");
+    localStorage.setItem('email', email);
   };
 
   const handleEmailChange = (e) => {

@@ -15,10 +15,11 @@ import Payment from './components/BookingTickets/Payment';
 import PaymentConfirmation from './components/BookingTickets/PaymentConfirmation';
 import OrderSummary from './components/BookingTickets/OrderSummary';
 import Promotions from './components/Promotions/Promotions';
+import UpdatePassword from './components/LoginRegister/UpdatePassword';
+import RegisterContinued from './components/LoginRegister/RegisterContinued';
 
 
 function App() {
-
   
   return (
     <Router>
@@ -41,7 +42,8 @@ function App() {
           <Route exact path='/paymentconfirm' element={<PaymentConfirmation />} />
           <Route exact path='/ordersummary' element={<OrderSummary />} />
           <Route exact path='/promotions' element={<Promotions />} />
-
+          <Route exact path='/reset/:token' element={<UpdatePassword />} />
+          <Route exact path='/registerContinued' element={<RegisterContinued />} /> 
         </Routes>
       </div>
     </Router>
