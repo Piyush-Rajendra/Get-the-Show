@@ -146,7 +146,6 @@ const Register = () => {
         </div>         
     </div>
     
-    
     <div>
         <h2>Home Address</h2>
         <div className="form-group">

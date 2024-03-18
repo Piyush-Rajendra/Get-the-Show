@@ -60,6 +60,7 @@
   width:90px;
   border-radius: 30px;
   font-weight: 600;
+  margin-bottom: 30px;
   background-color: #f85757;
   &:hover {
   background-color: #b44242;
@@ -88,3 +89,19 @@
     background-color: #b44242;
   }
 }
+
+  .removeButtonProfilePage {
+    padding: 10px 15px;
+    border: none;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-size: 30px;
+    width:150px;
+    border-radius: 30px;
+    font-weight: 600;
+    margin-left: 50px;
+    background-color: #f85757;
+    &:hover {
+    background-color: #b44242;
+    }
+  }

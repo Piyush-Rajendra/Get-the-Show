@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useState, useContext } from "react";
-import '../css/HomePage/HomePage.css'
-import MovieCard from "./MovieCard";
+import '../css/HomePage/HomePage.css';
+import MovieCard from './MovieCard';
 import axios from 'axios';
-import {useEffect} from 'react';
-import { useHistory } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SidebarPopup from './SidebarPopup';
 
 
 const HomePage = ({props}) => {
-
+  //const { userData } = useContext(UserContext);
+  //<h1>{userData.userName}</h1>
+  //<h1>{localstoage.getItem("username")}</h1>
   const [myValue, setMyValue] = useState(false)
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -103,13 +102,12 @@ useEffect(() => {
                 </Link>
               }
               {myValue && 
-                  <button onClick={updateVal}>Logout</button>
-              }
-               <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button>
-                <SidebarPopup isOpen={isOpen} onClose={toggleSidebar} />
               <div>
-
+                  <button onClick={updateVal}>Logout</button>
+                  <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button>
+                  <SidebarPopup isOpen={isOpen} onClose={toggleSidebar} />
               </div>
+              }
             </div>
           </div>
           <div class = "homeNowPlaying">
