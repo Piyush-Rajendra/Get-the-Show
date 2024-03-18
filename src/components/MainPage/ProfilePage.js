@@ -156,15 +156,11 @@ const handleAddPaymentCard = async (e) => {
   try {
     console.log(newPaymentInfo);
     const lastPayment = paymentInfo.slice(-1)[0];
-    const response = await axios.post(`http://localhost:3000/users/${userId}/payment`, {
+    const response = await axios.post(`http://localhost:3000/users/${userId}/onlypayment`, {
       cardType: newPaymentInfo.cardType,
       cardNumber: newPaymentInfo.cardNumberHash,
       cardPIN: newPaymentInfo.cardPINHash,
       expirationDate: newPaymentInfo.expirationDate,
-      billingAddress: lastPayment.billingAddress,
-      city: lastPayment.city,
-      state: lastPayment.state,
-      zipCode: lastPayment.zipCode,
     });
     setPaymentInfo([...paymentInfo, response.data]);
     setNewPaymentInfo({  
@@ -172,10 +168,6 @@ const handleAddPaymentCard = async (e) => {
       cardNumberHash: '',
       cardPINHash: '',
       expirationDate: '',
-      billingAddress: '',
-      city: '',
-      state: '',
-      zipCode: '',
     });
     alert('Payment information added successfully!');
     window.location.reload(); // Reload the page
@@ -259,44 +251,60 @@ const handleAddPaymentCard = async (e) => {
                       return updatedPaymentInfo;
                     })}
                   />
-                  <button className='editButtonProfilePage' type="submit">Edit</button>
+                  <button
+                    className='removeButtonProfilePage'
+                    onClick={async () => {
+                      console.log(payment.paymentId);
+                      try {
+                        await axios.delete(`http://localhost:3000/payment-info/${payment.paymentId}`);
+                        const updatedPaymentInfo = paymentInfo.filter((_, i) => i !== index);
+                        setPaymentInfo(updatedPaymentInfo);
+                        alert('Payment information removed!');
+                      } catch (error) {
+                        console.error('Failed to remove payment information', error);
+                        alert('Failed to remove payment information');
+                      }
+                    }}
+                  >
+                    Remove
+                  </button>
                 </form>
               ))}
               {paymentInfo.length < 3 && (
-              <div>
-                <form onSubmit={handleAddPaymentCard}>
-                  <input
-                    className="inputProfilePage"
-                    type="text"
-                    placeholder="Card Type"
-                    value={newPaymentInfo.cardType}
-                    onChange={(e) => setNewPaymentInfo({ ...newPaymentInfo, cardType: e.target.value })}
-                  />
-                  <input
-                    className="inputProfilePage"
-                    type="number"
-                    placeholder="Card Number"
-                    value={newPaymentInfo.cardNumberHash}
-                    onChange={(e) => setNewPaymentInfo({ ...newPaymentInfo, cardNumberHash: e.target.value })}
-                  />
-                  <input
-                    className="inputProfilePage"
-                    type="number"
-                    placeholder="Card Pin"
-                    value={newPaymentInfo.cardPINHash}
-                    onChange={(e) => setNewPaymentInfo({ ...newPaymentInfo, cardPINHash: e.target.value })}
-                  />
-                  <input
-                    className="inputProfilePage"
-                    type="date"
-                    placeholder="Expiration Date"
-                    value={newPaymentInfo.expirationDate}
-                    onChange={(e) => setNewPaymentInfo({ ...newPaymentInfo, expirationDate: e.target.value })}
-                  />
-                  <button className='editButtonProfilePage' type="submit">Add</button>
-                </form>
-              </div>
-            )}
+                <div>
+                  <form onSubmit={handleAddPaymentCard}>
+                    <input
+                      className="inputProfilePage"
+                      type="text"
+                      placeholder="Card Type"
+                      value={newPaymentInfo.cardType}
+                      onChange={(e) => setNewPaymentInfo({ ...newPaymentInfo, cardType: e.target.value })}
+                    />
+                    <input
+                      className="inputProfilePage"
+                      type="number"
+                      placeholder="Card Number"
+                      value={newPaymentInfo.cardNumberHash}
+                      onChange={(e) => setNewPaymentInfo({ ...newPaymentInfo, cardNumberHash: e.target.value })}
+                    />
+                    <input
+                      className="inputProfilePage"
+                      type="number"
+                      placeholder="Card Pin"
+                      value={newPaymentInfo.cardPINHash}
+                      onChange={(e) => setNewPaymentInfo({ ...newPaymentInfo, cardPINHash: e.target.value })}
+                    />
+                    <input
+                      className="inputProfilePage"
+                      type="date"
+                      placeholder="Expiration Date"
+                      value={newPaymentInfo.expirationDate}
+                      onChange={(e) => setNewPaymentInfo({ ...newPaymentInfo, expirationDate: e.target.value })}
+                    />
+                    <button className='editButtonProfilePage' type="submit">Add</button>
+                  </form>
+                </div>
+              )}
             </div>
           )}
         {activeTab === 'home' && (
