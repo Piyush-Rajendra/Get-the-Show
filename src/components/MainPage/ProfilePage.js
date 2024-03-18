@@ -91,31 +91,28 @@ useEffect(() => {
     }
   };
 
-  const handleSubmitPayment = async (e) => {
-  e.preventDefault();
-  try {
-    await axios.put('http://localhost:3000/payment/1', {
-      paymentInfo: [
-        {
-          paymentId: paymentInfo.paymentId,
-          cardType: paymentInfo.cardType,
-          cardNumberHash: paymentInfo.cardNumberHash,
-          cardPINHash: paymentInfo.cardPINHash,
-          expirationDate: paymentInfo.expirationDate,
-          billingAddress: paymentInfo.billingAddress,
-          city: paymentInfo.city,
-          state: paymentInfo.state,
-          zipCode: paymentInfo.zipCode,
-        }
-      ]
-    });
-    alert('Payment information updated!');
-  } catch (error) {
-    console.error('Failed to update payment information', error);
-    alert('Failed to update payment information');
-  }
-};
-
+ const handleSubmitPayment = async (e) => {
+    e.preventDefault();
+    try {
+      const lastPayment = paymentInfo.slice(-1)[0];
+      console.log (lastPayment);
+      await axios.put(`http://localhost:3000/payment/1`, {
+        cardType: lastPayment.cardType,
+        cardNumberHash: lastPayment.cardNumberHash,
+        cardPINHash: lastPayment.cardPINHash,
+        expirationDate: lastPayment.expirationDate,
+        billingAddress: lastPayment.billingAddress,
+        city: lastPayment.city,
+        state: lastPayment.state,
+        zipCode: lastPayment.zipCode,
+        userId: lastPayment.userId,
+      });
+      alert('Payment information updated!');
+    } catch (error) {
+      console.error('Failed to update payment information', error);
+      alert('Failed to update payment information');
+    }
+  };
   
 
   return (
@@ -209,38 +206,54 @@ useEffect(() => {
           </form>
         )}
         {activeTab === 'billing' && (
-          <form onSubmit={handleSubmitPayment}>
-            <input
-              className="inputProfilePage"
-              type="text"
-              placeholder="Street"
-              value={paymentInfo && paymentInfo.length > 0 ? paymentInfo[0].billingAddress : ''}
-              onChange={(e) => setPaymentInfo([{ ...paymentInfo[0], billingAddress: e.target.value }])}
-            />
-            <input
-              className="inputProfilePage"
-              type="text"
-              placeholder="City"
-              value={paymentInfo && paymentInfo.length > 0 ? paymentInfo[0].city : ''}
-              onChange={(e) => setPaymentInfo([{ ...paymentInfo[0], city: e.target.value }])}
-            />
-            <input
-              className="inputProfilePage"
-              type="text"
-              placeholder="State"
-              value={paymentInfo && paymentInfo.length > 0 ? paymentInfo[0].state : ''}
-              onChange={(e) => setPaymentInfo([{ ...paymentInfo[0], state: e.target.value }])}
-            />
-            <input
-              className="inputProfilePage"
-              type="number"
-              placeholder="Zip Code"
-              value={paymentInfo && paymentInfo.length > 0 ? paymentInfo[0].zipCode : ''}
-              onChange={(e) => setPaymentInfo([{ ...paymentInfo[0], zipCode: e.target.value }])}
-            />
-            <button type="submit" className='editButtonProfilePage'>Edit</button>
-          </form>
-        )}
+  <form onSubmit={handleSubmitPayment}>
+    <input
+      className="inputProfilePage"
+      type="text"
+      placeholder="Street"
+      value={paymentInfo && paymentInfo.length > 0 ? paymentInfo[paymentInfo.length - 1].billingAddress : ''}
+      onChange={(e) => setPaymentInfo(prevState => {
+        const updatedPaymentInfo = [...prevState];
+        updatedPaymentInfo[prevState.length - 1].billingAddress = e.target.value;
+        return updatedPaymentInfo;
+      })}
+    />
+    <input
+      className="inputProfilePage"
+      type="text"
+      placeholder="City"
+      value={paymentInfo && paymentInfo.length > 0 ? paymentInfo[paymentInfo.length - 1].city : ''}
+      onChange={(e) => setPaymentInfo(prevState => {
+        const updatedPaymentInfo = [...prevState];
+        updatedPaymentInfo[prevState.length - 1].city = e.target.value;
+        return updatedPaymentInfo;
+      })}
+    />
+    <input
+      className="inputProfilePage"
+      type="text"
+      placeholder="State"
+      value={paymentInfo && paymentInfo.length > 0 ? paymentInfo[paymentInfo.length - 1].state : ''}
+      onChange={(e) => setPaymentInfo(prevState => {
+        const updatedPaymentInfo = [...prevState];
+        updatedPaymentInfo[prevState.length - 1].state = e.target.value;
+        return updatedPaymentInfo;
+      })}
+    />
+    <input
+      className="inputProfilePage"
+      type="number"
+      placeholder="Zip Code"
+      value={paymentInfo && paymentInfo.length > 0 ? paymentInfo[paymentInfo.length - 1].zipCode : ''}
+      onChange={(e) => setPaymentInfo(prevState => {
+        const updatedPaymentInfo = [...prevState];
+        updatedPaymentInfo[prevState.length - 1].zipCode = e.target.value;
+        return updatedPaymentInfo;
+      })}
+    />
+    <button type="submit" className='editButtonProfilePage'>Edit</button>
+  </form>
+)}
       </div>
     </div>
   );
