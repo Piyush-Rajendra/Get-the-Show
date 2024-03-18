@@ -8,6 +8,7 @@ import {useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SidebarPopup from './SidebarPopup';
+import UserContext from "../context/UserContext";
 
 
 const HomePage = ({props}) => {
@@ -16,6 +17,11 @@ const HomePage = ({props}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
+  const { userData, setUserData } = useContext(UserContext);
+  const [token, setToken] = useState()
+  const isAdmin = userData && userData.isAdmin;
+
+
 
   const navigate = useNavigate();
   const toggleActive = () => {
@@ -75,6 +81,17 @@ useEffect(() => {
     navigate('/', { state: {props: false} });
     
   }
+
+  const logout = () => {
+    setUserData(prevUserData => ({
+      ...prevUserData,
+      token: null,
+    }));
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    navigate('/logout');
+  } 
+  
   
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -97,16 +114,20 @@ useEffect(() => {
               }
             </div>
             <div class = "buttons">
-              {!myValue &&
+              {!userData.token &&
                 <Link to="/Login">
                   <button>Login</button>
                 </Link>
               }
-              {myValue && 
-                  <button onClick={updateVal}>Logout</button>
+              {userData.token && 
+                  <button onClick={logout}>Logout</button>
               }
-               <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button>
+              {userData.token &&
+               <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button> 
+              }
+              {userData.token && 
                 <SidebarPopup isOpen={isOpen} onClose={toggleSidebar} />
+              }
               <div>
 
               </div>

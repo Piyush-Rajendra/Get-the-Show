@@ -3,6 +3,7 @@ import { useState } from "react";
 import './../css/LoginRegister/Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
+import UserContext from "../context/UserContext";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Login = () => {
       password: '',
     });
 
+    const { userData, setUserData } = useContext(UserContext);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -27,7 +29,15 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:3000/signin', formData);
       const token = response.data.token;
+      const username = response.data.user.username; 
       localStorage.setItem('token', token);
+      localStorage.setItem('username', username)
+      setUserData(prevUserData => ({
+        ...prevUserData,
+        username: username,
+        token: token,
+      }));
+      //console.log(username);
       navigate("/", { state: { props: true } });
     } catch (error) {
       console.error('Login failed', error);

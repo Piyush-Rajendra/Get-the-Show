@@ -15,12 +15,42 @@ import Payment from './components/BookingTickets/Payment';
 import PaymentConfirmation from './components/BookingTickets/PaymentConfirmation';
 import OrderSummary from './components/BookingTickets/OrderSummary';
 import Promotions from './components/Promotions/Promotions';
+import React, { useState, useEffect } from "react";
+import UserContext from './components/context/UserContext';
+import Logout from './components/Logout/Logout';
 
 
 function App() {
 
+  const [userData, setUserData] = useState({
+    username: undefined,
+    token: undefined,
+    isAdmin: false,
+  });
+
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      let token = localStorage.getItem("token");
+      if (token === null) {
+        localStorage.setItem("token", "");
+        console.log("null token");
+        token = "";
+      }
+
+      else if (token != null) {
+        console.log(token); 
+        setUserData(prevUserData => ({
+          ...prevUserData,
+          token: token
+        }));
+      }
+    };
+    checkLoggedIn();
+  }, [])
+
   
   return (
+    <UserContext.Provider value ={{userData, setUserData}}>
     <Router>
       <div>
         <Routes>
@@ -41,10 +71,12 @@ function App() {
           <Route exact path='/paymentconfirm' element={<PaymentConfirmation />} />
           <Route exact path='/ordersummary' element={<OrderSummary />} />
           <Route exact path='/promotions' element={<Promotions />} />
+          <Route path='/logout' element={<Logout />} />
 
         </Routes>
       </div>
     </Router>
+    </UserContext.Provider>
     )
 }
 
