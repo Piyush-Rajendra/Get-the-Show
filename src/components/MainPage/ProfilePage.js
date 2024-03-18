@@ -7,8 +7,10 @@ import axios from 'axios';
 
 
 const ProfilePage = ({ props }) => {
+  const username = localStorage.getItem('username');
   const [activeTab, setActiveTab] = useState('user');
   const [userInfo, setUserInfo] = useState({
+    id: '',
     username: '',
     password: '',
     phone: '',
@@ -17,6 +19,7 @@ const ProfilePage = ({ props }) => {
     state: '',
     zipCode: '',
     fullName: '',
+    registerForPromotions: '',
   });
 
   const [paymentInfo, setPaymentInfo] = useState({
@@ -54,12 +57,16 @@ const ProfilePage = ({ props }) => {
 useEffect(() => {
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/user/Test 2610`);
+      const response = await axios.get(`http://localhost:3000/user/${username}`);
       setUserInfo(response.data);
+      const userId = response.data.id;
       
-      const paymentResponse = await axios.get('http://localhost:3000/users/1/payment-info');
+
+
+      const paymentResponse = await axios.get('http://localhost:3000/users/${userId}/payment-info');
       const last3Payments = paymentResponse.data.paymentInfo.slice(-3);
       setPaymentInfo(last3Payments);
+
     } catch (error) {
       console.error('Failed to fetch user information', error);
       // Handle error, e.g., redirect to login page
@@ -75,11 +82,12 @@ useEffect(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const response = await axios.get(`http://localhost:3000/user/${username}`);
+    const userId = response.data.id;
     try {
-      await axios.put(`http://localhost:3000/users/1`, {
+      await axios.put(`http://localhost:3000/users/${userId}`, {
         fullName: userInfo.fullName,
         username: userInfo.username,
-        phone: userInfo.phone,
         city: userInfo.city,
         street: userInfo.street,
         state: userInfo.state,
@@ -155,6 +163,13 @@ useEffect(() => {
             value={userInfo && userInfo.phoneNumber}
             onChange={(e) => setUserInfo({ ...userInfo, phoneNumber: e.target.value })}/>
             <button className='editButtonProfilePage'>Edit</button>
+            <label>
+            <input
+              type="checkbox"
+              checked={userInfo.registeredForPromotions}
+            />
+              Registered for promotions
+            </label>
           </form>
         )}
         {activeTab === 'payment' && (
