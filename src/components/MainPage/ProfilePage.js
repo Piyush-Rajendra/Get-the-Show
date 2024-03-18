@@ -59,8 +59,9 @@ useEffect(() => {
     try {
       const response = await axios.get(`http://localhost:3000/user/${username}`);
       setUserInfo(response.data);
+      const userId = response.data.id;
       
-      const paymentResponse = await axios.get('http://localhost:3000/users/1/payment-info');
+      const paymentResponse = await axios.get(`http://localhost:3000/users/${userId}/payment-info`);
       setPaymentInfo(paymentResponse.data.paymentInfo); // Set the paymentInfo state with the fetched data
     } catch (error) {
       console.error('Failed to fetch user information', error);
@@ -77,11 +78,12 @@ useEffect(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const response = await axios.get(`http://localhost:3000/user/${username}`);
+    const userId = response.data.id;
     try {
-      await axios.put(`http://localhost:3000/users/${username}`, {
+      await axios.put(`http://localhost:3000/users/${userId}`, {
         fullName: userInfo.fullName,
         username: userInfo.username,
-        phone: userInfo.phone,
         city: userInfo.city,
         street: userInfo.street,
         state: userInfo.state,
