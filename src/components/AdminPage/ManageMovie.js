@@ -7,9 +7,13 @@ import axios from 'axios';
 import {useEffect} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
+import UserContext from "../context/UserContext";
 
 
 const ManageMovie = ({props}) => {
+
+  const { userData } = useContext(UserContext);
+  const isAdmin = userData && userData.isAdmin;
 
   const [myValue, setMyValue] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -74,6 +78,7 @@ useEffect(() => {
     navigate('/', { state: {props: false} });
     
   }
+  if (isAdmin) {
     return(
         <div class = "homeBody">
           <div class = "homeHeader">
@@ -160,6 +165,12 @@ useEffect(() => {
       </footer>
       </div>
     )
+              }
+  else {
+    return (
+      <h2 style={{ color: 'red' }}>You are not authorized to view this page.</h2>
+    )
+  }
 };
 
 export default ManageMovie;

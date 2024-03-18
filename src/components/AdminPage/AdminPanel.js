@@ -3,9 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useContext} from "react";
 import '../css/AdminPage/AdminPanel.css';
 import MovieCard from "../MainPage/MovieCard";
+import UserContext from "../context/UserContext";
 
 const AdminPanel = props => {
   const navigate = useNavigate();
+  const { userData } = useContext(UserContext);
+  const isAdmin = userData && userData.isAdmin;
 
   const changeMovie = () => {
     navigate('/ManageMovie');
@@ -19,6 +22,7 @@ const AdminPanel = props => {
   const changePromotions = () => {
     navigate('/promotions');
   }
+  if (isAdmin) {
     return(
         <div class = "homeBody">
           <div class = "homeHeader">
@@ -54,6 +58,12 @@ const AdminPanel = props => {
       </footer>
       </div>
     )
+          }
+    else {
+      return (
+      <h2 style={{ color: 'red' }}>You are not authorized to view this page.</h2>
+      )
+    }
 };
 
 export default AdminPanel;
