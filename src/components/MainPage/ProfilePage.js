@@ -219,7 +219,7 @@ const handleAddPaymentCard = async (e) => {
             <input className="inputProfilePage" type="text" placeholder="Username" 
             value={userInfo && userInfo.username}
             onChange={(e) => setUserInfo({ ...userInfo, username: e.target.value })}/>
-            <Link to="/forgotPage"><button className="inputProfilePage">Forgot Password?</button></Link>
+            <Link to="/ChangePassword"><button className="inputProfilePage">Change Password</button></Link>
             <input className="inputProfilePage" type="tel" placeholder="Phone Number" 
             value={userInfo && userInfo.phoneNumber}
             onChange={(e) => setUserInfo({ ...userInfo, phoneNumber: e.target.value })}/>
