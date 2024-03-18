@@ -7,8 +7,10 @@ import axios from 'axios';
 
 
 const ProfilePage = ({ props }) => {
+  const username = localStorage.getItem('username');
   const [activeTab, setActiveTab] = useState('user');
   const [userInfo, setUserInfo] = useState({
+    id: '',
     username: '',
     password: '',
     phone: '',
@@ -17,6 +19,7 @@ const ProfilePage = ({ props }) => {
     state: '',
     zipCode: '',
     fullName: '',
+    registerForPromotions: '',
   });
 
   const [paymentInfo, setPaymentInfo] = useState({
@@ -54,7 +57,7 @@ const ProfilePage = ({ props }) => {
 useEffect(() => {
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/user/Test 2610`);
+      const response = await axios.get(`http://localhost:3000/user/${username}`);
       setUserInfo(response.data);
       
       const paymentResponse = await axios.get('http://localhost:3000/users/1/payment-info');
@@ -75,7 +78,7 @@ useEffect(() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/users/1`, {
+      await axios.put(`http://localhost:3000/users/${username}`, {
         fullName: userInfo.fullName,
         username: userInfo.username,
         phone: userInfo.phone,
@@ -157,6 +160,13 @@ useEffect(() => {
             value={userInfo && userInfo.phoneNumber}
             onChange={(e) => setUserInfo({ ...userInfo, phoneNumber: e.target.value })}/>
             <button className='editButtonProfilePage'>Edit</button>
+            <label>
+            <input
+              type="checkbox"
+              checked={userInfo.registeredForPromotions}
+            />
+              Registered for promotions
+            </label>
           </form>
         )}
         {activeTab === 'payment' && (
