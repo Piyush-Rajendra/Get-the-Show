@@ -57,9 +57,9 @@ const UpdatePassword = () => {
       }
       const response = await axios.get('http://localhost:3000/users', email);
       const token = response.data.token;
-      console.log(formData);
-      const log = await axios.post('http://localhost:3000/signin', formData)
-      console.log(log.data.token);
+      // console.log(formData);
+      // // const log = await axios.post('http://localhost:3000/signin', formData)
+      // console.log(log.data.token);
       const resetData = {
         email: email,
         newPassword: newPassword
@@ -98,9 +98,9 @@ const UpdatePassword = () => {
                 onChange={handleEmailChange}
                 required
               /> 
-            <label class="forms-label-reset">
-              Current Password
-            </label>
+            {/* <label class="forms-label-reset">
+              Current Password */}
+            {/* </label>
               <input class="forms-input"
                 type="password"
                 // name="password"
@@ -110,7 +110,7 @@ const UpdatePassword = () => {
                 value={currentPassword}
                 onChange={handleCurrentPasswordChange}
                 required
-              />            
+              />             */}
             <br/>
             <label class="forms-label">
               New Password
