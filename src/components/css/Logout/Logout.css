@@ -1,0 +1,8 @@
+#logout-page {
+    background: linear-gradient(to bottom, #070707, #939393); /* Black to dark grey gradient */
+    margin: 0; /* Remove default body margin */
+    padding-bottom: 500px; /* Remove default body padding */
+    padding-top: 30px;
+    color: white;
+    text-align: center;
+}

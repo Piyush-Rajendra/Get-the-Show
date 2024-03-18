@@ -80,6 +80,9 @@ const UpdatePassword = () => {
     return (
     <div class = "background">
           <hr></hr>
+          <Link to="/Profile">
+            <button type="submit" className="reset-button">Back</button>
+          </Link>
           <h2 class="register">Reset Password</h2>
         <div className="center">
         <div class="formcontainer">

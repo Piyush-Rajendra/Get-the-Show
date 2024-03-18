@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import UserContext from '../context/UserContext';
+import '../css/Logout/Logout.css';
 
 
 
@@ -32,10 +33,10 @@ const Logout = props => {
     }, []);
 
     return (    
-      <div>
-        <h3>You have been succesfully logged out.</h3>
+      <div id="logout-page">
+        <h3 id="success-logout">You have been succesfully logged out.</h3>
         <Link to='/'>
-        <h3>Click here to return to home</h3>
+        <h3 id="click-here">Click here to return to home</h3>
         </Link>
       </div>
     )
