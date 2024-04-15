@@ -1,0 +1,67 @@
+.manage-tickets-page {
+    background: linear-gradient(to bottom, #070707, #939393);
+    padding-bottom: 200px;
+    padding-top: 30px; 
+    
+}
+
+
+
+#title-header {
+    color: #FF6666;
+
+}
+
+#ticket-header {
+    color: white; 
+}
+
+#center-tickets {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#center-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.ticket-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 15px;
+}
+
+.section-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-button {
+    margin: 10px; 
+    background-color: #FF6666;
+    color: black;
+    border-radius: 35px; 
+    padding: 20px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.submit-button {
+    margin: 10px; 
+    background-color: #FF6666;
+    color: black;
+    border-radius: 35px; 
+    padding: 20px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}

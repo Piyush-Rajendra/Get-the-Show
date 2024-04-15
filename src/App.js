@@ -22,6 +22,7 @@ import UpdatePassword from './components/LoginRegister/UpdatePassword';
 import RegisterContinued from './components/LoginRegister/RegisterContinued';
 import AdminLogIn from './components/LoginRegister/AdminLogIn';
 import ChangePassword from './components/LoginRegister/ChangePassword';
+import ManageTickets from './components/AdminPage/ManageTickets';
 
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
           <Route path='/logout' element={<Logout />} />
           <Route path='/adminlogin' element={<AdminLogIn />} />
           <Route path='/ChangePassword' element={<ChangePassword />} />
+          <Route path='/ManageTickets' element={<ManageTickets />} />
 
           <Route exact path='/reset/:token' element={<UpdatePassword />} />
           <Route exact path='/registerContinued' element={<RegisterContinued />} /> 
