@@ -6,6 +6,7 @@ import UserContext from "../context/UserContext";
 
 const Promotions = () => {
 
+    const navigate = useNavigate();
     const { userData } = useContext(UserContext);
     const isAdmin = localStorage.getItem('isAdmin');
     const DUMMY_PROMOTIONS = [
@@ -112,6 +113,9 @@ const Promotions = () => {
     
     const [promotions, setPromotions] = useState(DUMMY_PROMOTIONS);
 
+    const ToAddPromo = () => {
+        navigate('/AddPromotion');
+    }
 
     if (isAdmin) {
     return (
@@ -125,7 +129,7 @@ const Promotions = () => {
                 </div>
             </div>
             <div id="promo-add-button">
-                <button id="add-promo-button">Add New Promotion</button>
+                <button id="add-promo-button" onClick={ToAddPromo}>Add New Promotion</button>
             </div>
             <div id="promos-container">
             <div>
@@ -138,7 +142,9 @@ const Promotions = () => {
                     {promo.valueOffPromo && <p>Value Off: ${promo.valueOff}</p>}
                     <div id="promo-buttons">
                         <button className="promo-button">Remove</button>
+                        <Link to='/EditPromotion'>
                         <button className="promo-button">Edit</button>
+                        </Link>
                     </div>
                 </div>
             ))}

@@ -23,6 +23,8 @@ import RegisterContinued from './components/LoginRegister/RegisterContinued';
 import AdminLogIn from './components/LoginRegister/AdminLogIn';
 import ChangePassword from './components/LoginRegister/ChangePassword';
 import ManageTickets from './components/AdminPage/ManageTickets';
+import AddPromotions from './components/Promotions/AddPromotions';
+import EditPromotions from './components/Promotions/EditPromotions';
 
 
 function App() {
@@ -80,7 +82,8 @@ function App() {
           <Route path='/adminlogin' element={<AdminLogIn />} />
           <Route path='/ChangePassword' element={<ChangePassword />} />
           <Route path='/ManageTickets' element={<ManageTickets />} />
-
+          <Route path='/AddPromotion' element={<AddPromotions />} />
+          <Route path='/EditPromotion' element={<EditPromotions />} />
           <Route exact path='/reset/:token' element={<UpdatePassword />} />
           <Route exact path='/registerContinued' element={<RegisterContinued />} /> 
         </Routes>

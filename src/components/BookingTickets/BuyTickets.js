@@ -115,6 +115,8 @@ const BuyTickets = (props) => {
         sessionStorage.setItem('cost', cost);
         sessionStorage.setItem('tax', tax);
         sessionStorage.setItem('fullTotal', totalFormatted);
+        sessionStorage.setItem('movie-time', movieTime);
+        sessionStorage.setItem('movie-title', movieTitle);
 
 
         navigate('/payment');
