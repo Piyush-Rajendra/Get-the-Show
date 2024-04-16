@@ -14,6 +14,8 @@ const HomePage = ({props}) => {
   //<h1>{localstoage.getItem("username")}</h1>
   const [myValue, setMyValue] = useState(false)
   const [searchQuery, setSearchQuery] = useState('');
+  const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
+  const [moviesComingSoon, setMoviesComingSoon] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
@@ -47,10 +49,20 @@ const handleSearchInputChange = (event) => {
 };
 const handleSearch = () => {
   // Filter movieList based on searchQuery
+  const selectedFilter = document.getElementById('filter-dropdown').value;
   setSearchActive(true);
-  const filtered = movieList.filter(movie =>
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  let filtered;
+  if (selectedFilter === 'category') {
+    // Filter by category
+    filtered = movieList.filter(movie =>
+      movie.category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  } else {
+    // Filter by title or showDatesTimes (you can add more filters as needed)
+    filtered = movieList.filter(movie =>
+      movie[selectedFilter].toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }
   setFilteredMovies(filtered);
 };
 
@@ -62,6 +74,17 @@ useEffect(() => {
       // Handle successful response
       setMovieList(response.data);
       console.log('Data:', response.data);
+      const currentDateTime = new Date();
+      const nowPlayingMovies = response.data.filter(movie => {
+        const releaseDateTime = new Date(movie.releaseDate);
+        return releaseDateTime <= currentDateTime;
+      });
+      const comingSoonMovies = response.data.filter(movie => {
+        const releaseDateTime = new Date(movie.releaseDate);
+        return releaseDateTime > currentDateTime;
+      });
+      setMoviesPlayingNow(nowPlayingMovies);
+      setMoviesComingSoon(comingSoonMovies);
     })
     .catch(error => {
       // Handle error
@@ -144,7 +167,7 @@ useEffect(() => {
           <div class="homeListNowPlaying">
             <ul class="item-list">
               <li class="movie-card-container">
-              {searchActive && filteredMovies.slice(0, movieList.length/2).map((location, index) => (
+              {searchActive && filteredMovies.map((location, index) => (
                   <Link to={`/movieview/${location.id}`}  key={index}>
                     <MovieCard 
                       movie={location.title}
@@ -161,7 +184,7 @@ useEffect(() => {
                     ></MovieCard>
                 </Link>
                 ))}
-                {!searchActive && movieList.slice(0, movieList.length/2).map((location, index) => (
+                {!searchActive && moviesPlayingNow.map((location, index) => (
                   <Link to={`/movieview/${location.id}`}  key={index}>
                     <MovieCard 
                       movie={location.title}
@@ -187,7 +210,7 @@ useEffect(() => {
           <div class="homeListNowPlaying">
             <ul class="item-list">
               <li class="movie-card-container">
-              {searchActive && filteredMovies.slice(movieList.length/2).map((location) => (
+              {searchActive && filteredMovies.map((location) => (
                   <Link to={`/movieview/${location.id}`}  >
                     <MovieCard 
                       movie={location.title}
@@ -204,7 +227,7 @@ useEffect(() => {
                     ></MovieCard>
                 </Link>
                 ))}
-                {!searchActive && movieList.slice(movieList.length/2, movieList.length).map((location) => (
+                {!searchActive && moviesComingSoon.map((location) => (
                   <Link to={`/movieview/${location.id}`}  >
                     <MovieCard 
                       movie={location.title}
