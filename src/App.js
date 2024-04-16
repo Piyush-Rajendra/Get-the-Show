@@ -22,7 +22,10 @@ import UpdatePassword from './components/LoginRegister/UpdatePassword';
 import RegisterContinued from './components/LoginRegister/RegisterContinued';
 import AdminLogIn from './components/LoginRegister/AdminLogIn';
 import ChangePassword from './components/LoginRegister/ChangePassword';
-
+import EditMovie from './components/AdminPage/EditMovie';
+import AddMovie from './components/AdminPage/AddMovie';
+import AddAdmin from './components/AdminPage/AddAdmin';
+import EditUser from './components/AdminPage/EditUser';
 
 function App() {
   const [userData, setUserData] = useState({
@@ -78,9 +81,12 @@ function App() {
           <Route path='/logout' element={<Logout />} />
           <Route path='/adminlogin' element={<AdminLogIn />} />
           <Route path='/ChangePassword' element={<ChangePassword />} />
-
+          <Route path='/editmovie/:id' element={<EditMovie />} />
           <Route exact path='/reset/:token' element={<UpdatePassword />} />
           <Route exact path='/registerContinued' element={<RegisterContinued />} /> 
+          <Route exact path='/AddMovie' element ={<AddMovie />} />
+          <Route exact path='/addadmin' element ={<AddAdmin />} />
+          <Route exact path='/edituser/:id' element={<EditUser/>} />
         </Routes>
       </div>
     </Router>

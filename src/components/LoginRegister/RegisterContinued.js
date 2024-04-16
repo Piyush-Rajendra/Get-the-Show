@@ -63,7 +63,7 @@ const Register = () => {
     });
     newLocation("/confirmationPage")
     } catch(error) {
-
+      alert(error.response.data.error)
     }
   };
  return (

@@ -51,31 +51,6 @@ const Register = () => {
       setPasswordsMatch(false);
       return;
     } 
-    const regex = /[!@#$%^&*(),.?":{}|<>]/;
-    const hasCapitalLetter = /[A-Z]/.test(formData.password);
-    setIsValid(regex.test(formData.password) && hasCapitalLetter);
-    if (!hasCapitalLetter) {
-      alert('Password does not contain a capital letter');
-      return;
-    }
-    if (!regex.test(formData.password)) {
-      alert('Password does not contain a special character');
-      return;
-    }
-    const isValidLength = formData.password.length >= 8;
-    if (!isValidLength) {
-      alert('Password is not at least length 8');
-      return;
-    }
-    axios.get("http://localhost:3000/users/", formData.email).then(
-      response => {
-        console.log(response);
-      }
-    )
-    // if (check.message !== "User not found") {
-    //   alert('Email is already used');
-    //   return;
-    // }
     setPasswordsMatch(true);
     console.log(formData);
     // Reset form data
@@ -99,9 +74,9 @@ const Register = () => {
     });
     newLocation("/registerContinued", { state: { email: formData.email } })
     } catch(error) {
-      console.error('Registering failed', error);
+      console.error('Registering failed', error.response.data.error);
       // alert('Error while registering');
-      alert(error)
+      alert(error.response.data.error)
     }
   
   };

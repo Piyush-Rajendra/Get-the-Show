@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import { useState, useContext } from "react";
-import '../css/AdminPage/ManageMovie.css'
+import '../css/AdminPage/ManageMovie.css';
+import '../css/AdminPage/ManageUser.css';
 import UserCard from "../MainPage/UserCard";
 import axios from 'axios';
 import {useEffect} from 'react';
@@ -11,6 +12,7 @@ import UserContext from "../context/UserContext";
 
 const ManageUser = () => {
 
+  const [suspended, setSuspended] = useState('');
   const [userList, setUserList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -35,16 +37,16 @@ const ManageUser = () => {
     setSearchQuery(''); // Clear the value of the input field
   };
   const url = 'http://localhost:3000/users';
+  const url1 = 'http://localhost:3000/admin/users';
   useEffect(() => {
     axios.get(url)
       .then(response => {
         // Handle successful response
         setUserList(response.data);
-        console.log('Data:', response.data);
       })
       .catch(error => {
         // Handle error
-        console.error('Error fetching data:', error);
+        alert(error);
       });
   }, []);
 
@@ -55,10 +57,30 @@ const ManageUser = () => {
     // Filter movieList based on searchQuery
     setSearchActive(true);
     const filtered = userList.filter(user =>
-      user.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+      user.username.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredUsers(filtered);
   };
+
+  const deleteUser = async (ind) => {
+    try {
+      const response = await axios.delete(`http://localhost:3000/deleteUser/${ind}`);
+      window.location.reload();
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  const suspendUser = async (ind) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/suspend/${ind}`);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  }
+
 
   if (isAdmin) {
     return(
@@ -66,11 +88,7 @@ const ManageUser = () => {
           <div class = "homeHeader">
             <h1>E-Cinema Booking</h1>
             <div class = "homeSearch">
-              <select id="filter-dropdown">
-                <option value="fullName">Name</option>
-                <option value="username">Username</option>
-              </select>
-              <input type="text" id="myInput" placeholder="Search for Movies..." value={searchQuery} onChange={handleSearchInputChange}></input>
+              <input type="text" id="myInput" placeholder="Search For User By username..." value={searchQuery} onChange={handleSearchInputChange}></input>
               <button onClick={handleSearch}>Search</button>
               {searchActive && 
                 <button onClick={toggleActive}>Reset</button>
@@ -86,32 +104,14 @@ const ManageUser = () => {
           <div class = "ManageMovieNowPlaying">
             <h1>Manage Users</h1>
           </div>
+          <div class = "ManageMovieButton"> 
+          <Link to="/addadmin"><button>Add Admin</button></Link>
+          </div>
           <div class="homeListNowPlaying">
             <ul class="item-list">
             {searchActive && filteredUsers.map((location, index) => (
                   <li key={index} class="movie-card-container">
-                    <div class="movie-card-wrapper">
-                      <Link to="/">
-                      <UserCard 
-                          fullName={location.fullName}
-                          userName={location.username}
-                          age={location.age}
-                          email={location.email}
-                          profilePhoto={location.profilePhoto}
-                          paymentInfo={location.paymentInfo}
-                        />
-                    </Link>
-                      <div class="button-group">
-                        <button>Edit</button>
-                        <button>Delete</button>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              {!searchActive && userList.map((location, index) => (
-                <li key={index} class="movie-card-container">
                   <div class="movie-card-wrapper">
-                    <Link to="/">
                     <UserCard 
                           fullName={location.fullName}
                           userName={location.username}
@@ -120,10 +120,41 @@ const ManageUser = () => {
                           profilePhoto={location.profilePhoto}
                           paymentInfo={location.paymentInfo}
                         />
-                    </Link>
-                    <div class="button-group">
-                      <button>Edit</button>
-                      <button>Delete</button>
+                    <div class="button-group-user">
+                      <Link to={`/edituser/${location.id}`}  key={index}><button>Edit</button></Link>
+                      {console.log(location.suspendStatus)}
+                      {location.SuspendStatus === "not_suspended" && 
+                      <button onClick={() => suspendUser(location.id)}>Suspend</button>
+                      }
+                      {location.SuspendStatus !== "not_suspended" && 
+                      <button onClick={() => suspendUser(location.id)}>Unsuspend</button>
+                      }
+                      <button onClick={() => deleteUser(location.id)}>Delete</button>
+                    </div>
+                  </div>
+                </li>
+                ))}
+              {!searchActive && userList.map((location, index) => (
+                <li key={index} class="movie-card-container">
+                  <div class="movie-card-wrapper">
+                    <UserCard 
+                          fullName={location.fullName}
+                          userName={location.username}
+                          age={location.age}
+                          email={location.email}
+                          profilePhoto={location.profilePhoto}
+                          paymentInfo={location.paymentInfo}
+                        />
+                    <div class="button-group-user">
+                      <Link to={`/edituser/${location.id}`}  key={index}><button>Edit</button></Link>
+                      {console.log(location.suspendStatus)}
+                      {location.SuspendStatus === "not_suspended" && 
+                      <button onClick={() => suspendUser(location.id)}>Suspend</button>
+                      }
+                      {location.SuspendStatus !== "not_suspended" && 
+                      <button onClick={() => suspendUser(location.id)}>Unsuspend</button>
+                      }
+                      <button onClick={() => deleteUser(location.id)}>Delete</button>
                     </div>
                   </div>
                 </li>

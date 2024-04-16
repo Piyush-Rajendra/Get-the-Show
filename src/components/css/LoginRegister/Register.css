@@ -23,6 +23,21 @@
     margin-bottom: 50px;
 }
 
+.bodyRegisterFormUser {
+    display: flex;
+    gap: 50px;
+    align-items: flex-start; /* Align items to start of the cross axis */
+    background-color: #FF6666;
+    padding: 10px;
+    border-radius: 25px;
+    width: 90%;
+    width: 800px;
+    height: 400px;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 .bodyRegisterContinuedForm {
     display: flex;
     gap: 50px;
@@ -68,6 +83,27 @@
     color: #000000;
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: Judson, sans-serif;
+    padding: 8px 16px;    
+    &:hover {
+        background-color: #f8a6a6;
+    }
+}
+
+.registerButtonRegisterUser {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 200px;
+    padding: 6px;
+    font-size: 16px;
+    border-radius: 25px;
+    margin-top: 20px;
+    background-color: rgb(248, 232, 232);
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    align-items: center;
     transition: background-color 0.3s ease;
     font-family: Judson, sans-serif;
     padding: 8px 16px;    

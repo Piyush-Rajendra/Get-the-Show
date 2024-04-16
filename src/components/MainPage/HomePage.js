@@ -102,9 +102,9 @@ useEffect(() => {
             <h1>E-Cinema Booking</h1>
             <div class = "homeSearch">
               <select id="filter-dropdown">
-                <option value="">Title</option>
-                <option value="genre">Genre</option>
-                <option value="year">Year</option>
+                <option value="title">Title</option>
+                <option value="category">Category</option>
+                <option value="showDatesTimes">Show Date</option>
               </select>
               <input type="text" id="myInput" placeholder="Search for Movies..." value={searchQuery} onChange={handleSearchInputChange}></input>
               <button onClick={handleSearch}>Search</button>
