@@ -24,6 +24,31 @@ const ManageTickets = (props) => {
     const [adultPrice, setAdultPrice] = useState(12);
     const [seniorPrice, setSeniorPrice] = useState(9);
 
+    useEffect(() => {
+        const fetchTicketData = async () => {
+          try {
+            const responseOne = await axios.get(`http://localhost:3000/ticket-prices/children`);
+            setChildPrice(responseOne.data.price); 
+            const responseTwo = await axios.get(`http://localhost:3000/ticket-prices/adult`);
+            setAdultPrice(responseTwo.data.price); 
+            const responseThree = await axios.get(`http://localhost:3000/ticket-prices/senior`);
+            setSeniorPrice(responseThree.data.price); 
+            
+            //setShowtimesArray(["2/23/24 @ 4:30 P.M.", "2/27/24 @ 7:30 P.M.", "3/1/24 @ 1:00 P.M.", "3/16/24 @ 11:15 A.M."]);
+            //setCastArray(["Filler Guy Jr.", "Guy Ray", "Ray Guy", "Batman Robin", "Barack Obama", "Fake Person IV"]);
+            
+
+            //setFormData(response.data);
+          } catch (error) {
+            console.error('Error fetching ticket data:', error);
+          }
+        };
+    
+        fetchTicketData();
+      }, []);
+
+
+
     const handleEdit = (type) => {
         switch (type) {
             case 'child':
@@ -44,15 +69,50 @@ const ManageTickets = (props) => {
         switch (type) {
             case 'child':
                 setChildEdit(false);
-                alert("Child ticket price edited!");
+                //alert("Child ticket price edited to!");
+                //alert(childPrice);
+                const childFormData = {
+                    price: childPrice
+                  };
+                try {
+                    // Send form data to your server, which will interact with MongoDB
+                    axios.put(`http://localhost:3000/ticket-prices/children`, childFormData); // Replace with your server endpoint
+                    console.log('Form submitted successfully:', childFormData);
+                    //clear
+                  } catch (error) {
+                    console.error('Error submitting form:', error);
+                  }
+                
                 break;
             case 'adult':
                 setAdultEdit(false);
                 alert("Adult ticket price edited!");
+                const adultFormData = {
+                    price: adultPrice
+                  };
+                try {
+                    // Send form data to your server, which will interact with MongoDB
+                    axios.put(`http://localhost:3000/ticket-prices/adult`, adultFormData); // Replace with your server endpoint
+                    console.log('Form submitted successfully:', adultFormData);
+                    //clear
+                  } catch (error) {
+                    console.error('Error submitting form:', error);
+                  }
                 break;
             case 'senior':
                 setSeniorEdit(false);
                 alert("Senior ticket price edited!");
+                const seniorFormData = {
+                    price: seniorPrice
+                  };
+                try {
+                    // Send form data to your server, which will interact with MongoDB
+                    axios.put(`http://localhost:3000/ticket-prices/senior`, seniorFormData); // Replace with your server endpoint
+                    console.log('Form submitted successfully:', seniorFormData);
+                    //clear
+                  } catch (error) {
+                    console.error('Error submitting form:', error);
+                  }
                 break;
             default:
                 break;
