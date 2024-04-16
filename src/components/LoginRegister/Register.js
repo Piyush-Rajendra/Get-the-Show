@@ -76,7 +76,10 @@ const Register = () => {
  return (
   <div className="centerFormRegister">  
     <div className="containerForm">
-    <h2 class="register">Register</h2>
+      <Link to="/login">
+        <button className="backButtonRegisterPage">Back</button>
+      </Link>
+    <h2 class="registerFontRegisterPage">Register</h2>
       <form className="bodyRegisterForm" onSubmit={handleSubmit}>
       <div>
         <h2>User Information</h2>
@@ -160,7 +163,7 @@ const Register = () => {
         <div className="form-group">    
           <label for="registerForPromotion">Register for promotions:</label> 
           <input type="checkbox" id="registerForPromotion" name="registerForPromotion" onChange={handleCheck}></input> 
-          <button className="registerButtonRegister" type="submit">Continue</button>
+          <button className="registerButtonRegister" type="submit">Register!</button>
         </div>          
     </div>
     

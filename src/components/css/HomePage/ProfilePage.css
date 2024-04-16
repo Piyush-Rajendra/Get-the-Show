@@ -107,3 +107,21 @@
     background-color: #b44242;
     }
   }
+
+  .imageButtonProfilePage {
+    background:none;
+    border: none;
+    height: 200px;
+    width:200px;
+    margin:0;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .imgProfileSideBarProfilePage {
+  height: px;
+  width: 200px;
+  border-radius: 80%;
+  margin: auto;
+}
