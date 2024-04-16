@@ -130,6 +130,7 @@ useEffect(() => {
       alert('User information updated!');
     } catch (error) {
       console.error('Failed to update user information', error);
+      alert('Failed to update User Information!');
     }
   };
   
