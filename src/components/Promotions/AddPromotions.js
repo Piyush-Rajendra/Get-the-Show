@@ -10,10 +10,10 @@ const AddPromotions = () => {
         name: '',
         promoCode: '',
         description: '',
-        percentOffPromo: false,
-        valueOffPromo: true,
-        percentOff: 0,
-        valueOff: 0
+        percentoffPromo: false,
+        valueoffPromo: true,
+        percentoff: 0,
+        valueoff: 0
       });
     
       const handleChange = (e) => {
@@ -49,15 +49,23 @@ const AddPromotions = () => {
         e.preventDefault();
         console.log(formData); // This will log the updated object upon submission
         // You can perform further actions here like sending the data to a server
+        try {
+            // Send form data to your server, which will interact with MongoDB
+            axios.post('http://localhost:3000/promotions/', formData); // Replace with your server endpoint
+            console.log('Form submitted successfully:', formData);
+            //clear
+          } catch (error) {
+            console.error('Error submitting form:', error);
+          }
 
         setFormData({
             name: '',
             promoCode: '',
             description: '',
-            percentOffPromo: false,
-            valueOffPromo: true,
-            percentOff: 0,
-            valueOff: 0
+            percentoffPromo: false,
+            valueoffPromo: true,
+            percentoff: 0,
+            valueoff: 0
           });
       };
 
@@ -94,28 +102,28 @@ const AddPromotions = () => {
           <label className="add-promo-label">
             Percent Off Promo:
             <div></div>
-            <input type="checkbox" name="percentOffPromo" checked={formData.percentOffPromo} onChange={handleChange} />
+            <input type="checkbox" name="percentoffPromo" checked={formData.percentoffPromo} onChange={handleChange} />
           </label>
           <div></div>
           <label className="add-promo-label">
             Value Off Promo:
             <div></div>
-            <input type="checkbox" name="valueOffPromo" checked={formData.valueOffPromo} onChange={handleChange} />
+            <input type="checkbox" name="valueoffPromo" checked={formData.valueoffPromo} onChange={handleChange} />
           </label>
           <div></div>
-          {formData.percentOffPromo && (
+          {formData.percentoffPromo && (
             <label className="add-promo-label">
-              Percent Off:
+              Percent Off (decimal notation):
               <div></div>
-              <input type="number" name="percentOff" value={formData.percentOff} onChange={handleChange} />
+              <input type="number" name="percentoff" value={formData.percentoff} onChange={handleChange} />
             </label>
           )}
           <div></div>
-          {formData.valueOffPromo && (
+          {formData.valueoffPromo && (
             <label className="add-promo-label">
               Value Off:
               <div></div>
-              <input type="number" name="valueOff" value={formData.valueOff} onChange={handleChange} />
+              <input type="number" name="valueoff" value={formData.valueoff} onChange={handleChange} />
             </label>
           )}
           <div></div>

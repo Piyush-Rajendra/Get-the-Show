@@ -12,6 +12,7 @@ const OrderSummary = () => {
     const [discount, setDiscount] = useState(0);
     const [fees, setFees] = useState(0);
     const [total, setTotal] = useState(0);
+    const [promoUsed, setPromoUsed] = useState(false);
 
 
     useEffect(() => {
@@ -29,6 +30,59 @@ const OrderSummary = () => {
     const handleSubmitOrder = () => {
         navigate('/paymentconfirm');
         
+    }
+
+    const promotionsApplier = async () => {
+        const inputValue = document.getElementById('myInput').value;
+
+        // Display an alert with the inputted text
+        //alert(`Inputted text: ${inputValue}`);
+        try {
+            // Send an update request to the server
+            //alert(`Inputted text: ${inputValue}`);
+            if (promoUsed == false) {
+            const response = await axios.get(`http://localhost:3000/promotions/${inputValue}`);
+            if (response.data.percentoffPromo == 1) {
+                setDiscount((parseFloat(discount) + parseFloat(total * response.data.percentoff)).toFixed(2));
+                setTotal(total - (total * response.data.percentoff));
+                let totalValue = parseFloat(total)
+                if (totalValue < 0) {
+                    setTotal(0);
+                }
+            }
+            else if (response.data.valueoffPromo == 1) {
+                setDiscount((parseFloat(discount) + (response.data.valueoff)).toFixed(2));
+                setTotal(total - response.data.valueoff);
+                let totalValue = parseFloat(total - response.data.valueoff)
+                if (totalValue < 0) {
+                    setTotal(0);
+                }
+            }
+            setPromoUsed(true);
+            alert('Promo Applied!');
+        }
+
+        else {
+            alert("Promotions cannot be combined.");
+        }
+
+            //console.log('Success', response.data);
+            //alert(response.data.description);
+            // Optionally, you might want to redirect the user or perform additional actions
+          } catch (error) {
+            if (error.response && error.response.status === 404) {
+                // Display an alert indicating that the promo was not found
+                alert('Promo not found');
+            } else {
+                // Display an alert for other errors
+                console.error('Error fetching promotion data:', error);
+                alert('An error occurred while fetching promotion data');
+            }
+          }
+
+        // Clear the input field
+        document.getElementById('myInput').value = '';
+
     }
 
 
@@ -55,12 +109,12 @@ const OrderSummary = () => {
                         <h4 className="order-details-label">Promo Code</h4>
                         <div id="input-apply">
                             <input type="text" id="myInput" name="myInput"/>
-                            <button id="apply" className="summary-page-buttons">Apply</button>
+                            <button id="apply" onClick={promotionsApplier} className="summary-page-buttons">Apply</button>
                         </div>
                     </div>
                     <div className="order-details-container">
                         <h4 className="order-details-label">Discount</h4>
-                        <h4 className="order-details-value">${discount}</h4>
+                        <h4 className="order-details-value">- ${discount}</h4>
                     </div>
                     <div className="order-details-container">
                         <h4 className="order-details-label">Fees</h4>
