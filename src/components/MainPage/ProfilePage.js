@@ -5,8 +5,9 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 
-const ProfilePage = ({ props }) => {
+const ProfilePage = () => {
   const username = localStorage.getItem('username');
+  console.log(username);
   const [file, setFile] = useState(null);
   const [base64String, setBase64String] = useState('');
   
@@ -85,6 +86,7 @@ useEffect(() => {
   const fetchUserInfo = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/user/${username}`);
+      console.log(response.data);
       setUserInfo(response.data);
       const userId = response.data.id;
 
@@ -114,7 +116,6 @@ useEffect(() => {
     const response = await axios.get(`http://localhost:3000/user/${username}`);
     const userId = response.data.id;
     try {
-      console.log(userInfo);
       await axios.put(`http://localhost:3000/users/${userId}`, {
         fullName: userInfo.fullName,
         username: userInfo.username,
@@ -128,6 +129,8 @@ useEffect(() => {
         registerForPromotions: userInfo.registerForPromotions,
       });
       alert('User information updated!');
+      localStorage.setItem('username', userInfo.username);
+      console.log(username);
     } catch (error) {
       console.error('Failed to update user information', error);
       alert('Failed to update User Information!');
@@ -144,7 +147,7 @@ useEffect(() => {
     }
     try {
       console.log(billingInfoForms);
-      await axios.post(`http://localhost:3000/billing-address/${userId}`, {
+      await axios.post(`http://localhost:3000/billing-address/${username}`, {
         billingAddress: billingInfoForms.billingAddress,
         city: billingInfoForms.city,
         state: billingInfoForms.state,
