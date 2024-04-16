@@ -6,8 +6,10 @@ import axios from 'axios';
 
 
 const ProfilePage = () => {
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + 1); 
+  const formattedDate = currentDate.toISOString().split('T')[0];
   const username = localStorage.getItem('username');
-  console.log(username);
   const [file, setFile] = useState(null);
   const [base64String, setBase64String] = useState('');
   
@@ -32,22 +34,22 @@ const ProfilePage = () => {
     state: '',
     zipCode: '',
     fullName: '',
-    registerForPromotions: '',
+    subscribeToPromotion:'',
     email: '',
     profilePhoto: '',
   });
 
-  const [paymentInfo, setPaymentInfo] = useState([]);
-
-  const [myValue, setMyValue] = useState(true);
+const [myValue, setMyValue] = useState(true);
 
  const [billingInfoForms, setbillingInfoForms] = useState({
       billingAddress: '',
       city: '',
       state: '',
       zipCode: '',
-    },
+    }
   );
+
+const [paymentInfo, setPaymentInfo] = useState([]);
 
 const [newPaymentInfo, setNewPaymentInfo] = useState({
   cardType: '',
@@ -56,7 +58,7 @@ const [newPaymentInfo, setNewPaymentInfo] = useState({
   expirationDate: ''
 });
 
-const handleAddPaymentInfo = () => {
+const handleDeletePaymentInfo = () => {
     const newPaymentInfoItem = {
       cardType: '',
       cardNumberHash: '',
@@ -86,15 +88,17 @@ useEffect(() => {
   const fetchUserInfo = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/user/${username}`);
-      console.log(response.data);
       setUserInfo(response.data);
       const userId = response.data.id;
-
       const billingResponse = await axios.get(`http://localhost:3000/billing-address/user/${userId}`);
-      setbillingInfoForms(billingResponse.data[billingResponse.data.length - 1]);
+
+      if ((billingResponse.data.length <= 1) && (billingResponse.data.length != 0)) {
+        setbillingInfoForms(billingResponse.data[0]);  
+      }
 
       const paymentResponse = await axios.get(`http://localhost:3000/users/${userId}/payment-info`);
       const last3Payments = paymentResponse.data.paymentInfo.slice(-3);
+      console.log(last3Payments);
       setPaymentInfo(last3Payments);
 
     } catch (error) {
@@ -126,11 +130,11 @@ useEffect(() => {
         phoneNumber: userInfo.phoneNumber,
         profilePhoto: userInfo.profilePhoto,
         email: userInfo.email,
-        registerForPromotions: userInfo.registerForPromotions,
+        subscribeToPromotion: userInfo.subscribeToPromotion,
       });
+      console.log(userInfo);
       alert('User information updated!');
       localStorage.setItem('username', userInfo.username);
-      console.log(username);
     } catch (error) {
       console.error('Failed to update user information', error);
       alert('Failed to update User Information!');
@@ -141,13 +145,13 @@ useEffect(() => {
     e.preventDefault();
     const response = await axios.get(`http://localhost:3000/user/${username}`);
     const userId = response.data.id;
-    const amount = await axios.get(`http://localhost:3000/billing-address/user/${userId}`)    
-    if (amount.length > 1) {
-      return 0;
+    const billingID = await axios.get(`http://localhost:3000/billing-address/user/${userId}`);
+    if (billingID.data.length >= 1) {
+      await axios.delete(`http://localhost:3000/billing-address/${billingID.data[0].id}`)
     }
     try {
       console.log(billingInfoForms);
-      await axios.post(`http://localhost:3000/billing-address/${username}`, {
+      await axios.post(`http://localhost:3000/billing-address/${userId}`, {
         billingAddress: billingInfoForms.billingAddress,
         city: billingInfoForms.city,
         state: billingInfoForms.state,
@@ -165,11 +169,10 @@ const handleAddPaymentCard = async (e) => {
   const response = await axios.get(`http://localhost:3000/user/${username}`);
   const userId = response.data.id;
   try {
-    console.log(newPaymentInfo);
-    const lastPayment = paymentInfo.slice(-1)[0];
     // console.log(lastPayment);
     // console.log(newPaymentInfo.cardType);
-    const response = await axios.post(`http://localhost:3000/users/${userId}/onlypayment`, {
+    console.log(userId)
+    const response = await axios.post(`http://localhost:3000/user/${userId}/payment`, {
       cardType: newPaymentInfo.cardType,
       cardNumber: newPaymentInfo.cardNumberHash,
       cardPIN: newPaymentInfo.cardPINHash,
@@ -242,6 +245,7 @@ const handleFileChange = async (e) => {
     fileInput.click();
   };
 
+ 
   return (
     <div className="profile-container">
       <Link to="/" state={{ props: myValue }}>
@@ -285,44 +289,50 @@ const handleFileChange = async (e) => {
           <form onSubmit={handleSubmit}>
             <input className="inputProfilePage" type="text" placeholder="Full Name" 
             value={userInfo && userInfo.fullName}
+            required
             onChange={(e) => setUserInfo({ ...userInfo, fullName: e.target.value })}/>
             <input className="inputProfilePage" type="text" placeholder="Username" 
             value={userInfo && userInfo.username}
+            required
             onChange={(e) => setUserInfo({ ...userInfo, username: e.target.value })}/>
             <Link to="/ChangePassword"><button className="inputProfilePage">Change Password</button></Link>
             <input className="inputProfilePage" type="tel" placeholder="Phone Number" 
-            required minlength="10" maxlength="10" size="10"
+            required minLength="10" maxLength="10" size="10"
             value={userInfo && userInfo.phoneNumber}
             onChange={(e) => setUserInfo({ ...userInfo, phoneNumber: e.target.value })}/>
             <button className='editButtonProfilePage'>Edit</button>
             <label>
-            <input
-              type="checkbox"
-              checked={userInfo.registeredForPromotions}
-            />
-              Registered for promotions
+                <input
+                  type="checkbox"
+                  checked={userInfo.subscribeToPromotion === 'yes'}
+                  onChange={(e) => setUserInfo({ ...userInfo, subscribeToPromotion: e.target.checked ? 'yes' : 'no' })}
+                />
+                Registered for promotions
             </label>
           </form>
         )}
           {activeTab === 'payment' && (
             <div>
               {paymentInfo.map((payment, index) => (
-                <form key={index} onSubmit={handleAddPaymentInfo}>
+                <form key={index} onSubmit={handleDeletePaymentInfo}>
                   <input
                     className="inputProfilePage"
                     type="text"
                     placeholder="Card Type"
                     value={payment.cardType}
+                    readOnly                    
                   />
                   <input
                     className="inputProfilePage"
                     type="text"
-                    placeholder="XXXX-XXXX-XXXX-XXXX"                    
+                    placeholder="XXXX-XXXX-XXXX-XXXX"  
+                    readOnly                                      
                   />
                   <input
                     className="inputProfilePage"
                     type="date"
                     placeholder="Expiration Date"
+                    readOnly
                     value={formatDate(payment.expirationDate)}
                     onChange={(e) => newPaymentInfo(prevState => {
                       const updatedPaymentInfo = [...prevState];
@@ -333,9 +343,9 @@ const handleFileChange = async (e) => {
                   <button
                     className='removeButtonProfilePage'
                     onClick={async () => {
-                      console.log(payment.paymentId);
+                      console.log(payment);
                       try {
-                        await axios.delete(`http://localhost:3000/payment-info/${payment.paymentId}`);
+                        await axios.delete(`http://localhost:3000/payment-info/${payment.id}`);
                         const updatedPaymentInfo = paymentInfo.filter((_, i) => i !== index);
                         setPaymentInfo(updatedPaymentInfo);
                         alert('Payment information removed!');
@@ -357,11 +367,13 @@ const handleFileChange = async (e) => {
                       type="text"
                       placeholder="Card Type"
                       value={newPaymentInfo.cardType}
+                      required
                       onChange={(e) => setNewPaymentInfo({ ...newPaymentInfo, cardType: e.target.value })}
                     />
                     <input
                       className="inputProfilePage" type="text" placeholder="Card Number"
                       pattern="\d{16}" title="Card Number must be exactly 16 digits" maxLength="16"
+                      required
                       value={newPaymentInfo.cardNumberHash}
                       onChange={(e) => {
                         if (/^\d{0,16}$/.test(e.target.value)) {
@@ -370,11 +382,9 @@ const handleFileChange = async (e) => {
                       }}
                     />
                     <input
-                      className="inputProfilePage"
-                      type="number"
-                      placeholder="Card Pin"
-                      pattern="\d{3}" title="Card Number must be exactly 3 digits" maxLength="3"
-                      required minlength="3" maxlength="3" size="3"
+                      className="inputProfilePage" type="text" placeholder="Card Pin"
+                      pattern="\d{3}" title="Card Pin must be exactly 3 digits" maxLength="3"
+                      required
                       value={newPaymentInfo.cardPINHash}
                       onChange={(e) => {
                         if (/^\d{0,3}$/.test(e.target.value)) {
@@ -388,6 +398,8 @@ const handleFileChange = async (e) => {
                       placeholder="Expiration Date"
                       value={newPaymentInfo.expirationDate}
                       onChange={(e) => setNewPaymentInfo({ ...newPaymentInfo, expirationDate: e.target.value })}
+                      required
+                      min={formattedDate}
                     />
                     <button className='editButtonProfilePage' type="submit">Add</button>
                   </form>
@@ -398,18 +410,22 @@ const handleFileChange = async (e) => {
         {activeTab === 'home' && (
           <form onSubmit={handleSubmit}>
             <input className="inputProfilePage" type="text" placeholder="Street" 
+            required
             value={userInfo && userInfo.street}
             onChange={(e) => setUserInfo({ ...userInfo, street: e.target.value })}/>
             <input className="inputProfilePage" type="text" placeholder="City" 
             value={userInfo && userInfo.city}
+            required
             onChange={(e) => setUserInfo({ ...userInfo, city: e.target.value })}/>
             <input className="inputProfilePage" type="text" placeholder="State" 
              value={userInfo && userInfo.state}
+             required
             onChange={(e) => setUserInfo({ ...userInfo, state: e.target.value })}/>
           <input
             className="inputProfilePage" type="text" placeholder="Zip Code" pattern="\d{5}"
             title="Zip Code must be exactly 5 digits" maxLength="5"
             value={userInfo && userInfo.zipCode}
+            required
             onChange={(e) => {
               if (/^\d{0,5}$/.test(e.target.value)) {
                 setUserInfo({ ...userInfo, zipCode: e.target.value });
@@ -419,43 +435,46 @@ const handleFileChange = async (e) => {
             <button className='editButtonProfilePage'>Edit</button>
           </form>
         )}
-{activeTab === 'billing' && (
-  <form onSubmit={handleEditBillingAddress}>
-    <input
-      className="inputProfilePage"
-      type="text"
-      placeholder="Street"
-      value={billingInfoForms && billingInfoForms.billingAddress}
-      onChange={(e) => setbillingInfoForms({ ...billingInfoForms, billingAddress: e.target.value })}
-    />
-    <input
-      className="inputProfilePage"
-      type="text"
-      placeholder="City"
-      value={billingInfoForms && billingInfoForms.city}
-      onChange={(e) => setbillingInfoForms({ ...billingInfoForms, city: e.target.value })}
-    />
-    <input
-      className="inputProfilePage"
-      type="text"
-      placeholder="State"
-      value={billingInfoForms && billingInfoForms.state}
-      onChange={(e) => setbillingInfoForms({ ...billingInfoForms, state: e.target.value })}
-    />
-    <input
-      className="inputProfilePage" type="text" placeholder="Zip Code"
-      pattern="\d{5}" title="Zip Code must be exactly 5 digits"maxLength="5"
-      value={billingInfoForms && billingInfoForms.zipCode}
-      onChange={(e) => {
-        if (/^\d{0,5}$/.test(e.target.value)) {
-          setbillingInfoForms({ ...billingInfoForms, zipCode: e.target.value });
-        }
-      }}
-    />
-
-    <button type="submit" className='editButtonProfilePage'>Edit</button>
-  </form>
-)}
+        {activeTab === 'billing' && (
+          <form onSubmit={handleEditBillingAddress}>
+            <input
+              className="inputProfilePage"
+              type="text"
+              placeholder="Street"
+              value={billingInfoForms && billingInfoForms.billingAddress}
+              required
+              onChange={(e) => setbillingInfoForms({ ...billingInfoForms, billingAddress: e.target.value })}
+            />
+            <input
+              className="inputProfilePage"
+              type="text"
+              placeholder="City"
+              value={billingInfoForms && billingInfoForms.city}
+              required
+              onChange={(e) => setbillingInfoForms({ ...billingInfoForms, city: e.target.value })}
+            />
+            <input
+              className="inputProfilePage"
+              type="text"
+              placeholder="State"
+              value={billingInfoForms && billingInfoForms.state}
+              required
+              onChange={(e) => setbillingInfoForms({ ...billingInfoForms, state: e.target.value })}
+            />
+            <input
+              className="inputProfilePage" type="text" placeholder="Zip Code"
+              pattern="\d{5}" title="Zip Code must be exactly 5 digits"maxLength="5"
+              value={billingInfoForms && billingInfoForms.zipCode}
+              required
+              onChange={(e) => {
+                if (/^\d{0,5}$/.test(e.target.value)) {
+                  setbillingInfoForms({ ...billingInfoForms, zipCode: e.target.value });
+                }
+              }}
+            />
+            <button type="submit" className='editButtonProfilePage'>Edit</button>
+          </form>
+        )}
       </div>
     </div>
   );
