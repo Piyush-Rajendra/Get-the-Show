@@ -34,11 +34,6 @@ const ManageTickets = (props) => {
             const responseThree = await axios.get(`http://localhost:3000/ticket-prices/senior`);
             setSeniorPrice(responseThree.data.price); 
             
-            //setShowtimesArray(["2/23/24 @ 4:30 P.M.", "2/27/24 @ 7:30 P.M.", "3/1/24 @ 1:00 P.M.", "3/16/24 @ 11:15 A.M."]);
-            //setCastArray(["Filler Guy Jr.", "Guy Ray", "Ray Guy", "Batman Robin", "Barack Obama", "Fake Person IV"]);
-            
-
-            //setFormData(response.data);
           } catch (error) {
             console.error('Error fetching ticket data:', error);
           }

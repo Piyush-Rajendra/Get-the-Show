@@ -4,7 +4,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 const Payment = (props) => {
-    const navigate = useNavigate();
+  const username = localStorage.getItem('username')
+  console.log(username);
+  const [id, setId] = useState('');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+        try {
+          const response = await axios.get(`http://localhost:3000/user/${username}`);
+          setId(response.data.id); 
+          
+          
+         
+        } catch (error) {
+          console.error('Error fetching card data:', error);
+        }
+      };
+  
+      fetchUserData();
+  }, []);
+  const navigate = useNavigate();
     //console.log(props.location.state.totalAmount);
     //const { totalAmount } = props.location.state;
     //console.log(props);
@@ -15,6 +34,41 @@ const Payment = (props) => {
   const [cardTwo, setCardTwo] = useState('No saved card');
   const [cardThree, setCardThree] = useState('No saved card');
   const [usingSavedCard, setUsingSavedCard] = useState(false);
+
+  const [cards, setCards] = useState([]);
+
+  function formatDate(expirationDate) {
+    const date = new Date(expirationDate);
+    const month = date.getMonth() + 1; // Month is zero-based
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  }
+
+  useEffect(() => {
+    const fetchCardData = async () => {
+        try {
+          console.log(id);
+          const response = await axios.get(`http://localhost:3000/users/${id}/payment-info`);
+          setCards(response.data.paymentInfo); 
+          
+          //console.log(response.data);
+          //console.log(cards);
+
+          //console.log(cards);
+         
+        } catch (error) {
+          console.error('Error fetching card data:', error);
+        }
+      };
+  
+      fetchCardData();
+  }, [id]);
+
+  useEffect(() => {
+    console.log(cards); 
+    console.log(cards[0]);
+  }, [cards]);
 
     const [paymentInfo, setPaymentInfo] = useState({
         cardType: '',
@@ -81,10 +135,14 @@ const Payment = (props) => {
             <h2>Total: ${totalAmount }</h2>
             <h2 onClick={handleUseSavedCard} id="click-me" className="red">[Click to Use Saved Card]</h2>
             {usingSavedCard && (
-              <div>
-                  <h3 className="saved-card">Card One: {cardOne}</h3>
-                  <h3 className="saved-card">Card Two: {cardTwo}</h3>
-                  <h3 className="saved-card">Card Three: {cardThree}</h3>
+                <div>
+                {cards.map((card, index) => (
+                  <Link to='/ordersummary'>
+                  <div key={index}>
+                    Card {index + 1}: {card.cardType} - {formatDate(card.expirationDate)}
+                  </div>
+                  </Link>
+                ))}
               </div>
             )}
             <h2 className="red">Payment Information</h2>
