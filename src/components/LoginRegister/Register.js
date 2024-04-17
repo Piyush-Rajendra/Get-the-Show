@@ -52,11 +52,12 @@ const Register = () => {
       return;
     } 
     setPasswordsMatch(true);
-    console.log(formData);
     // Reset form data
     
     try {
     const response = await axios.post("http://localhost:3000/signup", formData);
+    console.log(formData.username);
+    localStorage.setItem('username', formData.username)
     setFormData({
       fullName: '',
       username: '',
@@ -71,15 +72,14 @@ const Register = () => {
       state: '',
       phoneNumber: ''
     });
-    const username = response.data.user.username; 
-    localStorage.setItem('username', username)
     newLocation("/registerContinued", { state: { email: formData.email } })
     } catch(error) {
       console.error('Registering failed', error);
-      alert('Error while registering');
+      alert('Error while registering ' + error.response.data.error);
     }
   
   };
+  
  return (
   <div className="centerFormRegister">  
     <div className="containerForm">

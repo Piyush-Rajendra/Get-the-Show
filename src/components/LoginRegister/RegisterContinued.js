@@ -65,10 +65,13 @@ const handleSubmit = async (e) => {
       return;
     }
     if (formData.cardType !== '') {
-      const userID = await axios.get(`http://localhost:3000/users/${holder.email}`);
+      const username = localStorage.getItem('username');
+      const userID = await axios.get(`http://localhost:3000/user/${username}`);
+      console.log(userID);
+      console.log(userID.data);
+      await axios.post(`http://localhost:3000/billing-address/${userID.data.id}/payment`, formData);
 
-      console.log(formData);
-      const submit = await axios.post(`http://localhost:3000/users/${userID.data.id}/payment`, formData);
+      await axios.post(`http://localhost:3000/user/${userID.data.id}/payment`,formData)
     }
     setFormData({
       cardType: '',
@@ -135,12 +138,14 @@ function formatDate(dateString) {
         </div>
         <div className="form-group">
           <label>Expiration Date: </label>
-          <input className="forms-inputRegister"
-              type="date"
-              name="expirationDate"
-              value={formatDate(formData.expirationDate)}
-              onChange={handleChange}
-            />
+          <input
+            className="forms-inputRegister"
+            type="date"
+            name="expirationDate"
+            value={formatDate(formData.expirationDate)}
+            onChange={handleChange}
+            min={formatDate(new Date().toISOString().split('T')[0])} // Set the min attribute to the current date
+          />
             
         </div>  
         <div className="form-group">
