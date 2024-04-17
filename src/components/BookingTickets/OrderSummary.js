@@ -28,6 +28,7 @@ const OrderSummary = () => {
     }
     
     const handleSubmitOrder = () => {
+        sessionStorage.setItem('finalTotal', total);
         navigate('/paymentconfirm');
         
     }
