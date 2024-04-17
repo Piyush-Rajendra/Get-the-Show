@@ -22,7 +22,7 @@ const Promotions = () => {
         }
     
         fetchPromotions();
-      }, []);
+      }, [promotions]);
 
     const DUMMY_PROMOTIONS = [
         {
@@ -131,6 +131,22 @@ const Promotions = () => {
     const ToAddPromo = () => {
         navigate('/AddPromotion');
     }
+    
+    function deletePromotion(promoID) {
+        axios.delete(`http://localhost:3000/promotions/${promoID}`)
+            .then(response => {
+                console.log('Promotion deleted successfully');
+                // Handle any UI updates or further actions here
+            })
+            .catch(error => {
+                console.error('Error deleting promotion:', error);
+                // Handle error cases here
+            });
+            //alert("button pressed");
+    }
+
+
+    
 
     if (isAdmin) {
     return (
@@ -156,9 +172,9 @@ const Promotions = () => {
                     {promo.percentoffPromo == 1 && <p>Percent Off: {promo.percentoff * 100}%</p>}
                     {promo.valueoffPromo == 1 && <p>Value Off: ${promo.valueoff}</p>}
                     <div id="promo-buttons">
-                        <button className="promo-button">Remove</button>
+                    <button className="promo-button" onClick={() => deletePromotion(promo.id)}>Remove</button>
                         <Link to={`/EditPromotion/${promo.promoCode}`}>
-                        <button className="promo-button">Edit</button>
+                        <button className="promo-button" onClick={deletePromotion}>Edit</button>
                         </Link>
                     </div>
                 </div>

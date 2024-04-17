@@ -115,7 +115,7 @@ const AddPromotions = () => {
           </label>
           <div></div>
           <label className="add-promo-label">
-            Percent Off Promo:
+            Percent Off Promo: 
             <div></div>
             <input type="checkbox" name="percentoffPromo" checked={formData.percentoffPromo} onChange={handleChange} />
           </label>
@@ -128,7 +128,7 @@ const AddPromotions = () => {
           <div></div>
           {formData.percentoffPromo == 1 && (
             <label className="add-promo-label">
-              Percent Off:
+              Percent Off: (Decimal Notation)
               <div></div>
               <input type="number" name="percentoff" value={formData.percentoff} onChange={handleChange} />
             </label>

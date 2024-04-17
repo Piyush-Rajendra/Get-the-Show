@@ -101,6 +101,15 @@ const Payment = (props) => {
           alert('Please fill out all fields.');
           return;
         }
+        var digitsOnly = /^\d+$/;
+        if (paymentInfo.cardNumber.length !== 16 || !digitsOnly.test(paymentInfo.cardNumber)) {
+            alert('Card number is not valid');
+            return;
+        }
+        if (!digitsOnly.test(paymentInfo.securityCode)) {
+          alert('Security code is not valid');
+          return;
+        }
         const paymentData = {
           paymentInfo,
           billingAddress
