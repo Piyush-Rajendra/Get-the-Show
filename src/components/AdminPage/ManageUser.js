@@ -118,7 +118,7 @@ const ManageUser = () => {
                           age={location.age}
                           email={location.email}
                           profilePhoto={location.profilePhoto}
-                          paymentInfo={location.paymentInfo}
+                          subscribeToPromotion={location.subscribeToPromotion}
                         />
                     <div class="button-group-user">
                       <Link to={`/edituser/${location.id}`}  key={index}><button>Edit</button></Link>
@@ -143,7 +143,7 @@ const ManageUser = () => {
                           age={location.age}
                           email={location.email}
                           profilePhoto={location.profilePhoto}
-                          paymentInfo={location.paymentInfo}
+                          subscribeToPromotion={location.subscribeToPromotion}
                         />
                     <div class="button-group-user">
                       <Link to={`/edituser/${location.id}`}  key={index}><button>Edit</button></Link>

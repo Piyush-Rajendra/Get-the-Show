@@ -20,7 +20,7 @@ const UserCard = (props) => {
           <h3>Username: {props.userName}</h3>
           <hr></hr>
           <p>Email: {props.email}</p>
-          <p>Payment Info: {props.paymentInfo}</p>
+          <p>Is Registered: {props.paymentInfo}</p>
         </div>
       </div>
     </div>

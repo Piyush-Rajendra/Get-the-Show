@@ -26,7 +26,8 @@ const AddMovie = ({ onSubmit }) => {
         releaseDate: '',
         cast: '',
         posterBase64: '',
-        showTimesDates: ''
+        showTimesDates: '',
+        end_date: ''
     });
 
     function stringToArray(inputString) {
@@ -63,7 +64,8 @@ const AddMovie = ({ onSubmit }) => {
           releaseDate: '',
           cast: '',
           posterBase64: '',
-          showTimesDates: ''
+          showTimesDates: '',
+          end_date: ''
       });
             // Code to be executed after 2 seconds
           
@@ -81,9 +83,10 @@ const AddMovie = ({ onSubmit }) => {
     <h3 style={{ color: '#FF6666', textAlign: "center" }}>{displayText}</h3>
       <form className="bodyRegisterForm" onSubmit={handleSubmit}>
       <div>
-        <h2>Movie Information</h2>
+        {/* <h2>Movie Information</h2> */}
         <div className="form-group">
           <label>Title: </label>
+          <br></br>
           <input className="forms-inputRegister"
                 type="text"
                 name="title"
@@ -94,6 +97,7 @@ const AddMovie = ({ onSubmit }) => {
         </div>
         <div className="form-group">
           <label>Category: </label>
+          <br></br>
           <input className="forms-inputRegister"
                 type="text"
                 name="category"
@@ -104,6 +108,7 @@ const AddMovie = ({ onSubmit }) => {
         </div>
         <div className="form-group">
           <label>cast: </label>
+          <br></br>
           <input className="forms-inputRegister"
                 type="text"
                 name="cast"
@@ -114,6 +119,7 @@ const AddMovie = ({ onSubmit }) => {
         </div>
         <div className="form-group">
           <label>Director: </label>
+          <br></br>
           <input className="forms-inputRegister"
                 type="text"
                 name="director"
@@ -123,11 +129,23 @@ const AddMovie = ({ onSubmit }) => {
               />
         </div>
         <div className="form-group">
-          <label>Producer: </label>
+          <label>Release Date For Showings: </label>
+          <br></br>
           <input className="forms-inputRegister"
-                type="text"
-                name="producer"
-                value={movie.producer}
+              type="date"
+              name="releaseDate"
+              value={movie.releaseDate}
+              onChange={handleChange}
+              required
+            />
+        </div>
+        <div className="form-group">
+          <label>End Date for Showings: </label>
+          <br></br>
+          <input className="forms-inputRegister"
+                type="date"
+                name="end_date"
+                value={movie.end_date}
                 onChange={handleChange}
                 required
               />
@@ -151,6 +169,7 @@ const AddMovie = ({ onSubmit }) => {
         </div>
         <div className="form-group">
           <label>Trailer Picture (link/url): </label>
+          <br></br>
           <input className="forms-inputRegister"
               type="text"
               name="trailerPicture"
@@ -161,6 +180,7 @@ const AddMovie = ({ onSubmit }) => {
         </div>
         <div className="form-group">
           <label>Trailer Video (link/url): </label>
+          <br></br>
           <input className="forms-inputRegister"
               type="text"
               name="trailerVideo"
@@ -171,6 +191,7 @@ const AddMovie = ({ onSubmit }) => {
         </div>
         <div className="form-group">
           <label>mpaa Rating: </label>
+          <br></br>
           <input className="forms-inputRegister"
               type="text"
               name="mpaaRating"
@@ -180,17 +201,19 @@ const AddMovie = ({ onSubmit }) => {
             />
         </div>
         <div className="form-group">
-          <label>Release Date: </label>
+          <label>Producer: </label>
+          <br></br>
           <input className="forms-inputRegister"
-              type="date"
-              name="releaseDate"
-              value={movie.releaseDate}
-              onChange={handleChange}
-              required
-            />
+                type="text"
+                name="producer"
+                value={movie.producer}
+                onChange={handleChange}
+                required
+              />
         </div>
         <div className="form-group">
           <label>Movie Poster (Base 64 format)</label>
+          <br></br>
           <input className="forms-inputRegister"
               type="text"
               name="posterBase64"
@@ -201,6 +224,7 @@ const AddMovie = ({ onSubmit }) => {
         </div>
         <div className="form-group">
           <label>Show Dates and Times</label>
+          <br></br>
           <input className="forms-inputRegister"
               type="text"
               name="showDatesTimes"
