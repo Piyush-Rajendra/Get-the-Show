@@ -4,7 +4,6 @@ import {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
-
 const ProfilePage = () => {
   const currentDate = new Date();
   currentDate.setDate(currentDate.getDate() + 1); 
@@ -19,13 +18,14 @@ const ProfilePage = () => {
         const response = await axios.get(`http://localhost:3000/user/${username}`);
         setBase64String(response.data.profilePhoto);
       } catch (error) {
-        console.error('Failed to fetch user information', error);
-        // Handle error, e.g., redirect to login page
+        alert('Failed to fetch user photo! ' + error.response.data.error);
       }
     };
     fetchUserInfo();
   }, [username]);
+
   const [activeTab, setActiveTab] = useState('user');
+
   const [userInfo, setUserInfo] = useState({
     username: '',
     phoneNumber: '',
@@ -39,9 +39,9 @@ const ProfilePage = () => {
     profilePhoto: '',
   });
 
-const [myValue, setMyValue] = useState(true);
+  const [myValue, setMyValue] = useState(true);
 
- const [billingInfoForms, setbillingInfoForms] = useState({
+  const [billingInfoForms, setbillingInfoForms] = useState({
       billingAddress: '',
       city: '',
       state: '',
@@ -49,24 +49,24 @@ const [myValue, setMyValue] = useState(true);
     }
   );
 
-const [paymentInfo, setPaymentInfo] = useState([]);
+  const [paymentInfo, setPaymentInfo] = useState([]);
 
-const [newPaymentInfo, setNewPaymentInfo] = useState({
-  cardType: '',
-  cardNumberHash: '',
-  cardPINHash: '',
-  expirationDate: ''
-});
+  const [newPaymentInfo, setNewPaymentInfo] = useState({
+    cardType: '',
+    cardNumberHash: '',
+    cardPINHash: '',
+    expirationDate: ''
+  });
 
-const handleDeletePaymentInfo = () => {
-    const newPaymentInfoItem = {
-      cardType: '',
-      cardNumberHash: '',
-      cardPINHash: '',
-      expirationDate: '',
-    };
-    setNewPaymentInfo([...newPaymentInfo, newPaymentInfoItem]);
-};
+  const handleDeletePaymentInfo = () => {
+      const newPaymentInfoItem = {
+        cardType: '',
+        cardNumberHash: '',
+        cardPINHash: '',
+        expirationDate: '',
+      };
+      setNewPaymentInfo([...newPaymentInfo, newPaymentInfoItem]);
+  };
 
 
   function formatDate(dateString) {
@@ -84,31 +84,29 @@ const handleDeletePaymentInfo = () => {
     return `${year}-${month}-${day}`;
   }
 
-useEffect(() => {
-  const fetchUserInfo = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3000/user/${username}`);
-      setUserInfo(response.data);
-      const userId = response.data.id;
-      const billingResponse = await axios.get(`http://localhost:3000/billing-address/user/${userId}`);
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/user/${username}`);
+        setUserInfo(response.data);
+        const userId = response.data.id;
+        const billingResponse = await axios.get(`http://localhost:3000/billing-address/user/${userId}`);
 
-      if ((billingResponse.data.length <= 1) && (billingResponse.data.length != 0)) {
-        setbillingInfoForms(billingResponse.data[0]);  
-      }
+        if ((billingResponse.data.length <= 1) && (billingResponse.data.length != 0)) {
+          setbillingInfoForms(billingResponse.data[0]);  
+        }
 
-      const paymentResponse = await axios.get(`http://localhost:3000/users/${userId}/payment-info`);
-      const last3Payments = paymentResponse.data.paymentInfo.slice(-3);
-      console.log(last3Payments);
-      setPaymentInfo(last3Payments);
+        const paymentResponse = await axios.get(`http://localhost:3000/users/${userId}/payment-info`);
+        const last3Payments = paymentResponse.data.paymentInfo.slice(-3);
+        setPaymentInfo(last3Payments);
 
-    } catch (error) {
-      console.error('Failed to fetch user information', error);
-      // Handle error, e.g., redirect to login page
+      } catch (error) {
+        alert('Failed to fetch user information ' + error.response.data.error)
+        // Handle error, e.g., redirect to login page
     }
   };
-
   fetchUserInfo();
-}, [activeTab]);
+  }, [activeTab]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -132,16 +130,15 @@ useEffect(() => {
         email: userInfo.email,
         subscribeToPromotion: userInfo.subscribeToPromotion,
       });
-      console.log(userInfo);
       alert('User information updated!');
       localStorage.setItem('username', userInfo.username);
     } catch (error) {
-      console.error('Failed to update user information', error);
-      alert('Failed to update User Information!');
+      console.log(error.response.data);
+      alert('Failed to update User Information! ' + error.response.data.error);
     }
   };
   
- const handleEditBillingAddress = async (e) => {
+  const handleEditBillingAddress = async (e) => {
     e.preventDefault();
     const response = await axios.get(`http://localhost:3000/user/${username}`);
     const userId = response.data.id;
@@ -150,7 +147,6 @@ useEffect(() => {
       await axios.delete(`http://localhost:3000/billing-address/${billingID.data[0].id}`)
     }
     try {
-      console.log(billingInfoForms);
       await axios.post(`http://localhost:3000/billing-address/${userId}`, {
         billingAddress: billingInfoForms.billingAddress,
         city: billingInfoForms.city,
@@ -159,93 +155,74 @@ useEffect(() => {
       });
       alert('Payment information updated!');
     } catch (error) {
-      console.error('Failed to update payment information', error);
-      alert('Failed to update payment information');
+      alert('Failed to update payment information ' + error.response.data.error);
     }
   };
 
-const handleAddPaymentCard = async (e) => {
-  e.preventDefault();
-  const response = await axios.get(`http://localhost:3000/user/${username}`);
-  const userId = response.data.id;
-  try {
-    // console.log(lastPayment);
-    // console.log(newPaymentInfo.cardType);
-    console.log(userId)
-    const response = await axios.post(`http://localhost:3000/user/${userId}/payment`, {
-      cardType: newPaymentInfo.cardType,
-      cardNumber: newPaymentInfo.cardNumberHash,
-      cardPIN: newPaymentInfo.cardPINHash,
-      expirationDate: newPaymentInfo.expirationDate,
-    });
-    /** 
-    if (lastPayment.billingAddress != null) {
-      console.log('RUNNING');
-       await axios.put(`http://localhost:3000/payment/${userId}`, {
-        billingAddress: lastPayment.billingAddress,
-        city: lastPayment.city,
-        state: lastPayment.state,
-        zipCode: lastPayment.zipCode,
+  const handleAddPaymentCard = async (e) => {
+    e.preventDefault();
+    const response = await axios.get(`http://localhost:3000/user/${username}`);
+    const userId = response.data.id;
+    try {
+      const response = await axios.post(`http://localhost:3000/user/${userId}/payment`, {
+        cardType: newPaymentInfo.cardType,
+        cardNumber: newPaymentInfo.cardNumberHash,
+        cardPIN: newPaymentInfo.cardPINHash,
+        expirationDate: newPaymentInfo.expirationDate,
       });
+      setPaymentInfo([...paymentInfo, response.data]);
+      setNewPaymentInfo({  
+        cardType: '',
+        cardNumberHash: '',
+        cardPINHash: '',
+        expirationDate: '',
+      });
+      alert('Payment information added successfully!');
+      window.location.reload(); // Reload the page
+    } catch (error) {
+      alert('Failed to add payment information ' + error.response.data.error);
     }
-    */
-    setPaymentInfo([...paymentInfo, response.data]);
-    setNewPaymentInfo({  
-      cardType: '',
-      cardNumberHash: '',
-      cardPINHash: '',
-      expirationDate: '',
-    });
-    alert('Payment information added successfully!');
-    window.location.reload(); // Reload the page
-  } catch (error) {
-    console.error('Failed to add payment information', error);
-    alert('Failed to add payment information');
-  }
-};
+  };
 
-const handleFileChange = async (e) => {
-  e.preventDefault();
-  const selectedFile = e.target.files[0];
-  if (selectedFile) {
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      setFile(selectedFile);
-      setBase64String(reader.result);
-
-      const response = await axios.get(`http://localhost:3000/user/${username}`);
-      const userId = response.data.id;
-
-      try {
-        await axios.put(`http://localhost:3000/users/${userId}`, {
-          profilePhoto: reader.result,
-          username: response.data.username,
-          phoneNumber: response.data.phoneNumber,
-          street: response.data.street,
-          city: response.data.city,
-          state: response.data.state,
-          zipCode: response.data.zipCode,
-          fullName: response.data.fullName,
-          registerForPromotions: response.data.registerForPromotions,
-          email: response.data.email,
-        });
-        alert('Profile photo updated successfully!');
-      } catch (error) {
-        console.error('Failed to update profile photo', error);        
-        alert('Failed to update profile photo');
-        window.location.reload();
-      }
-    };
-    reader.readAsDataURL(selectedFile);
-  }
-};
+  const handleFileChange = async (e) => {
+    e.preventDefault();
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        setFile(selectedFile);
+        setBase64String(reader.result);
+        const response = await axios.get(`http://localhost:3000/user/${username}`);
+        const userId = response.data.id;
+        try {
+          await axios.put(`http://localhost:3000/users/${userId}`, {
+            profilePhoto: reader.result,
+            username: response.data.username,
+            phoneNumber: response.data.phoneNumber,
+            street: response.data.street,
+            city: response.data.city,
+            state: response.data.state,
+            zipCode: response.data.zipCode,
+            fullName: response.data.fullName,
+            registerForPromotions: response.data.registerForPromotions,
+            email: response.data.email,
+          });
+          window.location.reload();
+          alert('Profile photo updated successfully!');
+        } catch (error) {    
+          alert('Failed to update profile photo! ' + error.response.data.error);
+          window.location.reload();
+        }
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
 
   const handleButtonClick = () => {
     const fileInput = document.getElementById('file-upload');
     fileInput.click();
   };
 
- 
   return (
     <div className="profile-container">
       <Link to="/" state={{ props: myValue }}>
@@ -346,15 +323,13 @@ const handleFileChange = async (e) => {
                   <button
                     className='removeButtonProfilePage'
                     onClick={async () => {
-                      console.log(payment);
                       try {
                         await axios.delete(`http://localhost:3000/payment-info/${payment.id}`);
                         const updatedPaymentInfo = paymentInfo.filter((_, i) => i !== index);
                         setPaymentInfo(updatedPaymentInfo);
                         alert('Payment information removed!');
                       } catch (error) {
-                        console.error('Failed to remove payment information', error);
-                        alert('Failed to remove payment information');
+                        alert('Failed to remove payment information! ' + error.response.data.error);
                       }
                     }}
                   >
