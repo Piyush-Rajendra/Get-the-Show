@@ -107,3 +107,37 @@
     background-color: #b44242;
     }
   }
+
+  .imageButtonProfilePage {
+    background:none;
+    border: none;
+    height: 200px;
+    width:200px;
+    margin:0;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .imgProfileSideBarProfilePage {
+  height: px;
+  width: 200px;
+  border-radius: 80%;
+  margin: auto;
+}
+
+.historyButtonRegisterPage {
+  padding: 10px;
+  color:rgb(2, 2, 2);
+  margin-top: 15px;
+  margin-bottom: 50px;
+  margin-left: 50%;
+  font-size: 25px;
+  font-weight: 600;
+  background-color: #f85757;
+  border-radius: 20px;
+  cursor: pointer;
+  &:hover {
+    background-color: #b44242;
+  }
+}

@@ -95,3 +95,41 @@
         background-color: #f8a6a6;
     }
 }
+
+.registerFontRegisterPage {
+    color: #FF6666;
+    text-align: center;
+    font-size: 40px;   
+    margin-top: 5px;
+}
+
+.backButtonRegisterPage {
+  padding: 10px;
+  color:rgb(2, 2, 2);
+  margin-top: 15px;
+  margin-bottom: 0px;
+  font-size: 25px;
+  font-weight: 600;
+  background-color: #f85757;
+  border-radius: 20px;
+  cursor: pointer;
+  &:hover {
+    background-color: #b44242;
+  }
+}
+
+.backButtonForgotPasswordPage {
+    padding: 10px;
+    color:rgb(2, 2, 2);
+    margin-top: 15px;
+    margin-bottom: 0px;
+    margin-left: 250px;
+    font-size: 25px;
+    font-weight: 600;
+    background-color: #f85757;
+    border-radius: 20px;
+    cursor: pointer;
+    &:hover {
+    background-color: #b44242;
+    }
+}

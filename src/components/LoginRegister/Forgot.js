@@ -2,7 +2,7 @@ import React from "react";
 import './../css/LoginRegister/Register.css';
 import {useState } from 'react';
 import axios from 'axios';
-
+import { Link, useNavigate } from 'react-router-dom';
 
 const Forgot = () => {
   const [displayText, setDisplayText] = useState(
@@ -47,6 +47,9 @@ const Forgot = () => {
   return (
     <div className="background">
       <hr></hr>
+      <Link to="/login">
+        <button className="backButtonForgotPasswordPage">Back</button>
+      </Link>      
       <h2 className="register">Forgot Password</h2>
       <div className="center">
         <div className="formcontainer">

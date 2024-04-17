@@ -168,7 +168,7 @@ const Register = () => {
         </div>          */}
         
       <div className="form-group">  
-          <button className="registerButtonRegisterContinued" type="submit">Register!</button>
+          <button className="registerButtonRegisterContinued" type="submit">Continue!</button>
         </div>  
     </div>
     

@@ -136,6 +136,7 @@ hr {
     margin: 10px;
     max-width: 300px;
     width: 100%;
+    gap:20px;
     justify-content: space-around;
     font-family: Judson, sans-serif;
 }
@@ -144,6 +145,7 @@ hr {
     box-sizing: border-box;
     width: 100%;
     max-width: 200px;
+    height:60px;
     padding: 10px;
     font-size: 16px;
     border-radius: 25px;
@@ -166,6 +168,7 @@ hr {
     padding: 10px;
     font-size: 16px;
     border-radius: 25px;
+    height:60px;
     background-color: rgb(248, 232, 232);
     color: #000000;
     border: none;
