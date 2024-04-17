@@ -9,7 +9,6 @@ import { useHistory } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import UserContext from "../context/UserContext";
 
-
 const ManageMovie = ({props}) => {
   const isAdmin = localStorage.getItem('isAdmin');
 
@@ -21,6 +20,9 @@ const ManageMovie = ({props}) => {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
   const navigate = useNavigate();
+
+
+
 
 // Define the URL
 const url = 'http://localhost:3000/movies';
@@ -50,9 +52,6 @@ const handleSearch = () => {
   setFilteredMovies(filtered);
 };
 
-// if (myValue !== true || myValue !== false) {
-//   myValue = false;
-// }
 
 
 useEffect(() => {
@@ -90,6 +89,16 @@ useEffect(() => {
     navigate('/logout');
   } 
 
+  const deleteMovie = async (ind) => {
+    try {
+      const response = await axios.delete(`http://localhost:3000/movies/${ind}`);
+      window.location.reload();
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+
   if (isAdmin) {
     return(
         <div class = "homeBody">
@@ -98,11 +107,7 @@ useEffect(() => {
             <div class = "homeSearch">
               <select id="filter-dropdown">
                 <option value="">Title</option>
-                <option value="genre">Genre</option>
-                <option value="year">Year</option>
               </select>
-              {/* <input type="text" placeholder="Search for Movies..."></input>
-              <button>Search</button> */}
               <input type="text" id="myInput" placeholder="Search for Movies..." value={searchQuery} onChange={handleSearchInputChange}></input>
               <button onClick={handleSearch}>Search</button>
               {searchActive && 
@@ -120,7 +125,7 @@ useEffect(() => {
             <h1>Manage Movies</h1>
           </div>
           <div class = "ManageMovieButton"> 
-            <button>Add Movie</button>
+          <Link to="/AddMovie"><button>Add Movie</button></Link>
           </div>
           <div class="homeListNowPlaying">
             <ul class="item-list">
@@ -141,8 +146,8 @@ useEffect(() => {
                           posterBase64={location.posterBase64}
                         />
                       <div class="button-group">
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <button><Link to={`/editmovie/${location.id}`}  key={index}></Link>Edit</button>
+                        <button onClick={() => deleteMovie(location.id)}>Delete</button>
                       </div>
                     </div>
                   </li>
@@ -164,8 +169,8 @@ useEffect(() => {
                         posterBase64={location.posterBase64}
                       />
                     <div class="button-group">
-                      <button>Edit</button>
-                      <button>Delete</button>
+                    <Link to={`/editmovie/${location.id}`}  key={index}><button>Edit</button></Link>
+                    <button onClick={() => deleteMovie(location.id)}>Delete</button>
                     </div>
                   </div>
                 </li>

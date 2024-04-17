@@ -1,9 +1,9 @@
-body {
+/* body {
     background-color: black;
     color: #f66;
     margin: 0;
     padding: 0;
-  }
+  } */
   
   .homeHeaderUsers {
     display: flex;
@@ -67,4 +67,19 @@ body {
     flex-grow: 1;
   }
 
-  
+  .button-group-user {
+    display: flex;
+    justify-content: space-between; /* Space items evenly */
+    width: 100%; /* Occupy full width */
+    margin: 3px;
+  }
+
+  .button-group-user button {
+    margin-right: 5px; /* Adjust as needed */
+    background-color: #FF6666;
+    color: black;
+    border-radius: 15px; 
+    padding: 17px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }

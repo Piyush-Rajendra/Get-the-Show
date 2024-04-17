@@ -27,7 +27,10 @@ import AddPromotions from './components/Promotions/AddPromotions';
 import EditPromotions from './components/Promotions/EditPromotions';
 import OrderHistory from './components/MainPage/OrderHistory';
 import ErrorPage from './components/ErrorPage';
-
+import EditMovie from './components/AdminPage/EditMovie';
+import AddMovie from './components/AdminPage/AddMovie';
+import AddAdmin from './components/AdminPage/AddAdmin';
+import EditUser from './components/AdminPage/EditUser';
 
 function App() {
   const [userData, setUserData] = useState({
@@ -88,8 +91,12 @@ function App() {
           <Route path='/EditPromotion/:id' element={<EditPromotions />} />
           <Route path='/OrderHistory' element={<OrderHistory />} />
           <Route path='*' element={<ErrorPage />} />
+          <Route path='/editmovie/:id' element={<EditMovie />} />
           <Route exact path='/reset/:token' element={<UpdatePassword />} />
           <Route exact path='/registerContinued' element={<RegisterContinued />} /> 
+          <Route exact path='/AddMovie' element ={<AddMovie />} />
+          <Route exact path='/addadmin' element ={<AddAdmin />} />
+          <Route exact path='/edituser/:id' element={<EditUser/>} />
         </Routes>
       </div>
     </Router>

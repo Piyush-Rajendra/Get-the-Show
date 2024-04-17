@@ -60,6 +60,38 @@
     flex-grow: 1;
   }
 
+  .ManageMovieNowPlayingUser {
+    background-color: #FF6666;
+    color: black;
+    margin: 10px 0px 10px 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-align: center;
+    align-items: center;
+  }
+  .ManageMovieNowPlayingUser h3 {
+    margin: 0px 10% 0px 10%;
+    padding:5px;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .ManageMovieNowPlayingAdmin {
+    background-color: #FF6666;
+    color: black;
+    margin: 10px 0px 10px 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-align: center;
+    align-items: center;
+  }
+  .ManageMovieNowPlayingAdmin h3 {
+    margin: 0px 10% 0px 10%;
+    padding:5px;
+    align-items: center;
+    flex-grow: 1;
+  }
+
   .ManageMovieButton {
     padding:10px;
     padding-bottom: 15px;
