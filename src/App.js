@@ -26,6 +26,7 @@ import ManageTickets from './components/AdminPage/ManageTickets';
 import AddPromotions from './components/Promotions/AddPromotions';
 import EditPromotions from './components/Promotions/EditPromotions';
 import OrderHistory from './components/MainPage/OrderHistory';
+import ErrorPage from './components/ErrorPage';
 
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
           <Route path='/AddPromotion' element={<AddPromotions />} />
           <Route path='/EditPromotion/:id' element={<EditPromotions />} />
           <Route path='/OrderHistory' element={<OrderHistory />} />
+          <Route path='*' element={<ErrorPage />} />
           <Route exact path='/reset/:token' element={<UpdatePassword />} />
           <Route exact path='/registerContinued' element={<RegisterContinued />} /> 
         </Routes>
