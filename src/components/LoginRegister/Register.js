@@ -1,15 +1,9 @@
 import React from "react";
-import {useState, useContext } from "react";
+import {useState} from "react";
 import './../css/LoginRegister/Register.css';
 import { Link, useNavigate } from 'react-router-dom';
-import {useHistory} from 'react-router-dom';
 import axios from "axios";
 const Register = () => {
-  const handleCheck = (event) => {
-    formData.registerForPromotion = event.target.checked;
-    console.log(formData.registerForPromotion);
-
-  }
   const [formData, setFormData] = useState({
     fullName: '',
     username: '',
@@ -40,23 +34,28 @@ const Register = () => {
     });
   };
 
-   const [passwordsMatch, setPasswordsMatch] = useState(true);
-   const newLocation = useNavigate();
+  const handleCheck = (e) => {
+    const { name, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: checked ? 'yes' : 'no'
+    });
+};
+
+  const [, setPasswordsMatch] = useState(true);
+  const newLocation = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your registration logic here
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match');
       setPasswordsMatch(false);
       return;
     } 
     setPasswordsMatch(true);
-    // Reset form data
     
     try {
     const response = await axios.post("http://localhost:3000/signup", formData);
-    console.log(formData.username);
     localStorage.setItem('username', formData.username)
     setFormData({
       fullName: '',
@@ -72,9 +71,8 @@ const Register = () => {
       state: '',
       phoneNumber: ''
     });
-    newLocation("/registerContinued", { state: { email: formData.email } })
+    newLocation("/registerContinued")
     } catch(error) {
-      console.error('Registering failed', error);
       alert('Error while registering ' + error.response.data.error);
     }
   
@@ -143,13 +141,12 @@ const Register = () => {
             required
           />
         </div>
-        <div className="form-group">    
-          <label for="registerForPromotion">Register for promotions:</label> 
-          <input type="checkbox" id="registerForPromotion" name="registerForPromotion" onChange={handleCheck}></input> 
-          <button className="registerButtonRegister" type="submit">Register!</button>
-        </div>          
+          <div className="form-group">
+            <label htmlFor="registerForPromotion">Register for promotions:</label>
+            <input type="checkbox" id="registerForPromotion" name="subscribeToPromotion" onChange={handleCheck} />
+            <button className="registerButtonRegister" type="submit">Register!</button>
+          </div>         
     </div>
-    
     <div>
         <h2>Home Address</h2>
         <div className="form-group">
