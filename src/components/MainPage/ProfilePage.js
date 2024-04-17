@@ -251,6 +251,9 @@ const handleFileChange = async (e) => {
       <Link to="/" state={{ props: myValue }}>
         <button className="backButtonProfilePage">Back</button>
       </Link>
+      <Link to="/OrderHistory">
+        <button className="historyButtonRegisterPage">Order History</button>
+      </Link>
       <div>
       <input
         id="file-upload"
