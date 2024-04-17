@@ -6,8 +6,8 @@ import {useHistory} from 'react-router-dom';
 import axios from "axios";
 
 const Register = () => {
-    const location = useLocation();
-    const holder = location.state || {};
+  const location = useLocation();
+  const holder = location.state || {};
   const [formData, setFormData] = useState({
     cardType: '',
     cardNumber: '',
@@ -19,110 +19,98 @@ const Register = () => {
     zipCode: '',
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  if (name === 'phoneNumber' && !/^\d*$/.test(value)) {
+    return;
+  }
+  if (name === 'zipCode' && !/^\d{0,5}$/.test(value)) {
+    return; 
+  }
+  if (name === 'cardPIN' && !/^\d{0,3}$/.test(value)) {
+    return;
+  }
+  setFormData({
+    ...formData,
+    [name]: value
+  });
+};
 
-   const [passwordsMatch, setPasswordsMatch] = useState(true);
-   const newLocation = useNavigate();
+const [passwordsMatch, setPasswordsMatch] = useState(true);
+const newLocation = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Add your registration logic here
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match');
-      setPasswordsMatch(false);
-      return;
-    } 
-    setPasswordsMatch(true);
-    console.log(formData);
-    // Reset form data
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (formData.password !== formData.confirmPassword) {
+    alert('Passwords do not match');
+    setPasswordsMatch(false);
+    return;
+  }
+  setPasswordsMatch(true);
+
+  try {
     
+    if (formData.cardType !== '') {
+      const username = localStorage.getItem('username');
+      const userID = await axios.get(`http://localhost:3000/user/${username}`);
+      console.log(userID);
+      console.log(userID.data);
+      console.log(formData);
+      await axios.post(`http://localhost:3000/billing-address/${userID.data.id}`, {
+        billingAddress: formData.billingAddress,
+        city: formData.city,
+        state: formData.state,
+        zipCode: formData.zipCode
+      });
 
-    try {
-        if (formData.cardType !== '') {
-        console.log(holder.email);
-         const userID = await axios.get(`http://localhost:3000/users/${holder.email}`);
-
-         console.log(formData);
-         const submit = await axios.post(`http://localhost:3000/users/${userID.data.id}/payment`, formData);
-        }
+      await axios.post(`http://localhost:3000/user/${userID.data.id}/payment`, {
+        cardType: formData.cardType,
+        cardNumber: formData.cardNumber,
+        cardPIN: formData.cardPIN,
+        expirationDate: formData.expirationDate
+      });
+    }
     setFormData({
-        cardType: '',
-        cardNumber: '',
-        cardPIN: '',
-        expirationDate: '',
-        billingAddress: '',
-        city: '',
-        state: '',
-        zipCode: '',
+      cardType: '',
+      cardNumber: '',
+      cardPIN: '',
+      expirationDate: '',
+      billingAddress: '',
+      city: '',
+      state: '',
+      zipCode: '',
     });
     newLocation("/confirmationPage")
-    } catch(error) {
-      alert(error.response.data.error)
-    }
-  };
+  } catch (error) {
+    alert(error.response.data.error)
+  }
+};
+
+function formatDate(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    return ''; 
+  }
+  const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+  const year = utcDate.getFullYear();
+  let month = utcDate.getMonth() + 1;
+  if (month < 10) {
+    month = `0${month}`;
+  }
+  let day = utcDate.getDate();
+  if (day < 10) {
+    day = `0${day}`;
+  }
+  return `${year}-${month}-${day}`;
+}
+
  return (
   <div className="centerFormRegister">  
     <div className="containerForm">
     <h2 class="register">Register: Optional</h2>
       <form className="bodyRegisterContinuedForm" onSubmit={handleSubmit}>
       <div>
-        {/* <h2>User Information</h2>
-        <div className="form-group">
-          <label>Username: </label>
-          <input className="forms-inputRegister"
-                type="text"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className="form-group">
-          <label>Email: </label>
-          <input className="forms-inputRegister"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className="form-group">
-          <label>Password: </label>
-          <input className="forms-inputRegister"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className="form-group">
-          <label>Confirm Password: </label>
-          <input className="forms-inputRegister"
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className="form-group">
-          <label>Phone Number: </label>
-          <input className="forms-inputRegister"
-                type="tel"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-              />
-        </div> */}
-        
       <div className="form-group">      
         <h2>Payment Information</h2>      
           <label>Card Type: </label>
@@ -135,21 +123,26 @@ const Register = () => {
         </div>
         <div className="form-group">
           <label>Card Number: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="cardNumber"
-              value={formData.cardNumber}
-              onChange={handleChange}
-            />
+          <input
+            className="forms-inputRegister"
+            type="tel"
+            name="cardNumber"
+            value={formData.cardNumber}
+            onChange={handleChange}
+            maxLength="16"
+            minLength="16"
+          />
         </div>
         <div className="form-group">
           <label>Expiration Date: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="expirationDate"
-              value={formData.expirationDate}
-              onChange={handleChange}
-            />
+          <input
+            className="forms-inputRegister"
+            type="date"
+            name="expirationDate"
+            value={formatDate(formData.expirationDate)}
+            onChange={handleChange}
+            min={formatDate(new Date().toISOString().split('T')[0])} // Set the min attribute to the current date
+          />
             
         </div>  
         <div className="form-group">
@@ -160,94 +153,13 @@ const Register = () => {
               value={formData.cardPIN}
               onChange={handleChange}
             />
-            
         </div> 
-         
-        {/* <div className="form-group">  
-          <button className="registerButtonRegisterContinued" type="submit">Register!</button>
-        </div>          */}
-        
       <div className="form-group">  
-          <button className="registerButtonRegisterContinued" type="submit">Register!</button>
+          <button className="registerButtonRegisterContinued" type="submit">Continue!</button>
         </div>  
     </div>
-    
-    
     <div>
-        {/* <h2>Home Address</h2>
-        <div className="form-group">
-          <label>Street: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="street"
-              value={formData.street}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>City: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>State: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>Zip Code: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleChange}
-            />
-        </div> */}
         <h2>Billing Address</h2>
-        <div className="form-group">
-          <label>Street: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="street"
-              value={formData.street}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>City: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>State: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>Zip Code: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleChange}
-            />
-        </div>
         <div className="form-group">
           <label>Billing Address: </label>
           <input className="forms-inputRegister"
@@ -256,6 +168,36 @@ const Register = () => {
               value={formData.billingAddress}
               onChange={handleChange}
             />
+        </div>
+        <div className="form-group">
+          <label>City: </label>
+          <input className="forms-inputRegister"
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+            />
+        </div>
+        <div className="form-group">
+          <label>State: </label>
+          <input className="forms-inputRegister"
+              type="text"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+            />
+        </div>
+        <div className="form-group">
+          <label>Zip Code: </label>
+          <input
+            className="forms-inputRegister"
+            type="text"
+            name="zipCode"
+            value={formData.zipCode}
+            onChange={handleChange}
+            maxLength="5"
+            minLength="5"
+          />
         </div>
         <div className="fillInSpaceRegister"></div>
       </div> 
