@@ -49,29 +49,26 @@ const handleSubmit = async (e) => {
   setPasswordsMatch(true);
 
   try {
-    const isPaymentInfoFilled =
-      formData.cardType !== '' &&
-      formData.cardNumber !== '' &&
-      formData.cardPIN !== '' &&
-      formData.expirationDate !== '';
-    const isBillingAddressFilled =
-      formData.street !== '' &&
-      formData.city !== '' &&
-      formData.state !== '' &&
-      formData.zipCode !== '' &&
-      formData.billingAddress !== '';
-    if ((isPaymentInfoFilled || !isBillingAddressFilled) || (!isBillingAddressFilled || isPaymentInfoFilled)) {
-      alert('Please fill out all payment information fields or none at all');
-      return;
-    }
+    
     if (formData.cardType !== '') {
       const username = localStorage.getItem('username');
       const userID = await axios.get(`http://localhost:3000/user/${username}`);
       console.log(userID);
       console.log(userID.data);
-      await axios.post(`http://localhost:3000/billing-address/${userID.data.id}/payment`, formData);
+      console.log(formData);
+      await axios.post(`http://localhost:3000/billing-address/${userID.data.id}`, {
+        billingAddress: formData.billingAddress,
+        city: formData.city,
+        state: formData.state,
+        zipCode: formData.zipCode
+      });
 
-      await axios.post(`http://localhost:3000/user/${userID.data.id}/payment`,formData)
+      await axios.post(`http://localhost:3000/user/${userID.data.id}/payment`, {
+        cardType: formData.cardType,
+        cardNumber: formData.cardNumber,
+        cardPIN: formData.cardPIN,
+        expirationDate: formData.expirationDate
+      });
     }
     setFormData({
       cardType: '',
@@ -125,15 +122,15 @@ function formatDate(dateString) {
             />
         </div>
         <div className="form-group">
-          <label>Phone Number: </label>
+          <label>Card Number: </label>
           <input
             className="forms-inputRegister"
             type="tel"
-            name="phoneNumber"
-            value={formData.phoneNumber}
+            name="cardNumber"
+            value={formData.cardNumber}
             onChange={handleChange}
-            maxLength="10"
-            minLength="10"
+            maxLength="16"
+            minLength="16"
           />
         </div>
         <div className="form-group">
