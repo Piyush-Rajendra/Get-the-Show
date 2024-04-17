@@ -6,6 +6,7 @@ import EmbeddedVideo from "../EmbeddedVideo";
 import UserContext from "../context/UserContext";
 
 const MovieView = (props) => {
+    //const base64String = props.posterBase64;
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -32,6 +33,7 @@ const MovieView = (props) => {
         ageRating:'',
         director:'',
         producer:'',
+        base64: '',
         //code:'',
         trailer:'',
         synopsis:'',
@@ -84,6 +86,7 @@ const MovieView = (props) => {
                 producer: response.data.producer,
                 trailer: response.data.trailerVideo,
                 synopsis: response.data.synopsis,
+                base64: response.data.posterBase64,
                 rating: 4.5,
                 showtimes: response.data.showDatesTimes,
                 reviews: ["It was kind of mid", "Another Sony Pictures stinker", "My five year old really enjoyed it", "Awful"],
@@ -159,7 +162,11 @@ const MovieView = (props) => {
             </div>
             <div className="three-containers">
                 <div id="column-one" className="view-page-column">
-                    <img src={movie.poster} width="250" id="movie-poster" alt={movie.title} />
+                {movie.base64 ? (
+                        <img src={movie.base64} width="250" alt="Base64 Image" />
+                        ) : (
+                        <p>No valid base64 string provided</p>
+                        )}
                     <div id="whole-info-container">
                     <div id="center-movie-title">
                     <h2 id="movie-title">{movie.title}</h2>
