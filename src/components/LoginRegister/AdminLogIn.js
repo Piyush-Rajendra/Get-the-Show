@@ -11,6 +11,7 @@ const AdminLogIn = () => {
       password: '',
     });
 
+
     const { userData, setUserData } = useContext(UserContext);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -27,7 +28,6 @@ const AdminLogIn = () => {
    const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        console.log(formData);
       const response = await axios.post('http://localhost:3000/admin/signin', formData);
       const token = response.data.token;
       const user = response.data.user.username; 

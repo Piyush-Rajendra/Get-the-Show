@@ -18,6 +18,9 @@ const AdminPanel = props => {
   const changeUser = () => {
     navigate('/ManageUser');
   }
+  const homeScreen = () => {
+    navigate('/');
+  }
   const logout = () => {
     setUserData(prevUserData => ({
       ...prevUserData,
@@ -38,6 +41,7 @@ const AdminPanel = props => {
             <h1>E-Cinema Booking</h1>
             <div class = "buttons">
               <button onClick={logout}>Logout</button>
+              <button onClick={homeScreen}>Home Page</button>
             </div>
           </div>
           {/* <div class = "homeSearch">
