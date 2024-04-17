@@ -6,10 +6,14 @@ import EmbeddedVideo from "../EmbeddedVideo";
 import UserContext from "../context/UserContext";
 
 const MovieView = (props) => {
+    //const base64String = props.posterBase64;
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const { userData } = useContext(UserContext);
     const [username, setUsername] = useState();
+    const [review, setReview] = useState([]);
+    const [comment, setComment] = useState();
 
     useEffect(() => {
         // Get username from localStorage and set it
@@ -29,6 +33,7 @@ const MovieView = (props) => {
         ageRating:'',
         director:'',
         producer:'',
+        base64: '',
         //code:'',
         trailer:'',
         synopsis:'',
@@ -71,8 +76,7 @@ const MovieView = (props) => {
         const fetchMovieData = async () => {
           try {
             const response = await axios.get(`http://localhost:3000/moviesById/${id}`);
-            //const response = await axios.get(`http://localhost:3001/3`);
-            //console.log(response.data);
+           
             setMovie({
                 title: response.data.title,
                 poster: response.data.trailerPicture,
@@ -82,6 +86,7 @@ const MovieView = (props) => {
                 producer: response.data.producer,
                 trailer: response.data.trailerVideo,
                 synopsis: response.data.synopsis,
+                base64: response.data.posterBase64,
                 rating: 4.5,
                 showtimes: response.data.showDatesTimes,
                 reviews: ["It was kind of mid", "Another Sony Pictures stinker", "My five year old really enjoyed it", "Awful"],
@@ -101,14 +106,67 @@ const MovieView = (props) => {
         fetchMovieData();
       }, [id, showtimesArray, castArray]);
 
+      useEffect(() => {
+        const fetchReviewData = async () => {
+          try {
+            const response = await axios.get(`http://localhost:3000/reviews/${id}`);
+            setReview(response.data);
+            
+          } catch (error) {
+            console.error('Error fetching review data:', error);
+          }
+        };
+    
+        fetchReviewData();
+      }, [id, review]);
+
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        // Handle form submission here, for example, send inputValue to server or perform any action
+        //alert(comment);
+        //setComment('');
+        try {
+            // Send form data to your server, which will interact with MongoDB
+            const commentData = {
+                movie_id: id,
+                username: username,
+                review: comment
+            }
+            axios.post('http://localhost:3000/reviews', commentData); // Replace with your server endpoint
+            alert("Comment added!");
+            //console.log('Form submitted successfully:', commentData);
+            //clear
+          } catch (error) {
+            console.error('Error submitting form:', error);
+          }
+          setComment('');
+
+
+      };
+    
+      const handleChange = (event) => {
+        setComment(event.target.value);
+      };
+
+    const navigateHome = () => {
+        navigate('/');
+    }
+
+      
+
     return (
         <div className="page">
             <div id="title-logo">
-                <h1>E-Cinema Booking</h1>
+
+                <h1 onClick={navigateHome}>E-Cinema Booking</h1>
             </div>
             <div className="three-containers">
                 <div id="column-one" className="view-page-column">
-                    <img src={movie.poster} width="250" id="movie-poster" alt={movie.title} />
+                {movie.base64 ? (
+                        <img src={movie.base64} width="250" alt="Base64 Image" />
+                        ) : (
+                        <p>No valid base64 string provided</p>
+                        )}
                     <div id="whole-info-container">
                     <div id="center-movie-title">
                     <h2 id="movie-title">{movie.title}</h2>
@@ -119,7 +177,6 @@ const MovieView = (props) => {
                         <h3>Rated: {movie.ageRating}</h3>
                         <h3>Director: {movie.director}</h3>
                         <h3>Prodcuer: {movie.producer}</h3>
-                        <h3>Film Code: {movie.code}</h3>
                     </div>
                     </div>
                     </div>
@@ -141,12 +198,22 @@ const MovieView = (props) => {
                 ))}
                 <div id="review-container">
                     <h3 className="red" id="review-title">Reviews</h3>
-                    <h4 className="white" id="movie-rating">{movie.rating}/5</h4>
-                    {movie.reviews.map((review, index) => (
+                    {review.map((review, index) => (
                     <h5 className="review-single" key={index}>
-                        {review} 
+                        <div id="comment">{review.username}: {review.review}</div>
                     </h5>
                 ))}
+                <h5><u>Leave a comment: </u></h5>
+                <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={comment}
+                    onChange={handleChange}
+                    placeholder="Enter text here..."
+                />
+                <button type="submit">Submit</button>
+                </form>
+
                 </div>
                 </div>
                 </div>

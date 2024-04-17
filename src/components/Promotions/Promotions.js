@@ -6,8 +6,24 @@ import UserContext from "../context/UserContext";
 
 const Promotions = () => {
 
+    const navigate = useNavigate();
     const { userData } = useContext(UserContext);
     const isAdmin = localStorage.getItem('isAdmin');
+
+    const [promotions, setPromotions] = useState([]);
+    useEffect(() => {
+        async function fetchPromotions() {
+          try {
+            const response = await axios.get('http://localhost:3000/promotions'); // Use Axios to make a GET request
+            setPromotions(response.data); // Set the promotions data into the state
+          } catch (error) {
+            console.error('Error fetching promotions:', error);
+          }
+        }
+    
+        fetchPromotions();
+      }, [promotions]);
+
     const DUMMY_PROMOTIONS = [
         {
             name: 'Promo1',
@@ -110,8 +126,27 @@ const Promotions = () => {
         }
     ];
     
-    const [promotions, setPromotions] = useState(DUMMY_PROMOTIONS);
+    
 
+    const ToAddPromo = () => {
+        navigate('/AddPromotion');
+    }
+    
+    function deletePromotion(promoID) {
+        axios.delete(`http://localhost:3000/promotions/${promoID}`)
+            .then(response => {
+                console.log('Promotion deleted successfully');
+                // Handle any UI updates or further actions here
+            })
+            .catch(error => {
+                console.error('Error deleting promotion:', error);
+                // Handle error cases here
+            });
+            //alert("button pressed");
+    }
+
+
+    
 
     if (isAdmin) {
     return (
@@ -125,24 +160,26 @@ const Promotions = () => {
                 </div>
             </div>
             <div id="promo-add-button">
-                <button id="add-promo-button">Add New Promotion</button>
+                <button id="add-promo-button" onClick={ToAddPromo}>Add New Promotion</button>
             </div>
             <div id="promos-container">
-            <div>
+            
             {promotions.map((promo, index) => (
                 <div className="card" key={index}>
                     <h2>{promo.name}</h2>
                     <p>Promo Code: {promo.promoCode}</p>
                     <p>Description: {promo.description}</p>
-                    {promo.percentOffPromo && <p>Percent Off: {promo.percentOff * 100}%</p>}
-                    {promo.valueOffPromo && <p>Value Off: ${promo.valueOff}</p>}
+                    {promo.percentoffPromo == 1 && <p>Percent Off: {promo.percentoff * 100}%</p>}
+                    {promo.valueoffPromo == 1 && <p>Value Off: ${promo.valueoff}</p>}
                     <div id="promo-buttons">
-                        <button className="promo-button">Remove</button>
-                        <button className="promo-button">Edit</button>
+                    <button className="promo-button" onClick={() => deletePromotion(promo.id)}>Remove</button>
+                        <Link to={`/EditPromotion/${promo.promoCode}`}>
+                        <button className="promo-button" onClick={deletePromotion}>Edit</button>
+                        </Link>
                     </div>
                 </div>
             ))}
-        </div>
+        
 
             </div>
 

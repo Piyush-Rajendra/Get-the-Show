@@ -22,6 +22,11 @@ import UpdatePassword from './components/LoginRegister/UpdatePassword';
 import RegisterContinued from './components/LoginRegister/RegisterContinued';
 import AdminLogIn from './components/LoginRegister/AdminLogIn';
 import ChangePassword from './components/LoginRegister/ChangePassword';
+import ManageTickets from './components/AdminPage/ManageTickets';
+import AddPromotions from './components/Promotions/AddPromotions';
+import EditPromotions from './components/Promotions/EditPromotions';
+import OrderHistory from './components/MainPage/OrderHistory';
+import ErrorPage from './components/ErrorPage';
 import EditMovie from './components/AdminPage/EditMovie';
 import AddMovie from './components/AdminPage/AddMovie';
 import AddAdmin from './components/AdminPage/AddAdmin';
@@ -81,6 +86,11 @@ function App() {
           <Route path='/logout' element={<Logout />} />
           <Route path='/adminlogin' element={<AdminLogIn />} />
           <Route path='/ChangePassword' element={<ChangePassword />} />
+          <Route path='/ManageTickets' element={<ManageTickets />} />
+          <Route path='/AddPromotion' element={<AddPromotions />} />
+          <Route path='/EditPromotion/:id' element={<EditPromotions />} />
+          <Route path='/OrderHistory' element={<OrderHistory />} />
+          <Route path='*' element={<ErrorPage />} />
           <Route path='/editmovie/:id' element={<EditMovie />} />
           <Route exact path='/reset/:token' element={<UpdatePassword />} />
           <Route exact path='/registerContinued' element={<RegisterContinued />} /> 

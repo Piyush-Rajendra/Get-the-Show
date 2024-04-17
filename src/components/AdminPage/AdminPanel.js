@@ -34,6 +34,11 @@ const AdminPanel = props => {
   const changePromotions = () => {
     navigate('/promotions');
   }
+
+  const changeTickets = () => {
+    navigate('/ManageTickets');
+  }
+
   if (isAdmin) {
     return(
         <div class = "homeBody">
@@ -65,6 +70,8 @@ const AdminPanel = props => {
             {/* <button>Ticket Prices</button>            
             <br></br>*/}
             <button onClick={changeUser}>Members & Admin</button>
+            <br></br>
+            <button onClick={changeTickets}>Manage Ticket Prices</button>
           </div>
           
         <footer>

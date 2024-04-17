@@ -6,6 +6,8 @@ import axios from "axios";
 const BuyTickets = (props) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    
+    
 
     const [token, setToken] = useState(localStorage.getItem('token'));
 
@@ -54,10 +56,21 @@ const BuyTickets = (props) => {
     useEffect(() => {
         setMovieTitle('The Emoji Movie');
         setMovieTime('2/23/24 @ 4:30 P.M.');
-        setAdultTicket(12);
-        setSeniorTicket(8);
-        setChildTicket(9); 
-        //setTax(3.91);
+        const fetchTicketData = async () => {
+            try {
+              const responseOne = await axios.get(`http://localhost:3000/ticket-prices/children`);
+              setChildTicket(responseOne.data.price); 
+              const responseTwo = await axios.get(`http://localhost:3000/ticket-prices/adult`);
+              setAdultTicket(responseTwo.data.price); 
+              const responseThree = await axios.get(`http://localhost:3000/ticket-prices/senior`);
+              setSeniorTicket(responseThree.data.price); 
+              
+            } catch (error) {
+              console.error('Error fetching ticket data:', error);
+            }
+          };
+      
+          fetchTicketData();
       }, []);
 
       useEffect(() => {
@@ -115,6 +128,8 @@ const BuyTickets = (props) => {
         sessionStorage.setItem('cost', cost);
         sessionStorage.setItem('tax', tax);
         sessionStorage.setItem('fullTotal', totalFormatted);
+        sessionStorage.setItem('movie-time', movieTime);
+        sessionStorage.setItem('movie-title', movieTitle);
 
 
         navigate('/payment');
