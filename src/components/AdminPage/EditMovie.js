@@ -27,7 +27,8 @@ const EditMovie = ({ onSubmit }) => {
         cast: '',
         posterBase64: '',
         showDatesTimes: '',
-        end_date: ''
+        end_date: '',
+        MovieStatus: ''
     });
 
     function stringToArray(inputString) {
@@ -89,7 +90,8 @@ const EditMovie = ({ onSubmit }) => {
                   cast: response.data.cast,
                   posterBase64: response.data.posterBase64,
                   showDatesTimes: response.data.showDatesTimes,
-                  end_date: response.data.end_date
+                  end_date: response.data.end_date,
+                  MovieStatus: response.data.MovieStatus
               });
               // setShowtimesArray(stringToArray(movie.showtimes));
               // setCastArray(stringToArray(movie.cast));
@@ -111,7 +113,7 @@ const EditMovie = ({ onSubmit }) => {
         const handleSubmit = async (e) => {
           e.preventDefault();
           try {
-          const response = await axios.put(`http://localhost:3000/movies/${id}`, movie);
+          const response = await axios.put(`http://localhost:3000/movie/${id}`, movie);
           setDisplayText("Movie has been edited!");
           setTimeout(() => {
           setMovie({
@@ -128,7 +130,8 @@ const EditMovie = ({ onSubmit }) => {
             cast: '',
             posterBase64: '',
             showDatesTimes: '',
-            end_date: ''
+            end_date: '',
+            MovieStatus: ''
         });
           navigate("/ManageMovie", { state: { props: true } });
         }, 1000);
@@ -141,9 +144,9 @@ const EditMovie = ({ onSubmit }) => {
       <div className="containerForm">
       <h2 class="register">Edit Movie</h2>
       <h3 style={{ color: '#FF6666', textAlign: "center" }}>{displayText}</h3>
-        <form className="bodyRegisterForm" onSubmit={handleSubmit}>
+        <form className="bodyRegisterFormMovie" onSubmit={handleSubmit}>
         <div>
-          <h2>Movie Information</h2>
+          {/* <h2>Movie Information</h2> */}
           <div className="form-group">
             <label>Title: </label>
             <input className="forms-inputRegister"
@@ -201,14 +204,25 @@ const EditMovie = ({ onSubmit }) => {
           <input className="forms-inputRegister"
                 type="date"
                 name="end_date"
-                value={movie.end_date}
+                value={formatDate(movie.end_date)}
                 onChange={handleChange}
                 required
               />
         </div>
-          <div className="form-group">    
-            <button className="registerButtonRegister" type="submit">Submit</button>
-          </div>          
+        <div className="form-group">
+          <label>Movie Status (Released or Unreleased): </label>
+          <br></br>
+          <input className="forms-inputRegister"
+                type="text"
+                name="MovieStatus"
+                value={movie.MovieStatus}
+                onChange={handleChange}
+                required
+              />
+        </div>     
+        <div className="form-group">    
+          <button className="registerButtonRegister" type="submit">Submit</button>
+        </div>   
       </div>
       
         <div>
@@ -255,6 +269,17 @@ const EditMovie = ({ onSubmit }) => {
               />
           </div>
           <div className="form-group">
+            <label>Producer: </label>
+            <br></br>
+            <input className="forms-inputRegister"
+                  type="text"
+                  name="producer"
+                  value={movie.producer}
+                  onChange={handleChange}
+                  required
+                />
+          </div>
+          {/* <div className="form-group">
             <label>Release Date: </label>
             <input className="forms-inputRegister"
                 type="date"
@@ -264,7 +289,7 @@ const EditMovie = ({ onSubmit }) => {
                 onChange={handleChange}
                 required
               />
-          </div>
+          </div> */}
           <div className="form-group">
             <label>Movie Poster (Base 64 format)</label>
             <input className="forms-inputRegister"
@@ -285,10 +310,13 @@ const EditMovie = ({ onSubmit }) => {
                 placeholder="xxxx/xx/xx @ xx:xx A.M./P.M., ..."
                 required
               />
+              
           </div>
-          <div className="fillInSpaceRegister"></div>
+          <div className="fillInSpaceRegister">
+          </div>
         </div> 
-        </form>
+        
+        </form> 
         </div>
     </div>
     );

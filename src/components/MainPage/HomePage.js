@@ -55,7 +55,6 @@ const handleSearch = async () => {
   setSearchActive(true);
   let filtered;
   let filtered1;
-  console.log(selectedFilter);
   if (selectedFilter === 'category') {
     // Filter by category
     filtered = moviesPlayingNow.filter(movie =>
@@ -75,15 +74,16 @@ const handleSearch = async () => {
   } else if (selectedFilter === 'showDatesTimes') {
     // Filter by title or showDatesTimes (you can add more filters as needed)
     const filtering = await axios.get(`http://localhost:3000/moviesByQuery?date=${searchQuery}`);
-    console.log(filtering.data[0]);
     const currentDateTime = new Date();
       const nowPlayingMoviesNow = filtering.data.filter(movie => {
         const releaseDateTime = new Date(movie.releaseDate);
-        return releaseDateTime <= currentDateTime;
+        const endDateTime = new Date(movie.end_date);
+        return ((releaseDateTime <= currentDateTime)  && (movie.MovieStatus === "Released") && (endDateTime > currentDateTime));
       });
       const comingSoonMoviesComing = filtering.data.filter(movie => {
         const releaseDateTime = new Date(movie.releaseDate);
-        return releaseDateTime > currentDateTime;
+        const endDateTime = new Date(movie.end_date);
+        return releaseDateTime > currentDateTime || (movie.MovieStatus === "Unreleased") || (endDateTime <= currentDateTime);
       });
     filtered = nowPlayingMoviesNow;
     filtered1 = comingSoonMoviesComing;
@@ -103,18 +103,20 @@ useEffect(() => {
       const currentDateTime = new Date();
       const nowPlayingMovies = response.data.filter(movie => {
         const releaseDateTime = new Date(movie.releaseDate);
-        return releaseDateTime <= currentDateTime;
+        const endDateTime = new Date(movie.end_date);
+        return ((releaseDateTime <= currentDateTime)  && (movie.MovieStatus === "Released") && (endDateTime > currentDateTime));
       });
       const comingSoonMovies = response.data.filter(movie => {
         const releaseDateTime = new Date(movie.releaseDate);
-        return releaseDateTime > currentDateTime;
+        const endDateTime = new Date(movie.end_date);
+        return releaseDateTime > currentDateTime || (movie.MovieStatus === "Unreleased") || (endDateTime <= currentDateTime);
       });
       setMoviesPlayingNow(nowPlayingMovies);
       setMoviesComingSoon(comingSoonMovies);
     })
     .catch(error => {
       // Handle error
-      console.error('Error fetching data:', error);
+      alert(error);
     });
 }, []); // empty dependency array ensures this effect runs only once
 

@@ -23,6 +23,21 @@
     margin-bottom: 50px;
 }
 
+.bodyRegisterFormMovie {
+    display: flex;
+    gap: 50px;
+    align-items: flex-start; /* Align items to start of the cross axis */
+    background-color: #FF6666;
+    padding: 10px;
+    border-radius: 25px;
+    width: 90%;
+    width: 800px;
+    height: 650px;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 .bodyRegisterFormUser {
     display: flex;
     gap: 50px;
