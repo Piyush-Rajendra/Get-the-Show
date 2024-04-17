@@ -27,6 +27,9 @@ const handleChange = (e) => {
   if (name === 'zipCode' && !/^\d{0,5}$/.test(value)) {
     return; 
   }
+  if (name === 'cardPIN' && !/^\d{0,3}$/.test(value)) {
+    return;
+  }
   setFormData({
     ...formData,
     [name]: value
@@ -84,19 +87,23 @@ const handleSubmit = async (e) => {
 };
 
 function formatDate(dateString) {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    if (month < 10) {
-      month = 0${month};
-    }
-    let day = date.getDate();
-    if (day < 10) {
-      day = 0${day};
-    }
-    return ${year}-${month}-${day};
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    return ''; 
   }
+  const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+  const year = utcDate.getFullYear();
+  let month = utcDate.getMonth() + 1;
+  if (month < 10) {
+    month = `0${month}`;
+  }
+  let day = utcDate.getDate();
+  if (day < 10) {
+    day = `0${day}`;
+  }
+  return `${year}-${month}-${day}`;
+}
 
  return (
   <div className="centerFormRegister">  
@@ -129,9 +136,9 @@ function formatDate(dateString) {
         <div className="form-group">
           <label>Expiration Date: </label>
           <input className="forms-inputRegister"
-              type="text"
+              type="date"
               name="expirationDate"
-              value={formData.expirationDate}
+              value={formatDate(formData.expirationDate)}
               onChange={handleChange}
             />
             

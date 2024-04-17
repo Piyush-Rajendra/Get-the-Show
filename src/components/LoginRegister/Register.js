@@ -71,6 +71,8 @@ const Register = () => {
       state: '',
       phoneNumber: ''
     });
+    const username = response.data.user.username; 
+    localStorage.setItem('username', username)
     newLocation("/registerContinued", { state: { email: formData.email } })
     } catch(error) {
       console.error('Registering failed', error);
