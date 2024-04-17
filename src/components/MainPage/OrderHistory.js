@@ -12,6 +12,48 @@ const OrderHistory = () => {
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
 
+    const [id, setId] = useState('');
+
+    useEffect(() => {
+      const fetchUserData = async () => {
+          try {
+            const response = await axios.get(`http://localhost:3000/user/${username}`);
+            setId(response.data.id); 
+          } catch (error) {
+            console.error('Error fetching card data:', error);
+          }
+        };
+    
+        fetchUserData();
+    }, []);
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const year = date.getFullYear();
+        
+        // Ensure two-digit format
+        const formattedMonth = month < 10 ? `0${month}` : month;
+        const formattedDay = day < 10 ? `0${day}` : day;
+      
+        return `${formattedMonth}/${formattedDay}/${year}`;
+      }
+
+    useEffect(() => {
+        async function fetchOrderHistory() {
+          try {
+            const response = await axios.get(`http://localhost:3000/order-history/${id}`);
+             // Use Axios to make a GET request
+            setOrders(response.data); // Set the promotions data into the state
+          } catch (error) {
+            console.error('Error fetching promotions:', error);
+          }
+        }
+    
+        fetchOrderHistory();
+      }, [orders]);
+
 
     const DUMMY_ORDERS = [
         {
@@ -43,19 +85,6 @@ const OrderHistory = () => {
         },
     ]
 
-    useEffect(() => {
-        setOrders(DUMMY_ORDERS);
-        /*async function fetchPromotions() {
-          try {
-            const response = await axios.get('http://localhost:3000/promotions'); // Use Axios to make a GET request
-            setPromotions(response.data); // Set the promotions data into the state
-          } catch (error) {
-            console.error('Error fetching promotions:', error);
-          }
-        }
-    
-        fetchPromotions();*/
-      }, [orders]);
 
       const navigateHome = () => {
         navigate('/');
@@ -73,11 +102,11 @@ const OrderHistory = () => {
             <div id="order-container">
             {orders.map((orders, index) => (
                 <div className="card" key={index}>
-                    <h2>{orders.movieTitle}</h2>
-                    <p>Order Number: {orders.bookingNumber}</p>
-                    <p>Number of Tickets: {orders.ticketNumber}</p>
-                    <p>Date: {orders.movieDate} @ {orders.movieTime}</p>
-                    <p>Total: ${orders.total.toFixed(2)}</p>
+                    <h2>{orders.movieName}</h2>
+                    <p>Order Number: {orders.id}</p>
+                    <p>Number of Tickets: {orders.number_of_tickets}</p>
+                    <p>Date: {formatDate(orders.showDate)}</p>
+                    <p>Total: ${orders.price.toFixed(2)}</p>
                     
                 </div>
             ))}

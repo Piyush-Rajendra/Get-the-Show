@@ -27,8 +27,18 @@ const OrderSummary = () => {
        navigate('/');
     }
     
-    const handleSubmitOrder = () => {
+    const handleSubmitOrder = async () => {
         sessionStorage.setItem('finalTotal', total);
+        const order = {
+            userId: "test",
+            movieName: "test",
+            price: 9,
+            showDate: "7/02/24",
+            cardType: "test",
+            number_of_tickets: 9
+        }
+
+
         navigate('/paymentconfirm');
         
     }
@@ -132,7 +142,7 @@ const OrderSummary = () => {
                 </div>
                 <div id="summary-buttons">
                     <button className="summary-page-buttons" onClick={handleCancelOrder}>Cancel Order</button>
-                    <button className="summary-page-buttons" onClick={handleSubmitOrder}>Sumbit Order</button>
+                    <button className="summary-page-buttons" onClick={handleSubmitOrder}>Submit Order</button>
                 </div>
 
             </div>
