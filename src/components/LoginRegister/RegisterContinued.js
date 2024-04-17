@@ -6,8 +6,8 @@ import {useHistory} from 'react-router-dom';
 import axios from "axios";
 
 const Register = () => {
-    const location = useLocation();
-    const holder = location.state || {};
+  const location = useLocation();
+  const holder = location.state || {};
   const [formData, setFormData] = useState({
     cardType: '',
     cardNumber: '',
@@ -19,110 +19,76 @@ const Register = () => {
     zipCode: '',
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  if (name === 'phoneNumber' && !/^\d*$/.test(value)) {
+    return;
+  }
+  if (name === 'zipCode' && !/^\d{0,5}$/.test(value)) {
+    return; 
+  }
+  setFormData({
+    ...formData,
+    [name]: value
+  });
+};
 
-   const [passwordsMatch, setPasswordsMatch] = useState(true);
-   const newLocation = useNavigate();
+const [passwordsMatch, setPasswordsMatch] = useState(true);
+const newLocation = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Add your registration logic here
-    if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match');
-      setPasswordsMatch(false);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (formData.password !== formData.confirmPassword) {
+    alert('Passwords do not match');
+    setPasswordsMatch(false);
+    return;
+  }
+  setPasswordsMatch(true);
+
+  try {
+    const isPaymentInfoFilled =
+      formData.cardType !== '' &&
+      formData.cardNumber !== '' &&
+      formData.cardPIN !== '' &&
+      formData.expirationDate !== '';
+    const isBillingAddressFilled =
+      formData.street !== '' &&
+      formData.city !== '' &&
+      formData.state !== '' &&
+      formData.zipCode !== '' &&
+      formData.billingAddress !== '';
+    if ((isPaymentInfoFilled || !isBillingAddressFilled) || (!isBillingAddressFilled || isPaymentInfoFilled)) {
+      alert('Please fill out all payment information fields or none at all');
       return;
-    } 
-    setPasswordsMatch(true);
-    console.log(formData);
-    // Reset form data
-    
+    }
+    if (formData.cardType !== '') {
+      const userID = await axios.get(`http://localhost:3000/users/${holder.email}`);
 
-    try {
-        if (formData.cardType !== '') {
-        console.log(holder.email);
-         const userID = await axios.get(`http://localhost:3000/users/${holder.email}`);
-
-         console.log(formData);
-         const submit = await axios.post(`http://localhost:3000/users/${userID.data.id}/payment`, formData);
-        }
+      console.log(formData);
+      const submit = await axios.post(`http://localhost:3000/users/${userID.data.id}/payment`, formData);
+    }
     setFormData({
-        cardType: '',
-        cardNumber: '',
-        cardPIN: '',
-        expirationDate: '',
-        billingAddress: '',
-        city: '',
-        state: '',
-        zipCode: '',
+      cardType: '',
+      cardNumber: '',
+      cardPIN: '',
+      expirationDate: '',
+      billingAddress: '',
+      city: '',
+      state: '',
+      zipCode: '',
     });
     newLocation("/confirmationPage")
-    } catch(error) {
-      alert(error.response.data.error)
-    }
-  };
+  } catch (error) {
+    alert(error.response.data.error)
+  }
+};
+
  return (
   <div className="centerFormRegister">  
     <div className="containerForm">
     <h2 class="register">Register: Optional</h2>
       <form className="bodyRegisterContinuedForm" onSubmit={handleSubmit}>
       <div>
-        {/* <h2>User Information</h2>
-        <div className="form-group">
-          <label>Username: </label>
-          <input className="forms-inputRegister"
-                type="text"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className="form-group">
-          <label>Email: </label>
-          <input className="forms-inputRegister"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className="form-group">
-          <label>Password: </label>
-          <input className="forms-inputRegister"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className="form-group">
-          <label>Confirm Password: </label>
-          <input className="forms-inputRegister"
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-        </div>
-        <div className="form-group">
-          <label>Phone Number: </label>
-          <input className="forms-inputRegister"
-                type="tel"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-              />
-        </div> */}
-        
       <div className="form-group">      
         <h2>Payment Information</h2>      
           <label>Card Type: </label>
@@ -134,13 +100,16 @@ const Register = () => {
             />
         </div>
         <div className="form-group">
-          <label>Card Number: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="cardNumber"
-              value={formData.cardNumber}
-              onChange={handleChange}
-            />
+          <label>Phone Number: </label>
+          <input
+            className="forms-inputRegister"
+            type="tel"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            maxLength="10"
+            minLength="10"
+          />
         </div>
         <div className="form-group">
           <label>Expiration Date: </label>
@@ -160,94 +129,13 @@ const Register = () => {
               value={formData.cardPIN}
               onChange={handleChange}
             />
-            
         </div> 
-         
-        {/* <div className="form-group">  
-          <button className="registerButtonRegisterContinued" type="submit">Register!</button>
-        </div>          */}
-        
       <div className="form-group">  
-          <button className="registerButtonRegisterContinued" type="submit">Register!</button>
+          <button className="registerButtonRegisterContinued" type="submit">Continue!</button>
         </div>  
     </div>
-    
-    
     <div>
-        {/* <h2>Home Address</h2>
-        <div className="form-group">
-          <label>Street: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="street"
-              value={formData.street}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>City: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>State: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>Zip Code: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleChange}
-            />
-        </div> */}
         <h2>Billing Address</h2>
-        <div className="form-group">
-          <label>Street: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="street"
-              value={formData.street}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>City: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>State: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-            />
-        </div>
-        <div className="form-group">
-          <label>Zip Code: </label>
-          <input className="forms-inputRegister"
-              type="text"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleChange}
-            />
-        </div>
         <div className="form-group">
           <label>Billing Address: </label>
           <input className="forms-inputRegister"
@@ -256,6 +144,36 @@ const Register = () => {
               value={formData.billingAddress}
               onChange={handleChange}
             />
+        </div>
+        <div className="form-group">
+          <label>City: </label>
+          <input className="forms-inputRegister"
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+            />
+        </div>
+        <div className="form-group">
+          <label>State: </label>
+          <input className="forms-inputRegister"
+              type="text"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+            />
+        </div>
+        <div className="form-group">
+          <label>Zip Code: </label>
+          <input
+            className="forms-inputRegister"
+            type="text"
+            name="zipCode"
+            value={formData.zipCode}
+            onChange={handleChange}
+            maxLength="5"
+            minLength="5"
+          />
         </div>
         <div className="fillInSpaceRegister"></div>
       </div> 
