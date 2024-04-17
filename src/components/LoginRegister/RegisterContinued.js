@@ -6,8 +6,6 @@ import {useHistory} from 'react-router-dom';
 import axios from "axios";
 
 const Register = () => {
-  const location = useLocation();
-  const holder = location.state || {};
   const [formData, setFormData] = useState({
     cardType: '',
     cardNumber: '',
@@ -53,9 +51,6 @@ const handleSubmit = async (e) => {
     if (formData.cardType !== '') {
       const username = localStorage.getItem('username');
       const userID = await axios.get(`http://localhost:3000/user/${username}`);
-      console.log(userID);
-      console.log(userID.data);
-      console.log(formData);
       await axios.post(`http://localhost:3000/billing-address/${userID.data.id}`, {
         billingAddress: formData.billingAddress,
         city: formData.city,
