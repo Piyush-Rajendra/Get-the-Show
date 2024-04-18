@@ -13,19 +13,20 @@
     color: white; 
 }
 
-.card {
+.cardPromotionsPage {
     background-color: #ffffff;
         border-radius: 25px; /* Rounded corners */
-        padding: 8px; /* Add some padding for spacing */
+        padding: 15px; /* Add some padding for spacing */
         padding-top: 10px;
-        padding-bottom: 10px;
+        padding-bottom: 40px;
         display: inline-block; /* Ensure that the background only covers the text */
         margin-top: 25px;
         margin-left: 10px;
         margin-right: 10px; 
 }
 
-.card:hover {
+.cardPromotionsPage:hover {
+    transition: background-color 0.4s ease;
     background-color: #ffaaaa;
 
 }
@@ -45,9 +46,6 @@
     transition: background-color 0.3s ease;
     margin: 10px
 }
-
-
-    
 
 #promos-container {
     display: flex;
@@ -89,4 +87,30 @@
     background-color: #f85757;
     border-radius: 20px;
     cursor: pointer;
+}
+#promo-buttons{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10px;
+    margin-bottom: 5px;
+}
+
+.promo-button {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 200px;
+    padding: 6px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 25px;
+    background-color: rgb(159, 209, 230);
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: Judson, sans-serif;
+    padding: 8px 16px;    
+    &:hover {
+        background-color: rgb(105, 164, 189);
+    }
 }

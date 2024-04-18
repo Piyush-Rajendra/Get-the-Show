@@ -3,11 +3,6 @@ import { Link } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import '../css/Logout/Logout.css';
 
-
-
-
-
-
 const Logout = props => {
     const [token, setToken] = useState();
     const { userData, setUserData } = useContext(UserContext);
@@ -16,7 +11,6 @@ const Logout = props => {
         const token = localStorage.getItem("token");
         const admin = localStorage.getItem("isAdmin")
         
-        //localStorage.removeItem("isAdmin");
         if (token || admin) {
             localStorage.removeItem("token");
             localStorage.removeItem("username");

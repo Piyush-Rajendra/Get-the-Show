@@ -12,8 +12,6 @@ const AdminLogIn = () => {
     });
 
     const { userData, setUserData } = useContext(UserContext);
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const handleChange = (e) => {
       setFormData({
@@ -39,7 +37,6 @@ const AdminLogIn = () => {
       }));
       navigate("/", { state: { props: true } });
     } catch (error) {
-      console.error('Login failed', error);
       alert('Username/Email or password is not correct');
     }
   };

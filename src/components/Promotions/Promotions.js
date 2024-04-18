@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import '../css/Promotions/Promotions.css';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
-import UserContext from "../context/UserContext";
 
 const Promotions = () => {
 
     const navigate = useNavigate();
-    const { userData } = useContext(UserContext);
     const isAdmin = localStorage.getItem('isAdmin');
 
     const [promotions, setPromotions] = useState([]);
@@ -15,9 +13,9 @@ const Promotions = () => {
         async function fetchPromotions() {
           try {
             const response = await axios.get('http://localhost:3000/promotions'); // Use Axios to make a GET request
-            setPromotions(response.data); // Set the promotions data into the state
+            setPromotions(response.data); 
           } catch (error) {
-            console.error('Error fetching promotions:', error);
+            alert("Error fetching promotions: " + error);
           }
         }
     
@@ -30,19 +28,13 @@ const Promotions = () => {
     
     function deletePromotion(promoID) {
         axios.delete(`http://localhost:3000/promotions/${promoID}`)
-            .then(response => {
-                console.log('Promotion deleted successfully');
-                // Handle any UI updates or further actions here
+            .then((response) => {                
+                alert("'Promotion deleted successfully!")
             })
             .catch(error => {
-                console.error('Error deleting promotion:', error);
-                // Handle error cases here
+                alert("Error deleting promotion: " + error);
             });
-            //alert("button pressed");
     }
-
-
-    
 
     if (isAdmin) {
     return (
@@ -64,7 +56,7 @@ const Promotions = () => {
             <div id="promos-container">
             
             {promotions.map((promo, index) => (
-                <div className="card" key={index}>
+                <div className="cardPromotionsPage" key={index}>
                     <h2>{promo.name}</h2>
                     <p>Promo Code: {promo.promoCode}</p>
                     <p>Description: {promo.description}</p>
@@ -73,7 +65,7 @@ const Promotions = () => {
                     <div id="promo-buttons">
                     <button className="promo-button" onClick={() => deletePromotion(promo.id)}>Remove</button>
                         <Link to={`/EditPromotion/${promo.promoCode}`}>
-                        <button className="promo-button" onClick={deletePromotion}>Edit</button>
+                            <button className="promo-button">Edit</button>
                         </Link>
                     </div>
                 </div>

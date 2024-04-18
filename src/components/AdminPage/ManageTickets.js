@@ -2,23 +2,17 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { useState, useContext } from "react";
 import '../css/AdminPage/ManageTickets.css'
-import MovieCard from "../MainPage/MovieCard";
 import axios from 'axios';
 import {useEffect} from 'react';
-import { useHistory } from 'react-router-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
-import UserContext from "../context/UserContext";
 
 
-const ManageTickets = (props) => {
+const ManageTickets = () => {
 
     const isAdmin = localStorage.getItem('isAdmin');
-    const navigate = useNavigate();
 
     const [childEdit, setChildEdit] = useState(false);
     const [adultEdit, setAdultEdit] = useState(false);
     const [seniorEdit, setSeniorEdit] = useState(false);
-
 
     const [childPrice, setChildPrice] = useState(8);
     const [adultPrice, setAdultPrice] = useState(12);
@@ -35,7 +29,7 @@ const ManageTickets = (props) => {
             setSeniorPrice(responseThree.data.price); 
             
           } catch (error) {
-            console.error('Error fetching ticket data:', error);
+            alert("Error fetching ticket data: " + error)
           }
         };
     
