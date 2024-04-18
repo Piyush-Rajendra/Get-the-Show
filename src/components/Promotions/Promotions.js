@@ -24,110 +24,6 @@ const Promotions = () => {
         fetchPromotions();
       }, [promotions]);
 
-    const DUMMY_PROMOTIONS = [
-        {
-            name: 'Promo1',
-            promoCode: 'GHUYYRT34',
-            description: 'A code for new members',
-            percentOffPromo: false,
-            valueOffPromo: true,
-            percentOff: 0,
-            valueOff: 2
-        },
-        {
-            name: 'Promo2',
-            promoCode: '567FHB8',
-            description: 'A code for old members',
-            percentOffPromo: true,
-            valueOffPromo: false,
-            percentOff: 0.15,
-            valueOff: 0
-        },
-        {
-            name: 'Promo3',
-            promoCode: '8QY7JNB35',
-            description: 'A student discount',
-            percentOffPromo: true,
-            valueOffPromo: false,
-            percentOff: 0.20,
-            valueOff: 0
-        },
-        {
-            name: 'Promo4',
-            promoCode: '78778BHG',
-            description: 'A senior discount new members',
-            percentOffPromo: false,
-            valueOffPromo: true,
-            percentOff: 0,
-            valueOff: 20
-        },
-        {
-            name: 'Promo5',
-            promoCode: 'FHJ432JKL',
-            description: 'Special weekend offer',
-            percentOffPromo: true,
-            valueOffPromo: false,
-            percentOff: 0.25,
-            valueOff: 0
-        },
-        {
-            name: 'Promo6',
-            promoCode: '67GHBFD9',
-            description: 'Early bird discount',
-            percentOffPromo: false,
-            valueOffPromo: true,
-            percentOff: 0,
-            valueOff: 15
-        },
-        {
-            name: 'Promo7',
-            promoCode: 'KJH876TY',
-            description: 'Holiday season sale',
-            percentOffPromo: true,
-            valueOffPromo: false,
-            percentOff: 0.30,
-            valueOff: 0
-        },
-        {
-            name: 'Promo8',
-            promoCode: 'KI8U7JNB',
-            description: 'Flash sale',
-            percentOffPromo: false,
-            valueOffPromo: true,
-            percentOff: 0,
-            valueOff: 10
-        },
-        {
-            name: 'Promo9',
-            promoCode: 'OIUHJ8Y7',
-            description: 'Referral discount',
-            percentOffPromo: true,
-            valueOffPromo: false,
-            percentOff: 0.10,
-            valueOff: 0
-        },
-        {
-            name: 'Promo10',
-            promoCode: '7JNHJU78',
-            description: 'Summer discount',
-            percentOffPromo: false,
-            valueOffPromo: true,
-            percentOff: 0,
-            valueOff: 30
-        },
-        {
-            name: 'Promo11',
-            promoCode: 'UJNHJKI8',
-            description: 'Back-to-school promotion',
-            percentOffPromo: true,
-            valueOffPromo: false,
-            percentOff: 0.18,
-            valueOff: 0
-        }
-    ];
-    
-    
-
     const ToAddPromo = () => {
         navigate('/AddPromotion');
     }
@@ -152,6 +48,9 @@ const Promotions = () => {
     return (
         <div id="promotions-page">
             <div id="promo-title">
+            <Link to="/AdminPanel">
+                <button className="backButtonPromotionUserAdmin">Back</button>
+              </Link>   
                 <div id="logo-center">
                 <h1 id="logo-title">E-Cinema Booking</h1>
                 </div>

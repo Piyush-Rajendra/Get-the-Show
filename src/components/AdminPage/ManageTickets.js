@@ -64,18 +64,14 @@ const ManageTickets = (props) => {
         switch (type) {
             case 'child':
                 setChildEdit(false);
-                //alert("Child ticket price edited to!");
-                //alert(childPrice);
                 const childFormData = {
                     price: childPrice
                   };
                 try {
-                    // Send form data to your server, which will interact with MongoDB
-                    axios.put(`http://localhost:3000/ticket-prices/children`, childFormData); // Replace with your server endpoint
-                    console.log('Form submitted successfully:', childFormData);
-                    //clear
+                    axios.put(`http://localhost:3000/ticket-prices/children`, childFormData); 
+                    alert("Child ticket price edited!");
                   } catch (error) {
-                    console.error('Error submitting form:', error);
+                    alert("Error submitting ticket price: " + error);
                   }
                 
                 break;
@@ -86,27 +82,22 @@ const ManageTickets = (props) => {
                     price: adultPrice
                   };
                 try {
-                    // Send form data to your server, which will interact with MongoDB
-                    axios.put(`http://localhost:3000/ticket-prices/adult`, adultFormData); // Replace with your server endpoint
-                    console.log('Form submitted successfully:', adultFormData);
-                    //clear
+                    axios.put(`http://localhost:3000/ticket-prices/adult`, adultFormData); 
+                    alert("Adult ticket price edited!");
                   } catch (error) {
-                    console.error('Error submitting form:', error);
+                    alert("Error submitting ticket price: " + error);
                   }
                 break;
             case 'senior':
                 setSeniorEdit(false);
-                alert("Senior ticket price edited!");
                 const seniorFormData = {
                     price: seniorPrice
                   };
                 try {
-                    // Send form data to your server, which will interact with MongoDB
-                    axios.put(`http://localhost:3000/ticket-prices/senior`, seniorFormData); // Replace with your server endpoint
-                    console.log('Form submitted successfully:', seniorFormData);
-                    //clear
+                    axios.put(`http://localhost:3000/ticket-prices/senior`, seniorFormData);
+                    alert("Senior ticket price edited!");
                   } catch (error) {
-                    console.error('Error submitting form:', error);
+                    alert("Error submitting ticket price: " + error);
                   }
                 break;
             default:
@@ -119,6 +110,9 @@ const ManageTickets = (props) => {
     return (
         <div className="manage-tickets-page">
             <div id="header">
+                <Link to="/AdminPanel">
+                    <button className="backButtonPromotionUserAdmin">Back</button>
+                </Link>   
                 <div id="center-tickets">
                 <h1 id="title-header">E-Cinema Booking</h1>
                 </div>
