@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 const ProfilePage = () => {
+  const [token, setToken] = useState(localStorage.getItem('token'));
   const currentDate = new Date();
   currentDate.setDate(currentDate.getDate() + 1); 
   const formattedDate = currentDate.toISOString().split('T')[0];
@@ -222,6 +223,7 @@ const ProfilePage = () => {
     fileInput.click();
   };
 
+  if (token) {
   return (
     <div className="profile-container">
       <Link to="/" state={{ props: myValue }}>
@@ -455,6 +457,18 @@ const ProfilePage = () => {
       </div>
     </div>
   );
+}
+else {
+  return (
+    <div className="not-logged-in">
+        <h2 style={{ color: 'red' }}>Please login to be able to purchase tickets.</h2>
+        <Link to="/Login">
+        <h3>Click here to login</h3>
+        </Link>
+    </div>
+)
+
+}
 };
 
 
