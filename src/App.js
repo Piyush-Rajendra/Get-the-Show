@@ -33,6 +33,7 @@ import AddAdmin from './components/AdminPage/AddAdmin';
 import EditUser from './components/AdminPage/EditUser';
 import EditMovieContinued from './components/AdminPage/EditMovieContinued';
 import AddMovieContinued from './components/AdminPage/AddMovieContinued';
+import EditTime from './components/AdminPage/EditTime';
 
 function App() {
   const [userData, setUserData] = useState({
@@ -101,6 +102,7 @@ function App() {
           <Route exact path='/edituser/:id' element={<EditUser/>} />
           <Route exact path='/editmoviecontinued/:id' element={<EditMovieContinued/>} />
           <Route exact path='/addmoviecontinued/:title' element={<AddMovieContinued/>} />
+          <Route exact path='/edittime/:id' element={<EditTime/>}/>
         </Routes>
       </div>
     </Router>

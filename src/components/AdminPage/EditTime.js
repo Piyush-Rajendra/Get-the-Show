@@ -4,16 +4,17 @@ import './../css/LoginRegister/Login.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 
-const AddAdmin = () => {
+const EditTime = () => {
   const [displayText, setDisplayText] = useState(
     "Please enter the new movie's show times"
   );
 
   const [showTimes, setShowTimes] = useState([]);
-  const { title } = useParams();
+  const { id } = useParams();
   
   const [time, setTime] = useState('');
-  const [id, setId] = useState('');
+
+  const [startAt, setStartAt] = useState('');
 
   const [userInput, setUserInput] = useState({
     startAt: "",
@@ -43,43 +44,41 @@ const AddAdmin = () => {
     // }
     //     fetchMovieData();
     //   }, []); // empty dependency array ensures this effect runs only once
-    useEffect(() => {
-        const fetchShowtimesData = async () => {
-          try {
-            const resp = await axios.get(`http://localhost:3000/movieByName/${title}`);
-            setId(resp.data.id);
-            setUserInput({
-                startAt: "",
-                startDate: "null",
-                endDate: "null",
-                movieId: resp.data.id
-            });
-            // console.log(userInput);
-            // const response = await axios.get(`http://localhost:3000/showtimes/${id}`);
-            // setShowTimes(response.data);
-          } catch (error) {
-            alert(error);
-          }
-        };
+    // useEffect(() => {
+    //     const fetchShowtimesData = async () => {
+    //       try {
+    //         const resp = await axios.get(`http://localhost:3000/movieByName/${title}`);
+    //         setId(resp.data.id);
+    //         setUserInput({
+    //             startAt: "",
+    //             startDate: "null",
+    //             endDate: "null",
+    //             movieId: resp.data.id
+    //         });
+    //         // console.log(userInput);
+    //         // const response = await axios.get(`http://localhost:3000/showtimes/${id}`);
+    //         // setShowTimes(response.data);
+    //       } catch (error) {
+    //         alert(error);
+    //       }
+    //     };
 
-        fetchShowtimesData();
-      }, [id]); 
+    //     fetchShowtimesData();
+    //   }, [id]); 
 
-      useEffect(() => {
-        const fetchShowtimesData = async () => {
-          try {
-            if (id !== "") {
-            const resp = await axios.get(`http://localhost:3000/showtimes/${id}`);
-            setShowTimes(resp.data);
-            }
-            // const response = await axios.get(`http://localhost:3000/showtimes/${id}`);
-            // setShowTimes(response.data);
-          } catch (error) {
-            alert(error);
-          }
-        };
-        fetchShowtimesData();
-      }, [id, showTimes]); 
+    //   useEffect(() => {
+    //     const fetchShowtimesData = async () => {
+    //       try {
+    //         if (id !== "") {
+    //         const resp = await axios.get(`http://localhost:3000/showtimes/${id}`);
+    //         setShowTimes(resp.data);
+    //         }
+    //       } catch (error) {
+    //         alert(error);
+    //       }
+    //     };
+    //     fetchShowtimesData();
+    //   }, [id, showTimes]); 
 
     const handleTimeChange = (e) => {
         const inputValue = e.target.value;
@@ -99,23 +98,37 @@ const AddAdmin = () => {
 
 
     const handleChange = (e) => {
+        // const { name, value } = e.target;
         const { name, value } = e.target;
-        setUserInput({...userInput, [name]: value + ':00' });
+        // setUserInput({...userInput, [name]: value + ':00' });
+        setStartAt(value  + ':00' )
       };
 
    const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axios.post('http://localhost:3000/showTimes', userInput);
-        const response1 = await axios.get(`http://localhost:3000/showtimes/${id}`);
-        setShowTimes(response1.data);
-        setUserInput({
-            startAt: "",
-            startDate: "null",
-            endDate: "null",
-            movieId: id
-        })
+        // const response = await axios.post('http://localhost:3000/showTimes', userInput);
+        // const response1 = await axios.get(`http://localhost:3000/showtimes/${id}`);
+        // setShowTimes(response1.data);
+        // setUserInput({
+        //     startAt: "",
+        //     startDate: "null",
+        //     endDate: "null",
+        //     movieId: id
+        // })
+        const holder = {
+            startAt: startAt
+        }
+        const response = await axios.put(`http://localhost:3000/showtimes/${id}`, holder);
+        setDisplayText('Time has been updated!');
+        
+        setTimeout(() => {
+            setStartAt('');
+
+        navigate('/ManageMovie', { state: { props: true } });
+        }, 1000);
     } catch (error) {
+        console.log(error);
       alert(error);
     }
   };
@@ -140,7 +153,7 @@ const AddAdmin = () => {
           <hr></hr>
           
           <Link to="/ManageMovie"><button class="register-button">Manage Movies</button></Link>
-          <h2 class="register">Add Show Times</h2>
+          <h2 class="register">Edit Show Time</h2>
         <div className="center">
         <div class="formcontainer">
           <form className ="forms-reset" onSubmit={handleSubmit}>
@@ -151,16 +164,11 @@ const AddAdmin = () => {
               <input class="forms-input"
                 type="time"
                 name="startAt"
-                value={userInput.startAt}
+                value={startAt}
                 onChange={handleChange}
                 required
-              /> 
-              {showTimes.map((showtime, index) => (
-                    <h4 className="showtime">
-                        {formatTime(showtime.startAt)} 
-                    </h4>
-            ))}  
-            <button type="submit" className="reset-button">Add Show Time</button>            
+              />  
+            <button type="submit" className="reset-button">Edit Show Time</button>            
           </form>
       </div>
       </div>
@@ -168,4 +176,4 @@ const AddAdmin = () => {
     )
   }
 
-  export default AddAdmin;
+  export default EditTime;
