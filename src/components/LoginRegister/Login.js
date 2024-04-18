@@ -45,6 +45,9 @@ const Login = () => {
 
     return (
     <div class = "background">
+          <Link to="/">
+            <button className="backButtonRegisterPage">Back</button>
+          </Link>
           <hr></hr>
           <h2 class="register">Login</h2>
         <div className="center">
