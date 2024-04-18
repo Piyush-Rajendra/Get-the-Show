@@ -31,9 +31,20 @@
         margin-right: 10px; 
 }
 
+
+
 #order-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow-x: auto; /* or overflow-x: scroll; */
+    white-space: nowrap; /* Prevent wrapping of items */
+}
 
+#order-container::-webkit-scrollbar {
+    display: none;
+}
+
+#order-card {
+    flex: 0 0 auto; /* Prevent flex items from growing or shrinking */
+    width: 300px; /* Adjust the width of your card */
+    margin-right: 10px; /* Adjust the margin between cards */
 }

@@ -58,6 +58,8 @@ const AddPromotions = () => {
             console.error('Error submitting form:', error);
           }
 
+          alert("Promo added!")
+
         setFormData({
             name: '',
             promoCode: '',

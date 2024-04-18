@@ -101,7 +101,7 @@ const OrderHistory = () => {
             </div>
             <div id="order-container">
             {orders.map((orders, index) => (
-                <div className="card" key={index}>
+                <div className="card" id="order-card" key={index}>
                     <h2>{orders.movieName}</h2>
                     <p>Order Number: {orders.id}</p>
                     <p>Number of Tickets: {orders.number_of_tickets}</p>

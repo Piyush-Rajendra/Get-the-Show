@@ -174,7 +174,7 @@ const Promotions = () => {
                     <div id="promo-buttons">
                     <button className="promo-button" onClick={() => deletePromotion(promo.id)}>Remove</button>
                         <Link to={`/EditPromotion/${promo.promoCode}`}>
-                        <button className="promo-button" onClick={deletePromotion}>Edit</button>
+                        <button className="promo-button">Edit</button>
                         </Link>
                     </div>
                 </div>
