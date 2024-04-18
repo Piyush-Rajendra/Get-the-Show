@@ -153,7 +153,10 @@ const EditTime = () => {
     <div class = "background">
           <hr></hr>
           
-          <Link to="/ManageMovie"><button class="register-button">Manage Movies</button></Link>
+          {/* <Link to="/ManageMovie"><button class="register-button">Manage Movies</button></Link> */}
+          <Link to="/ManageMovie">
+            <button className="backButtonForgotEditMovieAdminContinue">Back</button>
+          </Link>   
           <h2 class="register">Edit Show Time</h2>
         <div className="center">
         <div class="formcontainer">
