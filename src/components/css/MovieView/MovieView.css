@@ -139,6 +139,7 @@
     flex-direction: row;
 }
 
+
 .containerFormEditMovieAdminister h2 {
     align-items: center;
 }
@@ -149,6 +150,20 @@
     margin-top: 15px;
     margin-bottom: 0px;
 
+    margin-right: 210px;
+    font-size: 25px;
+    font-weight: 600;
+    background-color: #f85757;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.backButtonForgotEditMovieAdminContinue {
+    padding: 10px;
+    color: rgb(2, 2, 2);
+    margin-top: 15px;
+    margin-bottom: 0px;
+    
     margin-right: 210px;
     font-size: 25px;
     font-weight: 600;

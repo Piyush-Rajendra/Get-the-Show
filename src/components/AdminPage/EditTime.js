@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import './../css/LoginRegister/Login.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
 const EditTime = () => {
   const [displayText, setDisplayText] = useState(
     "Please enter the new movie's show times"
   );
+
 
   const [showTimes, setShowTimes] = useState([]);
   const { id } = useParams();
@@ -124,7 +126,6 @@ const EditTime = () => {
         
         setTimeout(() => {
             setStartAt('');
-
         navigate('/ManageMovie', { state: { props: true } });
         }, 1000);
     } catch (error) {

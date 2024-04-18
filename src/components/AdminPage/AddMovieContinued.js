@@ -116,9 +116,24 @@ const AddAdmin = () => {
             movieId: id
         })
     } catch (error) {
-      alert(error);
+      if (error.response && error.response.status === 500) {
+        // Server error
+        const errorMessage = error.response.data.error;
+        alert(errorMessage);
+    } else {
+        // Other errors
+        console.error('Error submitting form:', error);
+        // Handle the error here, e.g., show an error message to the user
+    }
     }
   };
+  const deleteTime = async (del) => {
+    try {
+    const response = await axios.delete(`http://localhost:3000/showtimes/${del}`);
+    } catch (error) {
+        alert(error);
+    }
+}
 
   function formatTime(timeString) {
     const time = new Date(`1970-01-01T${timeString}`);
@@ -139,7 +154,10 @@ const AddAdmin = () => {
     <div class = "background">
           <hr></hr>
           
-          <Link to="/ManageMovie"><button class="register-button">Manage Movies</button></Link>
+          {/* <Link to="/ManageMovie">Manage Movies</button></Link> */}
+          <Link to="/ManageMovie">
+            <button className="backButtonForgotEditMovieAdminContinue">Back</button>
+          </Link>  
           <h2 class="register">Add Show Times</h2>
         <div className="center">
         <div class="formcontainer">
@@ -155,15 +173,24 @@ const AddAdmin = () => {
                 onChange={handleChange}
                 required
               /> 
-              {showTimes.map((showtime, index) => (
+              {/* {showTimes.map((showtime, index) => (
                     <h4 className="showtime">
                         {formatTime(showtime.startAt)} 
                     </h4>
-            ))}  
+            ))}   */}
             <button type="submit" className="reset-button">Add Show Time</button>            
           </form>
       </div>
       </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+    {showTimes.map((showtime, index) => (
+        <div key={index} style={{ width: '20%', padding: '10px', boxSizing: 'border-box', textAlign: 'center' }}>
+            <h4 className="showtime">{formatTime(showtime.startAt)}</h4>
+            <button onClick={() => deleteTime(showtime.id)}>Delete</button>
+            <Link to={`/edittime/${showtime.id}`}><button>Edit</button></Link>
+        </div>
+    ))}
+</div>
     </div>
     )
   }
