@@ -52,7 +52,7 @@ const OrderHistory = () => {
         }
     
         fetchOrderHistory();
-      }, [orders]);
+      }, [orders, id]);
 
 
     const DUMMY_ORDERS = [
