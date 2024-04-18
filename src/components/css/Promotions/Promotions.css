@@ -77,3 +77,16 @@
     justify-content: center;
     align-items: center;
 }
+
+.backButtonPromotionUserAdmin {
+    padding: 10px;
+    color: rgb(2, 2, 2);
+    margin-top: 15px;
+    margin-bottom: 0px;
+    margin-left: 20%;
+    font-size: 25px;
+    font-weight: 600;
+    background-color: #f85757;
+    border-radius: 20px;
+    cursor: pointer;
+}

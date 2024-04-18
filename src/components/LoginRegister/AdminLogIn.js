@@ -11,13 +11,10 @@ const AdminLogIn = () => {
       password: '',
     });
 
-
     const { userData, setUserData } = useContext(UserContext);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
-
     const handleChange = (e) => {
       setFormData({
         ...formData,
@@ -40,12 +37,6 @@ const AdminLogIn = () => {
         token: token,
         isAdmin: true,
       }));
-      /*setUserData(prevUserData => ({
-        ...prevUserData,
-        isAdmin: true,
-      }));*/
-      //console.log(username);
-      
       navigate("/", { state: { props: true } });
     } catch (error) {
       console.error('Login failed', error);
@@ -83,8 +74,6 @@ const AdminLogIn = () => {
                 class="forms-input"
               />      
             <div className="forgot-register-Buttons">
-              <Link to='/forgotPage'><button class="forgot-Button">Forgot Password?</button></Link>
-              <Link to='/addadmin'><button class="signUp-ButtonLogin">SignUp</button></Link>
             </div>
             <button type="submit" className="register-button">Login</button>            
           </form>

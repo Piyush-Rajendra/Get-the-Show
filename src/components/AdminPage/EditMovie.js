@@ -306,8 +306,7 @@ const EditMovie = ({ onSubmit }) => {
                 onChange={handleChange}
                 placeholder="xxxx/xx/xx @ xx:xx A.M./P.M., ..."
                 required
-              />
-              
+              />              
           </div>
           <div className="fillInSpaceRegister">
           </div>
