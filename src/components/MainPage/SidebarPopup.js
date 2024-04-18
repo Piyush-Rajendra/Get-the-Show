@@ -14,8 +14,7 @@ const SidebarPopup = ({ isOpen, onClose }) => {
         const response = await axios.get(`http://localhost:3000/user/${username}`);
         setBase64String(response.data.profilePhoto);
       } catch (error) {
-        console.error('Failed to fetch user information', error);
-        // Handle error, e.g., redirect to login page
+        alert("Cannot get profile picture!");
       }
     };
     fetchUserInfo();

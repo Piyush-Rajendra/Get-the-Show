@@ -96,11 +96,28 @@ const AddMovie = ({ onSubmit }) => {
         }
         return `${year}-${month}-${day}`;
       }
+
+    const handleFileChange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const base64 = `data:${file.type};base64,${reader.result.split(',')[1]}`;
+        setMovie({ ...movie, posterBase64: base64 });
+      };
+      reader.readAsDataURL(file);
+    };
       
     return (
     <div className="centerFormRegister">  
     <div className="containerForm">
-    <h2 class="register">Add Movie</h2>
+        <div className="containerFormEditMovieAdminister">
+          <Link to="/ManageMovie">
+            <button className="backButtonForgotEditMovieAdmin">Back</button>
+          </Link>   
+          <h2 class="register">Add Movie</h2>
+        </div>
     <h3 style={{ color: '#FF6666', textAlign: "center" }}>{displayText}</h3>
     <form className="bodyRegisterFormMovie" onSubmit={handleSubmit}>
         <div>
@@ -153,6 +170,7 @@ const AddMovie = ({ onSubmit }) => {
                 name="releaseDate"
                 value={formatDate(movie.releaseDate)}
                 onChange={handleChange}
+                min={new Date().toISOString().split('T')[0]}
                 required
               />
           </div>
@@ -164,20 +182,25 @@ const AddMovie = ({ onSubmit }) => {
                 name="end_date"
                 value={formatDate(movie.end_date)}
                 onChange={handleChange}
+                min={formatDate(movie.releaseDate)}
                 required
               />
         </div>
-        <div className="form-group">
-          <label>Movie Status (Released or Unreleased): </label>
-          <br></br>
-          <input className="forms-inputRegister"
-                type="text"
-                name="MovieStatus"
-                value={movie.MovieStatus}
-                onChange={handleChange}
-                required
-              />
-        </div>     
+          <div className="form-group">
+            <label>Movie Status (Released or Unreleased): </label>
+            <br />
+            <select
+              className="releasedOrUnreleasedEditMovie"
+              name="MovieStatus"
+              placeholder="Choose"
+              value={movie.MovieStatus}
+              onChange={handleChange}
+              required
+            >
+              <option value="Released">Released</option>
+              <option value="Unreleased">Unreleased</option>
+            </select>
+          </div>      
         <div className="form-group">    
           <button className="registerButtonRegister" type="submit">Submit</button>
         </div>   
@@ -217,7 +240,7 @@ const AddMovie = ({ onSubmit }) => {
               />
           </div>
           <div className="form-group">
-            <label>mpaa Rating: </label>
+            <label>MPAA Rating: </label><br></br>
             <input className="forms-inputRegister"
                 type="text"
                 name="mpaaRating"
@@ -237,26 +260,14 @@ const AddMovie = ({ onSubmit }) => {
                   required
                 />
           </div>
-          {/* <div className="form-group">
-            <label>Release Date: </label>
-            <input className="forms-inputRegister"
-                type="date"
-                pattern="\d{4}-\d{2}-\d{2}"
-                name="releaseDate"
-                value={formatDate(movie.releaseDate)}
-                onChange={handleChange}
-                required
-              />
-          </div> */}
           <div className="form-group">
-            <label>Movie Poster (Base 64 format)</label>
-            <input className="forms-inputRegister"
-                type="text"
-                name="posterBase64"
-                value={movie.posterBase64}
-                onChange={handleChange}
-                required
-              />
+            <label>Movie Poster:</label>
+            <input
+              className="forms-inputRegister"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
           </div>
           <div className="form-group">
             <label>Show Dates and Times</label>

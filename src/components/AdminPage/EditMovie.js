@@ -41,16 +41,6 @@ const EditMovie = ({ onSubmit }) => {
     const [showtimesArray, setShowtimesArray] = useState([]);
     const [castArray, setCastArray] = useState([]);
 
-    // function formatDate(release) {
-    //   const date = new Date(release);
-    //   const month = date.getMonth() + 1; // Month is zero-based
-    //   const paddedMonth = month < 10 ? `0${month}` : month.toString();
-    //   const day = date.getDate();
-    //   const year = date.getFullYear();
-    //   console.log(`${year}/${paddedMonth}/${day}`)
-    //   return `${year}-${paddedMonth}-${day}`;
-    // }
-
     function formatDate(dateString) {
       if (!dateString) return '';
       const date = new Date(dateString);
@@ -68,7 +58,6 @@ const EditMovie = ({ onSubmit }) => {
       if (day < 10) {
         day = `0${day}`;
       }
-      console.log(`${year}-${month}-${day}`)
       return `${year}-${month}-${day}`;
     }
 
@@ -76,7 +65,6 @@ const EditMovie = ({ onSubmit }) => {
           const fetchMovieData = async () => {
             try {
               const response = await axios.get(`http://localhost:3000/moviesById/${id}`);
-              console.log(response);
               setMovie({
                   title: response.data.title,
                   trailerPicture: response.data.trailerPicture,
@@ -93,9 +81,6 @@ const EditMovie = ({ onSubmit }) => {
                   end_date: response.data.end_date,
                   MovieStatus: response.data.MovieStatus
               });
-              // setShowtimesArray(stringToArray(movie.showtimes));
-              // setCastArray(stringToArray(movie.cast));
-
             } catch (error) {
               alert(error);  
             }
@@ -139,10 +124,28 @@ const EditMovie = ({ onSubmit }) => {
           alert(error);
         }
         };
+
+    const handleFileChange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const base64 = `data:${file.type};base64,${reader.result.split(',')[1]}`;
+        setMovie({ ...movie, posterBase64: base64 });
+      };
+      reader.readAsDataURL(file);
+    };
+
       return (
       <div className="centerFormRegister">  
       <div className="containerForm">
-      <h2 class="register">Edit Movie</h2>
+        <div className="containerFormEditMovieAdminister">
+          <Link to="/ManageMovie">
+            <button className="backButtonForgotEditMovieAdmin">Back</button>
+          </Link>   
+          <h2 class="register">Edit Movie</h2>
+        </div>
       <h3 style={{ color: '#FF6666', textAlign: "center" }}>{displayText}</h3>
         <form className="bodyRegisterFormMovie" onSubmit={handleSubmit}>
         <div>
@@ -195,6 +198,7 @@ const EditMovie = ({ onSubmit }) => {
                 name="releaseDate"
                 value={formatDate(movie.releaseDate)}
                 onChange={handleChange}
+                min={new Date().toISOString().split('T')[0]}
                 required
               />
           </div>
@@ -206,20 +210,25 @@ const EditMovie = ({ onSubmit }) => {
                 name="end_date"
                 value={formatDate(movie.end_date)}
                 onChange={handleChange}
+                min={formatDate(movie.releaseDate)}
                 required
               />
         </div>
-        <div className="form-group">
-          <label>Movie Status (Released or Unreleased): </label>
-          <br></br>
-          <input className="forms-inputRegister"
-                type="text"
-                name="MovieStatus"
-                value={movie.MovieStatus}
-                onChange={handleChange}
-                required
-              />
-        </div>     
+          <div className="form-group">
+            <label>Movie Status (Released or Unreleased): </label>
+            <br />
+            <select
+              className="releasedOrUnreleasedEditMovie"
+              name="MovieStatus"
+              placeholder="Choose"
+              value={movie.MovieStatus}
+              onChange={handleChange}
+              required
+            >
+              <option value="Released">Released</option>
+              <option value="Unreleased">Unreleased</option>
+            </select>
+          </div>     
         <div className="form-group">    
           <button className="registerButtonRegister" type="submit">Submit</button>
         </div>   
@@ -259,7 +268,7 @@ const EditMovie = ({ onSubmit }) => {
               />
           </div>
           <div className="form-group">
-            <label>mpaa Rating: </label>
+            <label>MPAA Rating: </label><div></div>
             <input className="forms-inputRegister"
                 type="text"
                 name="mpaaRating"
@@ -279,26 +288,14 @@ const EditMovie = ({ onSubmit }) => {
                   required
                 />
           </div>
-          {/* <div className="form-group">
-            <label>Release Date: </label>
-            <input className="forms-inputRegister"
-                type="date"
-                pattern="\d{4}-\d{2}-\d{2}"
-                name="releaseDate"
-                value={formatDate(movie.releaseDate)}
-                onChange={handleChange}
-                required
-              />
-          </div> */}
           <div className="form-group">
-            <label>Movie Poster (Base 64 format)</label>
-            <input className="forms-inputRegister"
-                type="text"
-                name="posterBase64"
-                value={movie.posterBase64}
-                onChange={handleChange}
-                required
-              />
+            <label>Movie Poster:</label>
+            <input
+              className="forms-inputRegister"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
           </div>
           <div className="form-group">
             <label>Show Dates and Times</label>
@@ -309,8 +306,7 @@ const EditMovie = ({ onSubmit }) => {
                 onChange={handleChange}
                 placeholder="xxxx/xx/xx @ xx:xx A.M./P.M., ..."
                 required
-              />
-              
+              />              
           </div>
           <div className="fillInSpaceRegister">
           </div>

@@ -133,7 +133,6 @@ const ProfilePage = () => {
       alert('User information updated!');
       localStorage.setItem('username', userInfo.username);
     } catch (error) {
-      console.log(error.response.data);
       alert('Failed to update User Information! ' + error.response.data.error);
     }
   };

@@ -138,6 +138,9 @@ const Payment = (props) => {
       return (
         <div id="center-payment-page">
           <div id="payment-page">
+            <Link to={`/`} className="backButtonPaymentOptionView">
+                <button className="backButtonPaymentTickets">Cancel Tickets</button>
+            </Link>
             <h2>Total: ${totalAmount }</h2>
             <h2 onClick={handleUseSavedCard} id="click-me" className="red">[Click to Use Saved Card]</h2>
             {usingSavedCard && (
