@@ -2,6 +2,7 @@ import React, { useState, useEffect, } from "react";
 import '../css/BookingTickets/BuyTickets.css';
 import { Link, useNavigate, useSearchParams, useParams} from 'react-router-dom';
 import axios from "axios";
+import labeledScreen from './labeledScreen.jpg';
 
 const BuyTickets = (props) => {
     const navigate = useNavigate();
@@ -9,7 +10,8 @@ const BuyTickets = (props) => {
     const { id } = useParams(); // Retrieve the movie ID from URL
 
     const [token, setToken] = useState(localStorage.getItem('token'));
-
+    const [id, setId] = useState();
+    const [showId, setShowId] = useState();
     const [childTicket, setChildTicket] = useState();
     const [adultTicket, setAdultTicket] = useState();
     const [seniorTicket, setSeniorTicket] = useState();
@@ -17,12 +19,22 @@ const BuyTickets = (props) => {
     //const [availableSeats, setAvailableSeats] = useState([]); 
     const [movieTitle, setMovieTitle] = useState();
     const [movieTime, setMovieTime] = useState();
+    const [movieTimer, setMovieTimer] = useState();
     //const [total, setTotal] = useState();
     const [numOfChildTickets, setNumOfChildTickets] = useState(0);
     const [numOfAdultTickets, setNumOfAdultTickets] = useState(0);
     const [numOfSeniorTickets, setNumOfSeniorTickets] = useState(0);
 
-    const [seats, setSeats] = useState(["A1", "A2", "A3", "A4", "A5", "A6", "C5", "C6"]);
+    const [seats, setSeats] = useState([
+        "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10",
+        "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10",
+        "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10",
+        "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10",
+        "E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "E10",
+        "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10",
+        "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10",
+        "H1", "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "H10"
+    ]);
     const [selectedSeat, setSelectedSeat] = useState(""); // Initialize with an empty string
     //const [checkSeatSelected, setCheckSeatSelected] = useState(false);
     const [check, setCheck] = useState(false);
@@ -76,6 +88,9 @@ const BuyTickets = (props) => {
         // Check if all seats have been selected for renderTimes
         setMovieTime(searchParams.get('showtime'));
         setMovieTitle(searchParams.get('title'));
+        setMovieTimer(searchParams.get('time'));
+        setId(searchParams.get('id'));
+        setShowId(searchParams.get('showid'));
         console.log(selectedSeats);
         console.log(selectedSeats.length == renderTimes)
         //if (selectedSeats.every(seat => seat !== "")) {
@@ -130,13 +145,68 @@ const BuyTickets = (props) => {
         sessionStorage.setItem('movie-time', movieTime);
         sessionStorage.setItem('movie-title', movieTitle);
 
+        const arraySeats = JSON.stringify(selectedSeats);
+        sessionStorage.setItem('seats', arraySeats);
+        sessionStorage.setItem('movie-id', id);
+        //alert(selectedSeats);
+        const ticket = {
+            date: "2024-04-21",
+            startAt: "18:00:00",
+            seats:selectedSeats,
+            ticketPrice: "10.99, 123",
+            ticketType: "adult, children",
+            total: 21.98,
+            movieId: id,
+            username: "JohnDoe",
+            phone: "1234567890",
+            showtimeId: showId
+        }
+        try {
+            // Send form data to your server, which will interact with MongoDB
+            axios.post('http://localhost:3000/bookTickets', ticket)
+                .then(response => {
+                    console.log('Form submitted successfully:', response.data);
+                    navigate('/payment');
+                    // clear
+                })
+                .catch(error => {
+                    if (error.response && error.response.status === 500) {
+                        // Server error
+                        const errorMessage = error.response.data.error;
+                        alert(errorMessage);
+                    } else {
+                        // Other errors
+                        console.error('Error submitting form:', error);
+                        // Handle the error here, e.g., show an error message to the user
+                    }
+                });
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            // Handle the error here, e.g., show an error message to the user
+        }
 
-        navigate('/payment');
+          
+
+        
 
     } 
 
     
     //const total = searchParams.get('total');
+    function formatTime(timeString) {
+        const time = new Date(`1970-01-01T${timeString}`);
+        let hours = time.getHours();
+        const minutes = time.getMinutes();
+        const period = hours < 12 ? 'A.M.' : 'P.M.';
+    
+        // Convert hours to 12-hour format
+        hours = hours % 12 || 12;
+    
+        // Ensure two-digit format for minutes
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    
+        return `${hours}:${formattedMinutes} ${period}`;
+    }
 
 
     if (token) {
@@ -147,7 +217,7 @@ const BuyTickets = (props) => {
             </Link>
             <div className="movie-title">
                 <h2 id="ticket-movie-title">Movie: {movieTitle}</h2>
-                <h2 id="ticket-movie-time">Time: {movieTime}</h2>
+                <h2 id="ticket-movie-time">Time: {movieTime} @ {formatTime(movieTimer)}</h2>
             </div>
             <hr/>
             <div className="two-columns">
@@ -195,7 +265,7 @@ const BuyTickets = (props) => {
                 <div id="ticket-column-two">
                     <div id="movie-image">
                         <div id="movie-img-container">
-                        <img id="seat-image" src="https://amc-theatres-res.cloudinary.com/amc-cdn/production/2/attributes/HybridSeating_promo.jpg" width="400px"/>
+                        <img id="seat-image" src={labeledScreen} width="400px"/>
                         </div>
                         <h5 id="seat-select-text">Select Your Seat(s):</h5>
                         {[...Array(renderTimes)].map((_, index) => (

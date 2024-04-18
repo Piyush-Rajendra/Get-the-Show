@@ -12,6 +12,8 @@ const MovieView = () => {
     const [username, setUsername] = useState();
     const [review, setReview] = useState([]);
     const [comment, setComment] = useState();
+    const [showtimes, setShowtimes] = useState([]);
+    const [date, setDate] = useState();
 
     useEffect(() => {
         const username = localStorage.getItem('username');
@@ -58,8 +60,9 @@ const MovieView = () => {
                 base64: response.data.posterBase64,
                 rating: 4.5,
                 showtimes: response.data.showDatesTimes,
-                reviews: ["It was kind of mid", "Another Sony Pictures stinker", "My five year old really enjoyed it", "Awful"],
-                cast: response.data.cast
+                cast: response.data.cast,
+                releaseDate: response.data.releaseDate,
+                endDate: response.data.end_date
             });
             setShowtimesArray(stringToArray(movie.showtimes));
             setCastArray(stringToArray(movie.cast));
@@ -70,6 +73,20 @@ const MovieView = () => {
     
         fetchMovieData();
       }, [id, showtimesArray, castArray]);
+
+      useEffect(() => {
+        const fetchShowtimesData = async () => {
+          try {
+            const response = await axios.get(`http://localhost:3000/showtimes/${id}`);
+            setShowtimes(response.data);
+            
+          } catch (error) {
+            console.error('Error fetching review data:', error);
+          }
+        };
+    
+        fetchShowtimesData();
+      }, [id]);
 
       useEffect(() => {
         const fetchReviewData = async () => {
@@ -102,10 +119,55 @@ const MovieView = () => {
 
 
       };
+
+    function formatTime(timeString) {
+        const time = new Date(`1970-01-01T${timeString}`);
+        let hours = time.getHours();
+        const minutes = time.getMinutes();
+        const period = hours < 12 ? 'A.M.' : 'P.M.';
+    
+        // Convert hours to 12-hour format
+        hours = hours % 12 || 12;
+    
+        // Ensure two-digit format for minutes
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    
+        return `${hours}:${formattedMinutes} ${period}`;
+    }
+
+      function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+          return ''; // Return empty string for invalid date
+        }
+        // Adjust date to UTC timezone
+        const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+        const year = utcDate.getFullYear();
+        let month = utcDate.getMonth() + 1;
+        if (month < 10) {
+          month = `0${month}`;
+        }
+        let day = utcDate.getDate();
+        if (day < 10) {
+          day = `0${day}`;
+        }
+        //console.log(${year}-${month}-${day})
+        return `${year}-${month}-${day}`;
+      }
+    
     
       const handleChange = (event) => {
         setComment(event.target.value);
       };
+
+      const handleCalenderChange = (event) => {
+        setDate(event.target.value);
+      };
+
+    const navigateHome = () => {
+        navigate('/');
+    }
 
     return (
         <div className="page">
@@ -143,14 +205,32 @@ const MovieView = () => {
                     </div>
                     <h3 className="red">Showtimes</h3>
                     <h5 className="white">Click to purchase tickets:</h5>
+                    <input
+                        type="date"
+                        value={date}
+                        onChange={handleCalenderChange}
+                        placeholder="Pick date here..."
+                        min={formatDate(movie.releaseDate)}
+                        max={formatDate(movie.endDate)}
+                    />
+                    <br></br>
                     <div id="showtime-container">
-                    {showtimesArray.map((showtime, index) => (
-                    <Link to={`/tickets?showtime=${showtime}&title=${movie.title}`} className="componenetLink">
-                    <h4 className="showtime" key={index}>
-                        {showtime} 
-                    </h4>
-                    </Link>
-                ))}
+                    {date && (
+                        <div id="showtimes">
+                            {showtimes.map((showtime, index) => (
+                                <Link 
+                                    to={`/tickets?showtime=${date}&title=${movie.title}&time=${showtime.startAt}&id=${id}&showid=${showtime.id}`} 
+                                    className="componenetLink" 
+                                    key={index} // Move key to Link component
+                            
+                                >
+                                    <h4 className="showtime">
+                                        {formatTime(showtime.startAt)} 
+                                    </h4>
+                                </Link>
+                            ))}
+                        </div>
+                        )}
                 <div id="review-container">
                     <h3 className="red" id="review-title">Reviews</h3>
                     {review.map((review, index) => (
