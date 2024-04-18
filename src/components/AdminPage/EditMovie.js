@@ -26,7 +26,6 @@ const EditMovie = ({ onSubmit }) => {
         releaseDate: '',
         cast: '',
         posterBase64: '',
-        showDatesTimes: '',
         end_date: '',
         MovieStatus: ''
     });
@@ -77,7 +76,6 @@ const EditMovie = ({ onSubmit }) => {
                   releaseDate: response.data.releaseDate,
                   cast: response.data.cast,
                   posterBase64: response.data.posterBase64,
-                  showDatesTimes: response.data.showDatesTimes,
                   end_date: response.data.end_date,
                   MovieStatus: response.data.MovieStatus
               });
@@ -114,11 +112,10 @@ const EditMovie = ({ onSubmit }) => {
             releaseDate: '',
             cast: '',
             posterBase64: '',
-            showDatesTimes: '',
             end_date: '',
             MovieStatus: ''
         });
-          navigate("/ManageMovie", { state: { props: true } });
+          navigate(`/editmoviecontinued/${id}`, { state: { props: true } });
         }, 1000);
         } catch (error) {
           alert(error);
@@ -198,7 +195,7 @@ const EditMovie = ({ onSubmit }) => {
                 name="releaseDate"
                 value={formatDate(movie.releaseDate)}
                 onChange={handleChange}
-                min={new Date().toISOString().split('T')[0]}
+                // min={new Date().toISOString().split('T')[0]}
                 required
               />
           </div>
@@ -297,17 +294,8 @@ const EditMovie = ({ onSubmit }) => {
               onChange={handleFileChange}
             />
           </div>
-          <div className="form-group">
-            <label>Show Dates and Times</label>
-            <input className="forms-inputRegister"
-                type="text"
-                name="showDatesTimes"
-                value={movie.showDatesTimes}
-                onChange={handleChange}
-                placeholder="xxxx/xx/xx @ xx:xx A.M./P.M., ..."
-                required
-              />              
-          </div>
+         
+
           <div className="fillInSpaceRegister">
           </div>
         </div> 

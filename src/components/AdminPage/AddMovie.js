@@ -26,7 +26,6 @@ const AddMovie = ({ onSubmit }) => {
         releaseDate: '',
         cast: '',
         posterBase64: '',
-        showTimesDates: '',
         end_date: '',
         MovieStatus: ''
     });
@@ -65,13 +64,12 @@ const AddMovie = ({ onSubmit }) => {
           releaseDate: '',
           cast: '',
           posterBase64: '',
-          showTimesDates: '',
           end_date: '',
           MovieStatus: ''
       });
             // Code to be executed after 2 seconds
           
-        navigate("/ManageMovie", { state: { props: true } });
+          navigate(`/addmoviecontinued/${movie.title}`, { state: { props: true } });
     }, 1000);
       } catch (error) {
         alert(error);
@@ -170,7 +168,7 @@ const AddMovie = ({ onSubmit }) => {
                 name="releaseDate"
                 value={formatDate(movie.releaseDate)}
                 onChange={handleChange}
-                min={new Date().toISOString().split('T')[0]}
+                // min={new Date().toISOString().split('T')[0]}
                 required
               />
           </div>
@@ -269,7 +267,7 @@ const AddMovie = ({ onSubmit }) => {
               onChange={handleFileChange}
             />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>Show Dates and Times</label>
             <input className="forms-inputRegister"
                 type="text"
@@ -279,7 +277,7 @@ const AddMovie = ({ onSubmit }) => {
                 placeholder="xxxx/xx/xx @ xx:xx A.M./P.M., ..."
                 required
               />         
-          </div>
+          </div> */}
           <div className="fillInSpaceRegister">
           </div>
         </div> 
