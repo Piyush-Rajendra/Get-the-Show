@@ -39,7 +39,6 @@ const Login = () => {
       }));
       navigate("/", { state: { props: true } });
     } catch (error) {
-      console.error('Login failed', error);
       alert('Login Failed: ' + error.response.data.error);
     }
   };
