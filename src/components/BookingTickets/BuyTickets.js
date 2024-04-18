@@ -90,8 +90,6 @@ const BuyTickets = (props) => {
         setMovieTimer(searchParams.get('time'));
         setId(searchParams.get('id'));
         setShowId(searchParams.get('showid'));
-        console.log(selectedSeats);
-        console.log(selectedSeats.length == renderTimes)
         //if (selectedSeats.every(seat => seat !== "")) {
         if (selectedSeats.length == renderTimes) {
           setCheck(true); // Set check to true if all seats have been selected
@@ -161,10 +159,8 @@ const BuyTickets = (props) => {
             showtimeId: showId
         }
         try {
-            // Send form data to your server, which will interact with MongoDB
             axios.post('http://localhost:3000/bookTickets', ticket)
                 .then(response => {
-                    console.log('Form submitted successfully:', response.data);
                     navigate('/payment');
                     // clear
                 })

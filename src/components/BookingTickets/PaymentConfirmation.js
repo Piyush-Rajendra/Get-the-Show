@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import '../css/BookingTickets/PaymentConfirmation.css';
-import { Link, useNavigate, useSearchParams, useLocation} from 'react-router-dom';
-import axios from "axios";
+import { Link} from 'react-router-dom';
 
 const PaymentConfirmation = () => {
-    const navigate = useNavigate();
     const [ticketNum, setTicketNum] = useState();
     const [title, setTitle] = useState();
     const [time, setTime] = useState();
@@ -16,28 +14,7 @@ const PaymentConfirmation = () => {
         setTitle(sessionStorage.getItem('movie-title'));
         setTime(sessionStorage.getItem('movie-time'));
         setTotal(sessionStorage.getItem('finalTotal'));
-        
-      
-    
       }, []);
-  
-    
-    //const [searchParams] = useSearchParams();
-    //const total = searchParams.get('total');
-    
-
-    /*useEffect(() => {
-        const handleBackButton = (e) => {
-            e.preventDefault();
-            navigate('/');
-        };
-
-        window.addEventListener('popstate', handleBackButton);
-
-        return () => {
-            window.removeEventListener('popstate', handleBackButton);
-        };
-    }, [navigate]);*/
 
     return (
         <div id="confirm-page">

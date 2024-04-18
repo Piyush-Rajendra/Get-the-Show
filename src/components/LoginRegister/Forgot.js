@@ -26,7 +26,6 @@ const Forgot = () => {
     }
     // Email is valid, update displayText
     try {
-    console.log(email);
     const emailHolder = {
       email: email
     }

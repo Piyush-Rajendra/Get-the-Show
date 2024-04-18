@@ -56,9 +56,7 @@ const OrderSummary = () => {
             number_of_tickets: ticketNumber
         }
         try {
-            // Send form data to your server, which will interact with MongoDB
-            axios.post('http://localhost:3000/order-history', order); // Replace with your server endpoint
-            console.log('Form submitted successfully:', order);
+            axios.post('http://localhost:3000/order-history', order); 
             //clear
           } catch (error) {
             console.error('Error submitting form:', error);
@@ -108,16 +106,12 @@ const OrderSummary = () => {
             alert("Promotions cannot be combined.");
         }
 
-            //console.log('Success', response.data);
-            //alert(response.data.description);
-            // Optionally, you might want to redirect the user or perform additional actions
           } catch (error) {
             if (error.response && error.response.status === 404) {
                 // Display an alert indicating that the promo was not found
                 alert('Promo not found');
             } else {
                 // Display an alert for other errors
-                console.error('Error fetching promotion data:', error);
                 alert('An error occurred while fetching promotion data');
             }
           }
