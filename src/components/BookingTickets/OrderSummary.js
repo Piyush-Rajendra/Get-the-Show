@@ -100,6 +100,9 @@ const OrderSummary = () => {
 
     return (
         <div id="summary-page">
+            <Link to={`/`} className="backButtonpaymentConfirmation">
+                <button className="backButtonPaymentTickets">Cancel Tickets</button>
+            </Link>
             <div id="checkout-title">
                 <h1>Checkout</h1>
             </div>

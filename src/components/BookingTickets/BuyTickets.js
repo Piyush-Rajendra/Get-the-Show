@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
 import '../css/BookingTickets/BuyTickets.css';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams, useParams} from 'react-router-dom';
 import axios from "axios";
 
 const BuyTickets = (props) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    
-    
+    const { id } = useParams(); // Retrieve the movie ID from URL
 
     const [token, setToken] = useState(localStorage.getItem('token'));
 
@@ -143,6 +142,9 @@ const BuyTickets = (props) => {
     if (token) {
     return (
         <div className="movie-page">
+            <Link to={`/`} className="backButtonPaymentOptionView">
+                <button className="backButtonPaymentTickets">Cancel Tickets</button>
+            </Link>
             <div className="movie-title">
                 <h2 id="ticket-movie-title">Movie: {movieTitle}</h2>
                 <h2 id="ticket-movie-time">Time: {movieTime}</h2>
