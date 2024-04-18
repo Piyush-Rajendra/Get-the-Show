@@ -13,9 +13,6 @@ const Payment = (props) => {
         try {
           const response = await axios.get(`http://localhost:3000/user/${username}`);
           setId(response.data.id); 
-          
-          
-         
         } catch (error) {
           console.error('Error fetching card data:', error);
         }
