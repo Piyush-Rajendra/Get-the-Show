@@ -162,17 +162,14 @@ useEffect(() => {
                 <option value="category">Category</option>
                 <option value="showDatesTimes">Show Date</option>
               </select>
-              {/* <input type="text" id="myInput" placeholder="Search for Movies..." value={searchQuery} onChange={handleSearchInputChange}></input>
-              <button onClick={handleSearch}>Search</button> */}
-              {/* Conditionally render input based on selected filter */}
               {filter === "showDatesTimes" ? (
-                <input 
-                  type="date" 
-                  id="myInput" 
-                  placeholder="Select Date..." 
-                  value={searchQuery} 
-                  onChange={handleSearchInputChange}
-                />
+              <input 
+                type="date" 
+                id="myInput" 
+                value={searchQuery} 
+                onChange={handleSearchInputChange}
+                min={new Date().toISOString().split('T')[0]}
+              />
               ) : (
                 <input 
                   type="text" 
@@ -201,10 +198,10 @@ useEffect(() => {
                   <button>Admin</button>
                 </Link>
               }
-              {userData.token &&
+              {userData.token && !isAdmin &&
                <button className="hambugerMainPage" onClick={toggleSidebar}>&#8801;</button> 
               }
-              {userData.token && 
+              {userData.token && !isAdmin &&
                 <SidebarPopup isOpen={isOpen} onClose={toggleSidebar} />
               }
               <div>
@@ -299,7 +296,6 @@ useEffect(() => {
               </li>
             </ul>
           </div>
-          
         <footer>
       </footer>
       </div>

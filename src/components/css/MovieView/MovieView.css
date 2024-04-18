@@ -128,3 +128,31 @@
     align-items: center;
     justify-content: center;
 }
+
+.releasedOrUnreleasedEditMovie {
+    border-radius: 10%;
+    padding: 6px;
+}
+
+.containerFormEditMovieAdminister {
+    display: flex;
+    flex-direction: row;
+}
+
+.containerFormEditMovieAdminister h2 {
+    align-items: center;
+}
+
+.backButtonForgotEditMovieAdmin {
+    padding: 10px;
+    color: rgb(2, 2, 2);
+    margin-top: 15px;
+    margin-bottom: 0px;
+
+    margin-right: 210px;
+    font-size: 25px;
+    font-weight: 600;
+    background-color: #f85757;
+    border-radius: 20px;
+    cursor: pointer;
+}
