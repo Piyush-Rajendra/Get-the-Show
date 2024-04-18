@@ -48,6 +48,7 @@ function App() {
       }
 
       else if (token != null) {
+        console.log(token); 
         setUserData(prevUserData => ({
           ...prevUserData,
           token: token
