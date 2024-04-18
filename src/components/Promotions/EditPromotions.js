@@ -6,6 +6,7 @@ import UserContext from "../context/UserContext";
 
 const AddPromotions = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         id: '',
@@ -64,6 +65,7 @@ const AddPromotions = () => {
         try {
             axios.put(`http://localhost:3000/promotions/${formData.id}`, formData); // Replace with your server endpoint
             alert("Form submitted successfully!");
+            navigate('/promotions');            
           } catch (error) {
             alert('Error submitting form: '+ error);
           }
@@ -81,6 +83,9 @@ const AddPromotions = () => {
     
       return (
         <div id="add-promo-page">
+        <Link to="/promotions">
+          <button className="backButtonPromotionUserAdmin">Back</button>
+        </Link>   
         <div id="add-promo-header">
             <h1>E-Cinema Booking</h1>
         </div>
