@@ -8,7 +8,7 @@ const MovieView = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-
+    const [token, setToken] = useState(localStorage.getItem('token'));
     const [username, setUsername] = useState();
     const [review, setReview] = useState([]);
     const [comment, setComment] = useState();
@@ -104,18 +104,24 @@ const MovieView = () => {
 
       const handleSubmit = (event) => {
         event.preventDefault();
-        try {
-            const commentData = {
-                movie_id: id,
-                username: username,
-                review: comment
+        if (!token) {
+            alert("Please log in to comment!")
+            setComment('');
+        }
+        else {
+            try {
+                const commentData = {
+                    movie_id: id,
+                    username: username,
+                    review: comment
+                }
+                axios.post('http://localhost:3000/reviews', commentData); 
+                alert("Comment added!");
+            } catch (error) {
+                alert('Error submitting form: ' + error);
             }
-            axios.post('http://localhost:3000/reviews', commentData); 
-            alert("Comment added!");
-          } catch (error) {
-            alert('Error submitting form: ' + error);
-          }
-          setComment('');
+            setComment('');
+        }
 
 
       };
