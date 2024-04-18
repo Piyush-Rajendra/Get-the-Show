@@ -30,19 +30,6 @@ const UpdatePassword = () => {
     const handleCurrentPasswordChange = (e) => {
       setCurrentPassword(e.target.value);
     }
-  
-
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-
-
-    // const handleChange = (e) => {
-    //   setFormData({
-    //     ...formData,
-    //     [e.target.name]: e.target.value
-    //   });
-    // };
 
    const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,14 +44,11 @@ const UpdatePassword = () => {
       }
       const response = await axios.get('http://localhost:3000/users', email);
       const token = response.data.token;
-      console.log(formData);
       const log = await axios.post('http://localhost:3000/signin', formData)
-      console.log(log.data.token);
       const resetData = {
         email: email,
         newPassword: newPassword
       }
-      console.log(resetData);
       const resetResponse = await axios.post('http://localhost:3000/reset-password', resetData);
       setDisplayText('Password Updated!')
       setEmail('');
@@ -72,7 +56,6 @@ const UpdatePassword = () => {
       setCurrentPassword('');
       setNewPassword('');
     } catch (error) {
-      console.error('Reset failed', error);
       alert('Email or current password is not correct');
     }
   };
@@ -93,9 +76,6 @@ const UpdatePassword = () => {
             </label>
               <input class="forms-input"
                 type="email"
-                // name="usernameOrEmail"
-                // value={formData.usernameOrEmail}
-                // onChange={handleChange}
                 name="usernameOrEmail"
                 value={email}
                 onChange={handleEmailChange}
@@ -106,9 +86,6 @@ const UpdatePassword = () => {
             </label>
               <input class="forms-input"
                 type="password"
-                // name="password"
-                // value={formData.password}
-                // onChange={handleChange}
                 name="password"
                 value={currentPassword}
                 onChange={handleCurrentPasswordChange}

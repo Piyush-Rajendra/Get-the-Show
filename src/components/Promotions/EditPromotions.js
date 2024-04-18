@@ -22,7 +22,6 @@ const AddPromotions = () => {
         const { name, value, type, checked } = e.target;
         const newValue = type === 'checkbox' ? checked : value;
     
-        // Special handling for toggling percentOffPromo and valueOffPromo
         if (name === 'percentOffPromo' && newValue) {
           setFormData({
             ...formData,
@@ -53,7 +52,7 @@ const AddPromotions = () => {
             const response = await axios.get(`http://localhost:3000/promotions/${id}`);
             setFormData(response.data);
           } catch (error) {
-            console.error('Error fetching hospital data:', error);
+            alert("Error fetching promotion data: " + error);
           }
         };
     
@@ -62,15 +61,11 @@ const AddPromotions = () => {
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        //console.log(formData); // This will log the updated object upon submission
-        // You can perform further actions here like sending the data to a server
         try {
-            // Send form data to your server, which will interact with MongoDB
             axios.put(`http://localhost:3000/promotions/${formData.id}`, formData); // Replace with your server endpoint
-            console.log('Form submitted successfully:', formData);
-            //clear
+            alert("Form submitted successfully!");
           } catch (error) {
-            console.error('Error submitting form:', error);
+            alert('Error submitting form: '+ error);
           }
 
         setFormData({
@@ -83,8 +78,6 @@ const AddPromotions = () => {
             valueoff: 0
           });
       };
-
-     
     
       return (
         <div id="add-promo-page">

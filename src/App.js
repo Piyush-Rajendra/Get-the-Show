@@ -44,12 +44,10 @@ function App() {
       let token = localStorage.getItem("token");
       if (token === null) {
         localStorage.setItem("token", "");
-        console.log("null token");
         token = "";
       }
 
       else if (token != null) {
-        console.log(token); 
         setUserData(prevUserData => ({
           ...prevUserData,
           token: token

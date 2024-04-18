@@ -29,7 +29,6 @@ const EditUser = ({ onSubmit }) => {
         const fetchUserData = async () => {
           try {
             const response = await axios.get(`http://localhost:3000/users/${id}`);
-            console.log(response);
             setUser({
                 username: response.data.userInfo[0].username,
                 profilePhoto: response.data.userInfo[0].profilePhoto,

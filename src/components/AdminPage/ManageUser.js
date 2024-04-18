@@ -3,16 +3,14 @@ import { Link } from 'react-router-dom';
 import { useState, useContext } from "react";
 import '../css/AdminPage/ManageMovie.css';
 import '../css/AdminPage/ManageUser.css';
-import UserCard from "../MainPage/UserCard";
 import axios from 'axios';
 import {useEffect} from 'react';
-import { useHistory } from 'react-router-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import UserContext from "../context/UserContext";
+import CardFactory from "../MainPage/CardFactory"
 
 const ManageUser = () => {
 
-  const [suspended, setSuspended] = useState('');
   const [userList, setUserList] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -37,7 +35,6 @@ const ManageUser = () => {
     setSearchQuery(''); // Clear the value of the input field
   };
   const url = 'http://localhost:3000/users';
-  const url1 = 'http://localhost:3000/admin/users';
   useEffect(() => {
     axios.get(url)
       .then(response => {
@@ -67,7 +64,7 @@ const ManageUser = () => {
       const response = await axios.delete(`http://localhost:3000/deleteUser/${ind}`);
       window.location.reload();
     } catch (error) {
-      alert(error);
+      alert("Cannot delete user! " + error);
     }
   }
 
@@ -76,8 +73,7 @@ const ManageUser = () => {
       const response = await axios.put(`http://localhost:3000/suspend/${ind}`);
       window.location.reload();
     } catch (error) {
-      console.log(error);
-      alert(error);
+      alert("Cannot suspend/unsuspend: " + error);
     }
   }
 
@@ -112,7 +108,8 @@ const ManageUser = () => {
             {searchActive && filteredUsers.map((location, index) => (
                   <li key={index} class="movie-card-container">
                   <div class="movie-card-wrapper">
-                    <UserCard 
+                    <CardFactory
+                          type="user"
                           fullName={location.fullName}
                           userName={location.username}
                           age={location.age}
@@ -122,7 +119,6 @@ const ManageUser = () => {
                         />
                     <div class="button-group-user">
                       <Link to={`/edituser/${location.id}`}  key={index}><button>Edit</button></Link>
-                      {console.log(location.suspendStatus)}
                       {location.SuspendStatus === "not_suspended" && 
                       <button onClick={() => suspendUser(location.id)}>Suspend</button>
                       }
@@ -137,7 +133,8 @@ const ManageUser = () => {
               {!searchActive && userList.map((location, index) => (
                 <li key={index} class="movie-card-container">
                   <div class="movie-card-wrapper">
-                    <UserCard 
+                    <CardFactory 
+                          type="user" 
                           fullName={location.fullName}
                           userName={location.username}
                           age={location.age}
@@ -147,7 +144,6 @@ const ManageUser = () => {
                         />
                     <div class="button-group-user">
                       <Link to={`/edituser/${location.id}`}  key={index}><button>Edit</button></Link>
-                      {console.log(location.suspendStatus)}
                       {location.SuspendStatus === "not_suspended" && 
                       <button onClick={() => suspendUser(location.id)}>Suspend</button>
                       }

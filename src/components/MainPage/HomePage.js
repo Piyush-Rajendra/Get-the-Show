@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/HomePage/HomePage.css';
-import MovieCard from './MovieCard';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SidebarPopup from './SidebarPopup';
 import UserContext from "../context/UserContext";
+import CardFactory from "../MainPage/CardFactory";
 
 
-const HomePage = ({props}) => {
-  //const { userData } = useContext(UserContext);
-  //<h1>{userData.userName}</h1>
-  //<h1>{localstoage.getItem("username")}</h1>
+const HomePage = () => {
+
   const [myValue, setMyValue] = useState(false)
   const [searchQuery, setSearchQuery] = useState('');
   const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
@@ -20,16 +18,12 @@ const HomePage = ({props}) => {
   const [filteredComingSoonMovies, setFilteredComingSoonMovies] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
   const { userData, setUserData } = useContext(UserContext);
-  const [token, setToken] = useState()
   const isAdmin = localStorage.getItem('isAdmin');
   const [filter, setFilter] = useState("title"); // State to store the selected filter
-
-
 
   const navigate = useNavigate();
   const toggleActive = () => {
     setSearchActive(false);
-    // window.location.reload();
     setSearchQuery(''); // Clear the value of the input field
   }
 
@@ -43,9 +37,7 @@ useEffect(() => {
   }
 })
 
-// if (myValue !== true || myValue !== false) {
-//   myValue = false;
-// }
+
 const handleSearchInputChange = (event) => {
   setSearchQuery(event.target.value);
 };
@@ -118,19 +110,9 @@ useEffect(() => {
       // Handle error
       alert(error);
     });
-}, []); // empty dependency array ensures this effect runs only once
+}, []); 
 
   const [movieList, setMovieList] = useState([]);
-
-  const addMovieHandler = (newMovie) => {
-    setMovieList((prevMovies) => [newMovie, ...prevMovies]);
-  };
-
-  const updateVal = () => {
-    setMyValue(false);
-    navigate('/', { state: {props: false} });
-    
-  }
 
   const logout = () => {
     setUserData(prevUserData => ({
@@ -218,7 +200,8 @@ useEffect(() => {
               <li class="movie-card-container">
               {searchActive && filteredPlayingNowMovies.map((location, index) => (
                   <Link to={`/movieview/${location.id}`}  key={index}>
-                    <MovieCard 
+                    <CardFactory
+                      type="movie" 
                       movie={location.title}
                       category={location.category}
                       cast={location.cast}
@@ -230,12 +213,13 @@ useEffect(() => {
                       mpaaRating={location.mpaaRating}
                       showDatesTimes={location.showDatesTimes}
                       posterBase64={location.posterBase64}
-                    ></MovieCard>
+                    />
                 </Link>
                 ))}
                 {!searchActive && moviesPlayingNow.map((location, index) => (
                   <Link to={`/movieview/${location.id}`}  key={index}>
-                    <MovieCard 
+                    <CardFactory
+                      type="movie" 
                       movie={location.title}
                       category={location.category}
                       cast={location.cast}
@@ -247,7 +231,7 @@ useEffect(() => {
                       mpaaRating={location.mpaaRating}
                       showDatesTimes={location.showDatesTimes}
                       posterBase64={location.posterBase64}
-                    ></MovieCard>
+                    />
                 </Link>
                 ))}
               </li>
@@ -261,7 +245,8 @@ useEffect(() => {
               <li class="movie-card-container">
               {searchActive && filteredComingSoonMovies.map((location) => (
                   <Link to={`/movieview/${location.id}`}  >
-                    <MovieCard 
+                    <CardFactory
+                      type="movie" 
                       movie={location.title}
                       category={location.category}
                       cast={location.cast}
@@ -273,12 +258,13 @@ useEffect(() => {
                       mpaaRating={location.mpaaRating}
                       showDatesTimes={location.showDatesTimes}
                       posterBase64={location.posterBase64}
-                    ></MovieCard>
+                    />
                 </Link>
                 ))}
                 {!searchActive && moviesComingSoon.map((location) => (
                   <Link to={`/movieview/${location.id}`}  >
-                    <MovieCard 
+                    <CardFactory
+                      type="movie" 
                       movie={location.title}
                       category={location.category}
                       cast={location.cast}
@@ -290,7 +276,7 @@ useEffect(() => {
                       mpaaRating={location.mpaaRating}
                       showDatesTimes={location.showDatesTimes}
                       posterBase64={location.posterBase64}
-                    ></MovieCard>
+                    />
                   </Link>
                 ))}
               </li>

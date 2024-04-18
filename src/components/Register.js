@@ -26,15 +26,6 @@ const Register = () => {
       e.preventDefault();
       setLoading(true);
       try {
-        // console.log(formData);
-        // const newUser = formData;
-        // await axios.post("http://localhost:4000/api/users/signup/", newUser);
-        // const loginRes = await axios.post("http://localhost:4000/api/users/login", formData);
-        // setUserData({
-        //   token: loginRes.data.token,
-        //   user: loginRes.data.user,
-        // });
-        // localStorage.setItem("auth-token", loginRes.data.token);
         setLoading(false);
         navigate('/', { state: {props: true} });
       } catch (err) {
@@ -45,7 +36,6 @@ const Register = () => {
      
     };
     
-
     return (
     <div class = "background">
           <div class="outer">
