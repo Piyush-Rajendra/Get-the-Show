@@ -37,11 +37,10 @@ const Login = () => {
         username: username,
         token: token,
       }));
-      //console.log(username);
       navigate("/", { state: { props: true } });
     } catch (error) {
       console.error('Login failed', error);
-      alert('Username/Email or password is not correct');
+      alert('Login Failed: ' + error.response.data.error);
     }
   };
 

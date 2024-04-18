@@ -47,7 +47,6 @@ function App() {
       let token = localStorage.getItem("token");
       if (token === null) {
         localStorage.setItem("token", "");
-        console.log("null token");
         token = "";
       }
 

@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useContext} from "react";
 import '../css/AdminPage/AdminPanel.css';
-import MovieCard from "../MainPage/MovieCard";
 import UserContext from "../context/UserContext";
 
 const AdminPanel = props => {
@@ -10,7 +9,6 @@ const AdminPanel = props => {
   const { userData, setUserData } = useContext(UserContext);
   //const isAdmin = userData && userData.isAdmin;
   const isAdmin = localStorage.getItem('isAdmin');
-  console.log(isAdmin);
 
   const changeMovie = () => {
     navigate('/ManageMovie');
@@ -49,15 +47,6 @@ const AdminPanel = props => {
               <button onClick={homeScreen}>Home Page</button>
             </div>
           </div>
-          {/* <div class = "homeSearch">
-            <select id="filter-dropdown">
-              <option value="">Title</option>
-              <option value="genre">Genre</option>
-              <option value="year">Year</option>
-            </select>
-            <input type="text" placeholder="Search for Movies..."></input>
-            <button>Search</button>
-          </div> */}
           <div class = "adminPanel">
             <h1>ADMIN PANEL</h1>
           </div>
@@ -66,9 +55,6 @@ const AdminPanel = props => {
             <br></br>
             <button onClick={changePromotions}>Manage Promotions</button>
             <br></br>
-
-            {/* <button>Ticket Prices</button>            
-            <br></br>*/}
             <button onClick={changeUser}>Members & Admin</button>
             <br></br>
             <button onClick={changeTickets}>Manage Ticket Prices</button>

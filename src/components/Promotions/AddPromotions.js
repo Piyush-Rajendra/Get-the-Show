@@ -6,7 +6,75 @@ import UserContext from "../context/UserContext";
 
 const AddPromotions = () => {
 
-    const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
+      name: '',
+      promoCode: '',
+      description: '',
+      percentoffPromo: false,
+      valueoffPromo: true,
+      percentoff: 0,
+      valueoff: 0
+    });
+    
+const handleChange = (e) => {
+  const { name, value, type, checked } = e.target;
+  let newValue = type === 'checkbox' ? checked : value;
+
+  if (name === 'percentoffPromo' && newValue) {
+    setFormData({
+      ...formData,
+      percentoffPromo: true,
+      valueoffPromo: false,
+      percentoff: Math.max(0, Math.min(1, formData.percentoff)), 
+      valueoff: 0
+    });
+  } else if (name === 'valueoffPromo' && newValue) {
+    setFormData({
+      ...formData,
+      percentoffPromo: false,
+      valueoffPromo: true,
+      percentoff: 0,
+      valueoff: 0
+    });
+  } else if ((name === 'percentoffPromo' && !newValue && formData.valueoffPromo) ||
+            (name === 'valueoffPromo' && !newValue && formData.percentoffPromo)) {
+    setFormData({
+      ...formData,
+      percentoffPromo: false,
+      valueoffPromo: false,
+      percentoff: 0,
+      valueoff: 0
+    });
+  } else {
+    if (name === 'percentoff') {
+      newValue = Math.max(0, Math.min(1, newValue)); 
+    }
+    setFormData({
+      ...formData,
+      [name]: newValue
+    });
+  }
+};
+
+const navigate = useNavigate();
+    
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.promoCode || !formData.description ||
+        (formData.percentoffPromo && !formData.percentoff) ||
+        (formData.valueoffPromo && !formData.valueoff)) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+    try {
+        axios.post('http://localhost:3000/promotions/', formData); 
+        navigate("/promotions");
+      } catch (error) {
+        alert("Error submitting promotion :" + error);
+      }
+
+    setFormData({
         name: '',
         promoCode: '',
         description: '',
@@ -15,64 +83,13 @@ const AddPromotions = () => {
         percentoff: 0,
         valueoff: 0
       });
-    
-      const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        const newValue = type === 'checkbox' ? checked : value;
-    
-        // Special handling for toggling percentOffPromo and valueOffPromo
-        if (name === 'percentOffPromo' && newValue) {
-          setFormData({
-            ...formData,
-            percentOffPromo: true,
-            valueOffPromo: false,
-            percentOff: 0,
-            valueOff: 0
-          });
-        } else if (name === 'valueOffPromo' && newValue) {
-          setFormData({
-            ...formData,
-            percentOffPromo: false,
-            valueOffPromo: true,
-            percentOff: 0,
-            valueOff: 0
-          });
-        } else {
-          setFormData({
-            ...formData,
-            [name]: newValue
-          });
-        }
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(formData); // This will log the updated object upon submission
-        // You can perform further actions here like sending the data to a server
-        try {
-            // Send form data to your server, which will interact with MongoDB
-            axios.post('http://localhost:3000/promotions/', formData); // Replace with your server endpoint
-            console.log('Form submitted successfully:', formData);
-            //clear
-          } catch (error) {
-            console.error('Error submitting form:', error);
-          }
-
-        setFormData({
-            name: '',
-            promoCode: '',
-            description: '',
-            percentoffPromo: false,
-            valueoffPromo: true,
-            percentoff: 0,
-            valueoff: 0
-          });
-      };
-
-     
+  };
     
       return (
         <div id="add-promo-page">
+        <Link to="/promotions">
+          <button className="backButtonPromotionUserAdmin">Back</button>
+        </Link>   
         <div id="add-promo-header">
             <h1>E-Cinema Booking</h1>
         </div>
@@ -133,6 +150,5 @@ const AddPromotions = () => {
         </div>
       );
     }
-
 
 export default AddPromotions; 

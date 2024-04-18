@@ -6,6 +6,7 @@ import axios from "axios";
 
 const OrderSummary = () => {
     const navigate = useNavigate();
+    const username = localStorage.getItem('username');
     const [ticketNumber, setTicketNumber] =useState(0); 
     const [cost, setCost] = useState(0);
     const [tax, setTax] = useState(0);
@@ -13,10 +14,27 @@ const OrderSummary = () => {
     const [fees, setFees] = useState(0);
     const [total, setTotal] = useState(0);
     const [promoUsed, setPromoUsed] = useState(false);
+    const [time, setTime] = useState();
+
+    const [id, setId] = useState('');
+
+    useEffect(() => {
+      const fetchUserData = async () => {
+          try {
+            const response = await axios.get(`http://localhost:3000/user/${username}`);
+            setId(response.data.id); 
+          } catch (error) {
+            console.error('Error fetching card data:', error);
+          }
+        };
+    
+        fetchUserData();
+    }, []);
 
 
     useEffect(() => {
         setTicketNumber(sessionStorage.getItem('numberOfTickets'));
+        setTime(sessionStorage.getItem('movie-time'));
         setCost(parseFloat(sessionStorage.getItem('cost')));
         setTax(parseFloat(sessionStorage.getItem('tax')));
         setTotal(parseFloat(sessionStorage.getItem('cost'))  + parseFloat(sessionStorage.getItem('tax'))
@@ -30,15 +48,26 @@ const OrderSummary = () => {
     const handleSubmitOrder = async () => {
         sessionStorage.setItem('finalTotal', total);
         const order = {
-            userId: "test",
-            movieName: "test",
-            price: 9,
-            showDate: "7/02/24",
-            cardType: "test",
-            number_of_tickets: 9
+            userId: id,
+            movieName: sessionStorage.getItem('movie-title'),
+            price: total,
+            showDate: time,
+            //cardType: "MasterCard",
+            number_of_tickets: ticketNumber
         }
+        try {
+            axios.post('http://localhost:3000/order-history', order); 
+            //clear
+          } catch (error) {
+            console.error('Error submitting form:', error);
+          }
+
+        const retrievedArrayString = sessionStorage.getItem('seats');
+        const seats = JSON.parse(retrievedArrayString);
+        //alert(seats);
 
 
+        
         navigate('/paymentconfirm');
         
     }
@@ -77,16 +106,12 @@ const OrderSummary = () => {
             alert("Promotions cannot be combined.");
         }
 
-            //console.log('Success', response.data);
-            //alert(response.data.description);
-            // Optionally, you might want to redirect the user or perform additional actions
           } catch (error) {
             if (error.response && error.response.status === 404) {
                 // Display an alert indicating that the promo was not found
                 alert('Promo not found');
             } else {
                 // Display an alert for other errors
-                console.error('Error fetching promotion data:', error);
                 alert('An error occurred while fetching promotion data');
             }
           }
@@ -100,6 +125,9 @@ const OrderSummary = () => {
 
     return (
         <div id="summary-page">
+            <Link to={`/`} className="backButtonpaymentConfirmation">
+                <button className="backButtonPaymentTickets">Cancel Tickets</button>
+            </Link>
             <div id="checkout-title">
                 <h1>Checkout</h1>
             </div>

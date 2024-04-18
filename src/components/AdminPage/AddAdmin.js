@@ -28,20 +28,11 @@ const AddAdmin = () => {
     }
     const handleCurrentPasswordChange = (e) => {
       setCurrentPassword(e.target.value);
-    }
-  
+    }  
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
-
-    // const handleChange = (e) => {
-    //   setFormData({
-    //     ...formData,
-    //     [e.target.name]: e.target.value
-    //   });
-    // };
 
    const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,11 +45,7 @@ const AddAdmin = () => {
         usernameOrEmail: email,
         password: currentPassword
       }
-    //   const response = await axios.get('http://localhost:3000/users', email);
-    //   const token = response.data.token;
-      // console.log(formData);
-      // // const log = await axios.post('http://localhost:3000/signin', formData)
-      // console.log(log.data.token);
+
       const resetData = {
         username: email,
         password: newPassword
@@ -77,9 +64,12 @@ const AddAdmin = () => {
     return (
     <div class = "background">
           <hr></hr>
-          
-          <Link to="/ManageUser"><button class="register-button">Back</button></Link>
+        <div>
+          <Link to="/ManageUser">
+            <button className="backButtonForgotEditAddAdmin">Back</button>
+          </Link>   
           <h2 class="register">Add Admin</h2>
+        </div>
         <div className="center">
         <div class="formcontainer">
           <form className ="forms-reset" onSubmit={handleSubmit}>
@@ -89,9 +79,6 @@ const AddAdmin = () => {
             </label>
               <input class="forms-input"
                 type="text"
-                // name="usernameOrEmail"
-                // value={formData.usernameOrEmail}
-                // onChange={handleChange}
                 name="usernameOrEmail"
                 value={email}
                 onChange={handleEmailChange}

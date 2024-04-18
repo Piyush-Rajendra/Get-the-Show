@@ -1,31 +1,25 @@
 import React, { useState, useEffect, useContext} from "react";
 import '../css/MovieView/MovieView.css';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import axios from "axios";
 import EmbeddedVideo from "../EmbeddedVideo";
-import UserContext from "../context/UserContext";
 
-const MovieView = (props) => {
-    //const base64String = props.posterBase64;
+const MovieView = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const { userData } = useContext(UserContext);
+
     const [username, setUsername] = useState();
     const [review, setReview] = useState([]);
     const [comment, setComment] = useState();
+    const [showtimes, setShowtimes] = useState([]);
+    const [date, setDate] = useState();
 
     useEffect(() => {
-        // Get username from localStorage and set it
         const username = localStorage.getItem('username');
         setUsername(username);
     
       }, []);
-    //console.log(userData.username)
-
-    // Access isAdmin from userData
-    //const isAdmin = userData && userData.isAdmin;
-
     const [movie, setMovie] = useState({
         title:'',
         poster:'',
@@ -34,7 +28,6 @@ const MovieView = (props) => {
         director:'',
         producer:'',
         base64: '',
-        //code:'',
         trailer:'',
         synopsis:'',
         rating:'',  
@@ -44,39 +37,17 @@ const MovieView = (props) => {
     });
 
     function stringToArray(inputString) {
-        // Split the input string by comma and space
         const items = inputString.split(", ");
-        // Return the resulting array
         return items;
     }
 
     const [showtimesArray, setShowtimesArray] = useState([]);
     const [castArray, setCastArray] = useState([]);
 
-    /*useEffect(() => {
-        setMovie({
-            title: 'The Emoji Movie',
-            poster: 'https://image.tmdb.org/t/p/original/60bTx5z9zL1AqCjZ0gmWoRMJ6Bb.jpg',
-            category: 'Animation/Comedy',
-            ageRating: 'PG',
-            director: 'Tony Leondis',
-            producer: 'Michelle Raimo Kouyate',
-            code: 'EMOJ001',
-            trailer: 'https://www.youtube.com/embed/r8pJt4dK_s4?si=4klZuvFIk6_PMTIU',
-            synopsis: 'In Textopolis, where the emojis are expected to display just one emotion, Gene, an exuberant emoji, sets out on a journey to become a normal emoji.',
-            rating: 4.5,
-            showtimes: ["2/23/24 @ 4:30 P.M.", "2/27/24 @ 7:30 P.M.", "3/1/24 @ 1:00 P.M.", "3/16/24 @ 11:15 A.M."],
-            reviews: ["It was kind of mid", "Another Sony Pictures stinker", "My five year old really enjoyed it", "Awful"],
-            cast: ["Filler Guy Jr.", "Guy Ray", "Ray Guy", "Batman Robin", "Barack Obama", "Fake Person IV"]
-        });
-    }, []);*/
-
-
     useEffect(() => {
         const fetchMovieData = async () => {
           try {
             const response = await axios.get(`http://localhost:3000/moviesById/${id}`);
-           
             setMovie({
                 title: response.data.title,
                 poster: response.data.trailerPicture,
@@ -89,22 +60,33 @@ const MovieView = (props) => {
                 base64: response.data.posterBase64,
                 rating: 4.5,
                 showtimes: response.data.showDatesTimes,
-                reviews: ["It was kind of mid", "Another Sony Pictures stinker", "My five year old really enjoyed it", "Awful"],
-                cast: response.data.cast
+                cast: response.data.cast,
+                releaseDate: response.data.releaseDate,
+                endDate: response.data.end_date
             });
-            //setShowtimesArray(["2/23/24 @ 4:30 P.M.", "2/27/24 @ 7:30 P.M.", "3/1/24 @ 1:00 P.M.", "3/16/24 @ 11:15 A.M."]);
-            //setCastArray(["Filler Guy Jr.", "Guy Ray", "Ray Guy", "Batman Robin", "Barack Obama", "Fake Person IV"]);
             setShowtimesArray(stringToArray(movie.showtimes));
             setCastArray(stringToArray(movie.cast));
-
-            //setFormData(response.data);
           } catch (error) {
-            console.error('Error fetching movie data:', error);
+            
           }
         };
     
         fetchMovieData();
       }, [id, showtimesArray, castArray]);
+
+      useEffect(() => {
+        const fetchShowtimesData = async () => {
+          try {
+            const response = await axios.get(`http://localhost:3000/showtimes/${id}`);
+            setShowtimes(response.data);
+            
+          } catch (error) {
+            console.error('Error fetching review data:', error);
+          }
+        };
+    
+        fetchShowtimesData();
+      }, [id]);
 
       useEffect(() => {
         const fetchReviewData = async () => {
@@ -113,7 +95,7 @@ const MovieView = (props) => {
             setReview(response.data);
             
           } catch (error) {
-            console.error('Error fetching review data:', error);
+            
           }
         };
     
@@ -122,43 +104,77 @@ const MovieView = (props) => {
 
       const handleSubmit = (event) => {
         event.preventDefault();
-        // Handle form submission here, for example, send inputValue to server or perform any action
-        //alert(comment);
-        //setComment('');
         try {
-            // Send form data to your server, which will interact with MongoDB
             const commentData = {
                 movie_id: id,
                 username: username,
                 review: comment
             }
-            axios.post('http://localhost:3000/reviews', commentData); // Replace with your server endpoint
+            axios.post('http://localhost:3000/reviews', commentData); 
             alert("Comment added!");
-            //console.log('Form submitted successfully:', commentData);
-            //clear
           } catch (error) {
-            console.error('Error submitting form:', error);
+            alert('Error submitting form: ' + error);
           }
           setComment('');
 
 
       };
+
+    function formatTime(timeString) {
+        const time = new Date(`1970-01-01T${timeString}`);
+        let hours = time.getHours();
+        const minutes = time.getMinutes();
+        const period = hours < 12 ? 'A.M.' : 'P.M.';
+    
+        // Convert hours to 12-hour format
+        hours = hours % 12 || 12;
+    
+        // Ensure two-digit format for minutes
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    
+        return `${hours}:${formattedMinutes} ${period}`;
+    }
+
+      function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+          return ''; // Return empty string for invalid date
+        }
+        // Adjust date to UTC timezone
+        const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+        const year = utcDate.getFullYear();
+        let month = utcDate.getMonth() + 1;
+        if (month < 10) {
+          month = `0${month}`;
+        }
+        let day = utcDate.getDate();
+        if (day < 10) {
+          day = `0${day}`;
+        }
+        return `${year}-${month}-${day}`;
+      }
+    
     
       const handleChange = (event) => {
         setComment(event.target.value);
+      };
+
+      const handleCalenderChange = (event) => {
+        setDate(event.target.value);
       };
 
     const navigateHome = () => {
         navigate('/');
     }
 
-      
-
     return (
         <div className="page">
+            <Link to="/">
+            <button className="backButtonMoviewDetailView">Back</button>
+            </Link>   
             <div id="title-logo">
-
-                <h1 onClick={navigateHome}>E-Cinema Booking</h1>
+                <h1>E-Cinema Booking</h1>
             </div>
             <div className="three-containers">
                 <div id="column-one" className="view-page-column">
@@ -188,14 +204,32 @@ const MovieView = (props) => {
                     </div>
                     <h3 className="red">Showtimes</h3>
                     <h5 className="white">Click to purchase tickets:</h5>
+                    <input
+                        type="date"
+                        value={date}
+                        onChange={handleCalenderChange}
+                        placeholder="Pick date here..."
+                        min={formatDate(movie.releaseDate)}
+                        max={formatDate(movie.endDate)}
+                    />
+                    <br></br>
                     <div id="showtime-container">
-                    {showtimesArray.map((showtime, index) => (
-                    <Link to={`/tickets?showtime=${showtime}&title=${movie.title}`} className="componenetLink">
-                    <h4 className="showtime" key={index}>
-                        {showtime} 
-                    </h4>
-                    </Link>
-                ))}
+                    {date && (
+                        <div id="showtimes">
+                            {showtimes.map((showtime, index) => (
+                                <Link 
+                                    to={`/tickets?showtime=${date}&title=${movie.title}&time=${showtime.startAt}&id=${id}&showid=${showtime.id}`} 
+                                    className="componenetLink" 
+                                    key={index} // Move key to Link component
+                            
+                                >
+                                    <h4 className="showtime">
+                                        {formatTime(showtime.startAt)} 
+                                    </h4>
+                                </Link>
+                            ))}
+                        </div>
+                        )}
                 <div id="review-container">
                     <h3 className="red" id="review-title">Reviews</h3>
                     {review.map((review, index) => (

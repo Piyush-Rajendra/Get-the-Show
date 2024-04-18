@@ -148,7 +148,7 @@ const Register = () => {
           </div>         
     </div>
     <div>
-        <h2>Home Address</h2>
+        <h2>Home Address (Optional)</h2>
         <div className="form-group">
           <label>Street: </label>
           <input className="forms-inputRegister"
@@ -156,7 +156,6 @@ const Register = () => {
               name="street"
               value={formData.street}
               onChange={handleChange}
-              required
             />
         </div>
         <div className="form-group">
@@ -166,7 +165,6 @@ const Register = () => {
               name="city"
               value={formData.city}
               onChange={handleChange}
-              required
             />
         </div>
         <div className="form-group">
@@ -176,7 +174,6 @@ const Register = () => {
               name="state"
               value={formData.state}
               onChange={handleChange}
-              required
             />
         </div>
         <div className="form-group">
@@ -189,7 +186,6 @@ const Register = () => {
           onChange={handleChange}
           maxLength="5"
           minLength="5"
-          required
         />
         </div>
         <div className="fillInSpaceRegister"></div>

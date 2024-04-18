@@ -294,29 +294,8 @@ const EditMovie = ({ onSubmit }) => {
               onChange={handleFileChange}
             />
           </div>
-          {/* <div className="form-group">
-            <label>Director: </label>
-            <br></br>
-            <input className="forms-inputRegister"
-                  type="text"
-                  name="director"
-                  value={movie.director}
-                  onChange={handleChange}
-                  required
-                />
-          </div> */}
-          {/* <div className="form-group">
-            <label>Show Dates and Times</label>
-            <input className="forms-inputRegister"
-                type="text"
-                name="showDatesTimes"
-                value={movie.showDatesTimes}
-                onChange={handleChange}
-                placeholder="xxxx/xx/xx @ xx:xx A.M./P.M., ..."
-                required
-              />
-              
-          </div> */}
+         
+
           <div className="fillInSpaceRegister">
           </div>
         </div> 

@@ -57,14 +57,10 @@ const UpdatePassword = () => {
       }
       const response = await axios.get('http://localhost:3000/users', email);
       const token = response.data.token;
-      // console.log(formData);
-      // // const log = await axios.post('http://localhost:3000/signin', formData)
-      // console.log(log.data.token);
       const resetData = {
         email: email,
         newPassword: newPassword
       }
-      console.log(resetData);
       const resetResponse = await axios.post('http://localhost:3000/reset-password', resetData);
       setDisplayText('Password Updated!')
       setEmail('');
@@ -72,7 +68,6 @@ const UpdatePassword = () => {
       setCurrentPassword('');
       setNewPassword('');
     } catch (error) {
-      console.error('Reset failed', error);
       alert('Email or current password is not correct');
     }
   };

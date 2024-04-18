@@ -2,27 +2,22 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { useState, useContext } from "react";
 import '../css/AdminPage/ManageMovie.css'
-import MovieCard from "../MainPage/MovieCard";
 import axios from 'axios';
 import {useEffect} from 'react';
-import { useHistory } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import UserContext from "../context/UserContext";
+import CardFactory from "../MainPage/CardFactory";
 
 const ManageMovie = ({props}) => {
   const isAdmin = localStorage.getItem('isAdmin');
 
   const { userData, setUserData } = useContext(UserContext);
-  
 
   const [myValue, setMyValue] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
   const navigate = useNavigate();
-
-
-
 
 // Define the URL
 const url = 'http://localhost:3000/movies';
@@ -57,27 +52,14 @@ const handleSearch = () => {
 useEffect(() => {
   axios.get(url)
     .then(response => {
-      // Handle successful response
       setMovieList(response.data);
-      console.log('Data:', response.data);
     })
     .catch(error => {
-      // Handle error
-      console.error('Error fetching data:', error);
+      alert("Error fetching data: " + error);
     });
 }, []); // empty dependency array ensures this effect runs only once
 
   const [movieList, setMovieList] = useState([]);
-
-  const addMovieHandler = (newMovie) => {
-    setMovieList((prevMovies) => [newMovie, ...prevMovies]);
-  };
-
-  const updateVal = () => {
-    setMyValue(false);
-    navigate('/', { state: {props: false} });
-    
-  }
 
   const logout = () => {
     setUserData(prevUserData => ({
@@ -132,19 +114,20 @@ useEffect(() => {
               {searchActive && filteredMovies.map((location, index) => (
                   <li key={index} class="movie-card-container">
                     <div class="movie-card-wrapper">
-                        <MovieCard 
-                          movie={location.title}
-                          category={location.category}
-                          cast={location.cast}
-                          director={location.director}
-                          producer={location.producer}
-                          synopsis={location.synopsis}
-                          trailerPicture={location.trailerPicture}
-                          trailerVideo={location.trailerVideo}
-                          mpaaRating={location.mpaaRating}
-                          showDatesTimes={location.showDatesTimes}
-                          posterBase64={location.posterBase64}
-                        />
+                      <CardFactory
+                        type="movie" 
+                        movie={location.title}
+                        category={location.category}
+                        cast={location.cast}
+                        director={location.director}
+                        producer={location.producer}
+                        synopsis={location.synopsis}
+                        trailerPicture={location.trailerPicture}
+                        trailerVideo={location.trailerVideo}
+                        mpaaRating={location.mpaaRating}
+                        showDatesTimes={location.showDatesTimes}
+                        posterBase64={location.posterBase64}
+                      />
                       <div class="button-group">
                         <button><Link to={`/editmovie/${location.id}`}  key={index}></Link>Edit</button>
                         <button onClick={() => deleteMovie(location.id)}>Delete</button>
@@ -155,7 +138,8 @@ useEffect(() => {
               {!searchActive && movieList.map((location, index) => (
                 <li key={index} class="movie-card-container">
                   <div class="movie-card-wrapper">
-                      <MovieCard 
+                      <CardFactory
+                        type="movie" 
                         movie={location.title}
                         category={location.category}
                         cast={location.cast}

@@ -25,12 +25,10 @@ const EditUser = ({ onSubmit }) => {
         phoneNumber: ''
     });
 
-
     useEffect(() => {
         const fetchUserData = async () => {
           try {
             const response = await axios.get(`http://localhost:3000/users/${id}`);
-            console.log(response);
             setUser({
                 username: response.data.userInfo[0].username,
                 profilePhoto: response.data.userInfo[0].profilePhoto,
@@ -48,12 +46,15 @@ const EditUser = ({ onSubmit }) => {
         fetchUserData();
       }, [id]);
 
-    
       const handleChange = (e) => {
         const { name, value } = e.target;
+        // Validate phone number input
+        if (name === "phoneNumber" && !/^\d{0,10}$/.test(value)) {
+          return; // Do not update state if input is invalid
+        }
         setUser({ ...user, [name]: value });
       };
-    
+          
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -76,10 +77,28 @@ const EditUser = ({ onSubmit }) => {
         alert(error);
       }
       };
+
+    const handleFileChange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const base64 = `data:${file.type};base64,${reader.result.split(',')[1]}`;
+        setUser({ ...user, profilePhoto: base64 });
+      };
+      reader.readAsDataURL(file);
+    };
+
     return (
-        <div className="centerFormRegister">  
+    <div className="centerFormRegister">  
     <div className="containerForm">
-    <h2 class="register">Edit User</h2>
+      <div className="">
+      <Link to="/ManageUser">
+        <button className="backButtonEditUserAdmin">Back</button>
+      </Link>   
+      <h2 class="register">Edit User</h2>
+    </div>
     <h3 style={{ color: '#FF6666', textAlign: "center" }}>{displayText}</h3>
       <form className="bodyRegisterFormUser" onSubmit={handleSubmit}>
       <div>
@@ -94,16 +113,15 @@ const EditUser = ({ onSubmit }) => {
                 required
               />
         </div>
-        <div className="form-group">
-          <label>Profile Photo (URL): </label>
-          <input className="forms-inputRegister"
-                type="text"
-                name="profilePhoto"
-                value={user.profilePhoto}
-                onChange={handleChange}
-                required
-              />
-        </div>
+          <div className="form-group">
+            <label>User Poster:</label>
+            <input
+              className="forms-inputRegister"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </div>
         <div className="form-group">
           <label>Full Name: </label>
           <input className="forms-inputRegister"
@@ -118,7 +136,6 @@ const EditUser = ({ onSubmit }) => {
           <button className="registerButtonRegister" type="submit">Submit</button>
         </div>          
     </div>
-    
       <div>
       <div className="form-group">
           <label>Street: </label>

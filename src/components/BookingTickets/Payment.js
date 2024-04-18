@@ -5,7 +5,6 @@ import axios from "axios";
 
 const Payment = (props) => {
   const username = localStorage.getItem('username')
-  console.log(username);
   const [id, setId] = useState('');
 
   useEffect(() => {
@@ -21,15 +20,8 @@ const Payment = (props) => {
       fetchUserData();
   }, []);
   const navigate = useNavigate();
-    //console.log(props.location.state.totalAmount);
-    //const { totalAmount } = props.location.state;
-    //console.log(props);
-  //const totalAmount = 15; 
   const totalAmount = sessionStorage.getItem('fullTotal');
 
-  const [cardOne, setCardOne] = useState('No saved card');
-  const [cardTwo, setCardTwo] = useState('No saved card');
-  const [cardThree, setCardThree] = useState('No saved card');
   const [usingSavedCard, setUsingSavedCard] = useState(false);
 
   const [cards, setCards] = useState([]);
@@ -45,14 +37,8 @@ const Payment = (props) => {
   useEffect(() => {
     const fetchCardData = async () => {
         try {
-          console.log(id);
           const response = await axios.get(`http://localhost:3000/users/${id}/payment-info`);
           setCards(response.data.paymentInfo); 
-          
-          //console.log(response.data);
-          //console.log(cards);
-
-          //console.log(cards);
          
         } catch (error) {
           console.error('Error fetching card data:', error);
@@ -63,8 +49,6 @@ const Payment = (props) => {
   }, [id]);
 
   useEffect(() => {
-    console.log(cards); 
-    console.log(cards[0]);
   }, [cards]);
 
     const [paymentInfo, setPaymentInfo] = useState({
@@ -111,7 +95,6 @@ const Payment = (props) => {
           paymentInfo,
           billingAddress
         };
-        console.log(paymentData);
         //navigate('/paymentconfirm')
         navigate(`/ordersummary`);
 
@@ -138,6 +121,9 @@ const Payment = (props) => {
       return (
         <div id="center-payment-page">
           <div id="payment-page">
+            <Link to={`/`} className="backButtonPaymentOptionView">
+                <button className="backButtonPaymentTickets">Cancel Tickets</button>
+            </Link>
             <h2>Total: ${totalAmount }</h2>
             <h2 onClick={handleUseSavedCard} id="click-me" className="red">[Click to Use Saved Card]</h2>
             {usingSavedCard && (

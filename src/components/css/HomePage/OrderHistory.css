@@ -31,9 +31,33 @@
         margin-right: 10px; 
 }
 
+
+
 #order-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow-x: auto; /* or overflow-x: scroll; */
+    white-space: nowrap; /* Prevent wrapping of items */
+}
 
+#order-container::-webkit-scrollbar {
+    display: none;
+}
+
+#order-card {
+    flex: 0 0 auto; /* Prevent flex items from growing or shrinking */
+    width: 300px; /* Adjust the width of your card */
+    margin-right: 10px; /* Adjust the margin between cards */
+}
+
+.backButtonOrderHistoryPage{
+    padding: 10px;
+    color: rgb(2, 2, 2);
+    margin-top: 15px;
+    margin-bottom: 0px;
+    margin-left: 30%;
+    font-size: 25px;
+    font-weight: 600;
+    background-color: #f85757;
+    border-radius: 20px;
+    cursor: pointer;
 }
