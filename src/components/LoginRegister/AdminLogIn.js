@@ -84,7 +84,7 @@ const AdminLogIn = () => {
               />      
             <div className="forgot-register-Buttons">
               <Link to='/forgotPage'><button class="forgot-Button">Forgot Password?</button></Link>
-              <Link to='/registerPage'><button class="signUp-ButtonLogin">SignUp</button></Link>
+              <Link to='/addadmin'><button class="signUp-ButtonLogin">SignUp</button></Link>
             </div>
             <button type="submit" className="register-button">Login</button>            
           </form>
