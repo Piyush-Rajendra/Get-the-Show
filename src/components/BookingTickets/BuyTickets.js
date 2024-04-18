@@ -7,7 +7,6 @@ import labeledScreen from './labeledScreen.jpg';
 const BuyTickets = (props) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const { id } = useParams(); // Retrieve the movie ID from URL
 
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [id, setId] = useState();
