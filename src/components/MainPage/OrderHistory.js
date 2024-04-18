@@ -44,7 +44,7 @@ const OrderHistory = () => {
              // Use Axios to make a GET request
             setOrders(response.data); // Set the promotions data into the state
           } catch (error) {
-            alert("Error fetching promotions: " + error);
+
           }
         }
     
