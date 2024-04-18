@@ -68,7 +68,6 @@ const EditMovie = ({ onSubmit }) => {
       if (day < 10) {
         day = `0${day}`;
       }
-      console.log(`${year}-${month}-${day}`)
       return `${year}-${month}-${day}`;
     }
 
